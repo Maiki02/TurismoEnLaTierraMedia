@@ -8,4 +8,9 @@ public class Atraccion {
 	public Atraccion() {
 		System.out.println("Hola");
 	}
+	
+	public void sysoPruebaMerge() {
+		System.out.println("Agustina prueba mergear");
+
+	}
 }
