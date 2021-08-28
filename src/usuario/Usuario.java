@@ -14,6 +14,7 @@ public class Usuario {
 		return this.nombre;
 	}
 	public int holaGrupo() {
+		System.out.println("Lunes martes miercoles");
 		return 0;
 	}
 }

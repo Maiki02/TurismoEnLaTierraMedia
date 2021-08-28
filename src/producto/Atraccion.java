@@ -6,6 +6,6 @@ public class Atraccion {
 	private int cuposDisponibles;
 	
 	public Atraccion() {
-
+		System.out.println("Hola");
 	}
 }
