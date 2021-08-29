@@ -1,6 +1,6 @@
 package producto;
 
-public class Atraccion {
+public class Atraccion extends Producto {
 	
 	private String nombreAtraccion;
 	private int cuposDisponibles;

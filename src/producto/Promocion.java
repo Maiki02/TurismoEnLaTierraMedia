@@ -1,6 +1,6 @@
 package producto;
 
-public class Promocion {
+public class Promocion extends Producto {
 	
 	public Promocion() {
 
