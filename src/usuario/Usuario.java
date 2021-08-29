@@ -13,12 +13,9 @@ public class Usuario {
 	public String getNombre() {
 		return this.nombre;
 	}
-<<<<<<< HEAD
-	
-=======
+
 	public int holaGrupo() {
 		System.out.println("Lunes martes miercoles");
 		return 0;
 	}
->>>>>>> 17495f9aeb57f3ccd8fa2d06031ca9b12c358fa2
 }
