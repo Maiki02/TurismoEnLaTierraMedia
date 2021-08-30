@@ -1,5 +1,5 @@
 package archivos;
 
-public class ArchivoUsuarios {
+public class ArchivoUsuarios { //, implements leible
 
 }
