@@ -52,6 +52,7 @@ public class ArchivoAtracciones { // , implements leible
 					Atraccion atraccionNueva = crearAtraccion(linea);
 					if (atraccionNueva != null) {
 						atracciones.add(atraccionNueva);
+						atraccionNueva=null;
 					}
 
 				} catch (ValorNegativo ne) {

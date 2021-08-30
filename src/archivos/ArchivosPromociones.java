@@ -5,11 +5,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import excepciones.ValorNegativo;
+import excepciones.*;
 import producto.*;
 
 public class ArchivosPromociones {
 
+	// Crea una promocion a partir de la linea de un arcchivo
 	private static Promocion crearPromocion(String[] caracteristicasPorPromocion, TipoDePromocion tipo,
 			LinkedList<Atraccion> atraccionesInvolucradas, LinkedList<Atraccion> atracciones) {
 
@@ -39,26 +40,29 @@ public class ArchivosPromociones {
 
 	}
 
-	// Crea una promocion a partir de la linea de un arcchivo
+	// A partir de una linea de un archivo, se fija en su tercer columna en adelante
+	// y a cada nombre de atraccion
+	// lo mete en una LinkedList.
 	public static LinkedList<Atraccion> atraccionesInvolucradas(String[] caracteristicasPorPromocion,
 			LinkedList<Atraccion> atracciones) {
 
 		LinkedList<Atraccion> atraccionesInvolucradas = new LinkedList<Atraccion>();
 
-		// El 2 es porque a partir de la segunda columna, aparecen las atracciones
-		// involucradas
-		// Ver si poner como variable static final.
-		int cantidadAtraccionesInvolucradas = caracteristicasPorPromocion.length - 2;
-
-		for (int i = 2; i < cantidadAtraccionesInvolucradas + 2; i++) {
-			String nombreAtraccionParaAgregar = caracteristicasPorPromocion[i];
-
-			// Si la atraccion tiene el mismo nombre que la que dice en el archivo, la
-			// agregamos
-			if (atracciones.get(i).equals(nombreAtraccionParaAgregar)) {
-				atraccionesInvolucradas.add(atracciones.get(i));
+		int vecesRecorrido = 0;
+		for (String nombreAtraccion : caracteristicasPorPromocion) {
+			
+			if (vecesRecorrido <= 1) {
+				//Primero recorremos 2 veces, que son los campos de tipo y premio.
+				vecesRecorrido++;
+			} else {
+				// Si la atraccion tiene el mismo nombre que la que dice en el archivo, la
+				// agregamos
+				int index = atracciones.indexOf(nombreAtraccion);
+				if (index != -1)
+					atraccionesInvolucradas.add(atracciones.get(index));
 				// ** ES UN METODO INEFICIENTE, NO SE SI IMPORTARÁ SUPONIENDO QUE SON 10
 				// ATRACCIONES
+
 			}
 		}
 
