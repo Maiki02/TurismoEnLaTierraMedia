@@ -1,7 +1,6 @@
 package producto;
 
 public abstract class Producto {
-
 	private String nombre;
 	private TipoDeAtraccion tipoAtraccion;
 	private double duracion;

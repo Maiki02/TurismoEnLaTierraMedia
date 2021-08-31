@@ -1,10 +1,5 @@
 package producto;
 
-<<<<<<< Updated upstream
-public class Promocion {
-	
-	public Promocion() {
-=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +24,6 @@ public class Promocion extends Producto {
 
 		}
 		return costo;
->>>>>>> Stashed changes
 
 	}
 
