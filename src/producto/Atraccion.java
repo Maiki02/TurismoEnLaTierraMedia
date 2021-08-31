@@ -6,7 +6,7 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 	public boolean ocuparAtraccion;
 	private int cupo;
 
-	public Atraccion(String nombre, TipoDeAtraccion tipoAtraccion, double duracion, double costo, int cupo) {
+	public Atraccion(String nombre, double costo, double duracion,int cupo, TipoDeAtraccion tipoAtraccion) {
 
 		super(nombre, tipoAtraccion, duracion, costo);
 		this.cupo = cupo;
