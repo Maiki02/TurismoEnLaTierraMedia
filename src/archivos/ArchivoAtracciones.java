@@ -12,7 +12,7 @@ import producto.*;
 public class ArchivoAtracciones { // , implements leible
 	private static final int DATOS_ESPERADOS_POR_LINEA = 5;
 
-	public static Atraccion crearAtraccion(String[] datos) 
+	private static Atraccion crearAtraccion(String[] datos) 
 			throws ValorNegativo, IllegalArgumentException, NumberFormatException {
 		String nombre = datos[0]; // Capaz que conviene pasar el nombre a mayusculas o minusculas
 		double costo = Double.parseDouble(datos[1]);
@@ -27,7 +27,7 @@ public class ArchivoAtracciones { // , implements leible
 		return new Atraccion(nombre, costo, tiempo, cupo, tipo);
 	}
 
-	public static List<Atraccion> leerArchivo() {
+	public static List<Atraccion> leerArchivoAtracciones() {
 		FileReader fr = null;
 		BufferedReader br = null;
 		List<Atraccion> atracciones = new LinkedList<Atraccion>();

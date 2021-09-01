@@ -25,4 +25,8 @@ public abstract class Producto {
 		return this.duracion;
 	}
 
+	public TipoDeAtraccion getTipoAtraccion() {
+		return tipoAtraccion;
+	}
+
 }

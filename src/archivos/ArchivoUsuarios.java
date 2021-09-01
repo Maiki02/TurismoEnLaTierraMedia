@@ -15,7 +15,7 @@ import usuario.Usuario;
 public class ArchivoUsuarios { // , implements leible
 	private static final int DATOS_ESPERADOS_POR_LINEA = 4;
 
-	public static List<Usuario> leerArchivo() {
+	public static List<Usuario> leerArchivoUsuarios() {
 		FileReader fr = null;
 		BufferedReader br = null;
 		List<Usuario> usuarios = new LinkedList<Usuario>();

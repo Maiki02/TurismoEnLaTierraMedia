@@ -16,7 +16,7 @@ public class ArchivosPromociones {
 
 	// Crea una promocion a partir de la linea de un arcchivo
 	private static Promocion crearPromocion(String[] datos, List<Atraccion> atracciones) 
-			throws ValorNegativo, IllegalArgumentException, NumberFormatException{
+			throws ValorNegativo, IllegalArgumentException, NumberFormatException, AtraccionDeDistintoTipo{
 		
 		String nombrePack=datos[3];
 		
@@ -25,10 +25,14 @@ public class ArchivosPromociones {
 		
 		Map<String, Atraccion> atraccionesPorNombre = crearMapDeAtracciones(atracciones);
 		List<Atraccion> atraccionesInvolucradas = atraccionesInvolucradas(datos, atraccionesPorNombre);
+		if(!sonAtraccionesValidas(atraccionesInvolucradas, tipoAtraccion))
+			throw new AtraccionDeDistintoTipo("Hay atracciones que no son del mismo tipo que el pack");
 		
 		if (tipoPromocion == TipoDePromocion.AXB) {
 			String nombreAtraccionDePremio = datos[1];
 			Atraccion premio = atraccionesPorNombre.get(nombreAtraccionDePremio);
+			if(!esAtraccionValida(premio, tipoAtraccion))
+				throw new AtraccionDeDistintoTipo("El premio no es del mismo tipo que el pack");
 			// VER QUE EXCEPCION OCURRE CUANDO LA ATRACCION NO ESTÁ
 			return new AxB(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
 		}
@@ -42,6 +46,18 @@ public class ArchivosPromociones {
 		if (tipoPromocion == TipoDePromocion.DESCUENTO)
 			return new Absoluta(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
 
+	}
+
+	private static boolean esAtraccionValida(Atraccion atraccion, TipoDeAtraccion tipoAtraccion) {
+		return atraccion.getTipoAtraccion() == tipoAtraccion;
+	}
+	
+	private static boolean sonAtraccionesValidas(List<Atraccion> atracciones, TipoDeAtraccion tipoAtraccion) {
+		for(Atraccion atraccion: atracciones) {
+			if(!esAtraccionValida(atraccion, tipoAtraccion)) //Si es una atraccion invalida devuelve false
+				return false;
+		}
+		return true;
 	}
 
 	// A partir de una linea de un archivo, se fija en su tercer columna en adelante
@@ -67,7 +83,7 @@ public class ArchivosPromociones {
 		return atraccionesPorNombre;
 	}
 
-	public static List<Promocion> leerArchivo(List<Atraccion> atracciones) {
+	public static List<Promocion> leerArchivoPromociones(List<Atraccion> atracciones) {
 		FileReader fr = null;
 		BufferedReader br = null;
 
@@ -92,7 +108,7 @@ public class ArchivosPromociones {
 				} catch (NumberFormatException e) {
 					System.err.println("Uno de los datos leídos no es un numero válido en: " + linea);
 				} catch (IllegalArgumentException iae) {
-					System.err.println("Tipo de atraccion no reconocida");
+					System.err.println("Tipo de atraccion no reconocida en: " + linea);
 				} catch (CantidadDatosInvalidos cdi) {
 					System.err.println(cdi.getMessage());
 				} catch (Exception e) {
