@@ -7,7 +7,6 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 	private int cupo;
 
 	public Atraccion(String nombre, double costo, double duracion,int cupo, TipoDeAtraccion tipoAtraccion) {
-
 		super(nombre, tipoAtraccion, duracion, costo);
 		this.cupo = cupo;
 		this.cuposDisponibles = cupo;
@@ -22,7 +21,7 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 			cuposDisponibles--;
 			return true;
 		}
-		System.out.println("No tiene más cupos");
+		System.out.println("No tiene mï¿½s cupos");
 		return false;
 	}
 

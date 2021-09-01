@@ -13,6 +13,10 @@ public abstract class Producto {
 		this.costo = costo;
 	}
 
+	public String getNombre() {
+		return this.nombre;
+	}
+	
 	protected double getCosto() {
 		return this.costo;
 	}

@@ -1,0 +1,5 @@
+TIPO-DESCUENTO,PREMIO,TIPO-ATRACCION,NOMBRE-PACK,ATRACCIONES-INVOLUCRADAS
+DESCUENTO,20,AVENTURA,pack aventura 1,Bosque Negro,Mordor
+ABSOLUTA,50,AVENTURA,pack aventura 2,Mordor,Moria
+AXB,La Comarca,DEGUSTACION,pack aventura 3,Mordor,Moria,Bosque Negro
+ABSOLUTA,10,DEGUSTACION,pack Minas Tirith y Lothlorien,Minas Tirith,Lothlorien

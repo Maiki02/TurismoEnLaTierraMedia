@@ -1,5 +1,0 @@
-TIPO,PREMIO,ATRACCIONES INVOLUCRADAS
-DESCUENTO,20,Bosque Negro,Mordor
-ABSOLUTA,50,Mordor,Moria
-AXB,La Comarca,Mordor,Moria,Bosque Negro
-ABSOLUTA,10,Minas Tirith,Lothlorien
