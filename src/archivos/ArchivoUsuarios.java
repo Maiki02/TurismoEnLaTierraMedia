@@ -15,12 +15,9 @@ import usuario.Usuario;
 public class ArchivoUsuarios { // , implements leible
 	private static final int DATOS_ESPERADOS_POR_LINEA = 4;
 
-
-
 	public static List<Usuario> leerArchivo() {
 		FileReader fr = null;
 		BufferedReader br = null;
-
 		List<Usuario> usuarios = new LinkedList<Usuario>();
 
 		try {
@@ -38,7 +35,6 @@ public class ArchivoUsuarios { // , implements leible
 					Usuario nuevoUsuario = crearUsuario(datos);
 					if (nuevoUsuario != null) {
 						usuarios.add(nuevoUsuario);
-						nuevoUsuario=null;
 					}
 
 				} catch (ValorNegativo ne) {
@@ -68,7 +64,8 @@ public class ArchivoUsuarios { // , implements leible
 		return usuarios;
 	}
 
-	private static Usuario crearUsuario(String[] datos) throws ValorNegativo, IllegalArgumentException {
+	private static Usuario crearUsuario(String[] datos) 
+			throws ValorNegativo, IllegalArgumentException, NumberFormatException {
 		String nombre = datos[0];
 		double monedasDisponibles = Double.parseDouble(datos[1]);
 		double tiempoDisponible = Double.parseDouble(datos[2]);

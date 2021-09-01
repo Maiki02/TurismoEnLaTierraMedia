@@ -12,7 +12,8 @@ import producto.*;
 public class ArchivoAtracciones { // , implements leible
 	private static final int DATOS_ESPERADOS_POR_LINEA = 5;
 
-	public static Atraccion crearAtraccion(String[] datos) throws ValorNegativo, IllegalArgumentException {
+	public static Atraccion crearAtraccion(String[] datos) 
+			throws ValorNegativo, IllegalArgumentException, NumberFormatException {
 		String nombre = datos[0]; // Capaz que conviene pasar el nombre a mayusculas o minusculas
 		double costo = Double.parseDouble(datos[1]);
 		double tiempo = Double.parseDouble(datos[2]);
@@ -48,11 +49,9 @@ public class ArchivoAtracciones { // , implements leible
 					if (datos.length != DATOS_ESPERADOS_POR_LINEA) 
 						throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
 					
-					
 					Atraccion atraccionNueva = crearAtraccion(datos);
 					if (atraccionNueva != null) {
 						atracciones.add(atraccionNueva);
-						atraccionNueva = null;
 					}
 
 				} catch (ValorNegativo ne) {
@@ -62,7 +61,7 @@ public class ArchivoAtracciones { // , implements leible
 				} catch (IllegalArgumentException iae) {
 					System.err.println("Tipo de atraccion no reconocida en: " + linea);
 				} catch (CantidadDatosInvalidos cdi) {
-					System.err.println(cdi.getMessage());
+					System.err.println(cdi.getMessage()+ " en: " + linea);
 				} catch (Exception e) {
 					e.getMessage();
 				}
