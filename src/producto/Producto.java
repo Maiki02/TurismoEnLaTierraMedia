@@ -17,11 +17,11 @@ public abstract class Producto {
 		return this.nombre;
 	}
 	
-	protected double getCosto() {
+	public double getCosto() {
 		return this.costo;
 	}
 
-	protected double getDuracion() {
+	public double getDuracion() {
 		return this.duracion;
 	}
 
