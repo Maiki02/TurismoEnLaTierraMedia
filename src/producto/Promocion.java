@@ -3,8 +3,6 @@ package producto;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//Modificar monto por getCosto;
 public class Promocion extends Producto {
 
 	protected List<Atraccion> atracciones;
@@ -40,7 +38,7 @@ public class Promocion extends Producto {
 	}
 
 	public double importeAPagar() {
-      return getCosto();
+		return getCosto();
 	}
 
 }
