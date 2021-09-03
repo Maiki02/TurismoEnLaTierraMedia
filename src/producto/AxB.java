@@ -1,12 +1,13 @@
 package producto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AxB extends Promocion {
 
 	private Atraccion premio;
 
-	public AxB(String nombre, TipoDeAtraccion tipoAtraccion, ArrayList<Atraccion> atracciones, Atraccion premio) {
+	public AxB(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones, Atraccion premio) {
 		super(nombre, tipoAtraccion, atracciones);
 		this.premio = premio;
 	}

@@ -6,12 +6,12 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 	private String nombre;
 	private int cuposDisponibles;
 	public boolean ocuparAtraccion;
-	private int cupo;
+	private int cupoInicial;
 
 	public Atraccion(String nombre, double costo, double duracion, int cupo, TipoDeAtraccion tipoAtraccion) {
 
 		super(nombre, tipoAtraccion, duracion, costo);
-		this.cupo = cupo;
+		this.cupoInicial = cupo;
 		this.cuposDisponibles = cupo;
 	}
 
@@ -41,6 +41,10 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 		this.nombre = nombre;
 	}
 
+	public int getCuposMaximos() {
+		return cupoInicial;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(nombre);

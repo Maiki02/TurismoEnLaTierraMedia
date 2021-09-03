@@ -15,6 +15,8 @@ public class ArchivoAtracciones { // , implements leible
 	private static Atraccion crearAtraccion(String[] datos) 
 			throws ValorNegativo, IllegalArgumentException, NumberFormatException {
 		String nombre = datos[0]; // Capaz que conviene pasar el nombre a mayusculas o minusculas
+		//Deberiamos verificar que el nombre no sea una palabra como DESCUENTO, AVENTURA, un numero, etc.
+		
 		double costo = Double.parseDouble(datos[1]);
 		double tiempo = Double.parseDouble(datos[2]);
 		int cupo = Integer.parseInt(datos[3]);
@@ -31,12 +33,6 @@ public class ArchivoAtracciones { // , implements leible
 		FileReader fr = null;
 		BufferedReader br = null;
 		List<Atraccion> atracciones = new LinkedList<Atraccion>();
-		// *********
-		// CREO QUE EN VEZ DE HACER LINKED LIST, SERIA CONVENIENTE HACER UNA COLECCION
-		// PARA QUE NO SE REPITAN LOS NOMBRES DE LAS ATRACCIONES (Nuestro criterio de
-		// equals va a ser
-		// que dos atracciones son iguales si tienen el mismo nombre)
-		// *********
 
 		try {
 			fr = new FileReader("archivos/atracciones.txt");

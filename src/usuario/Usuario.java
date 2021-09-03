@@ -1,29 +1,30 @@
 package usuario;
 
-import producto.Atraccion;
-import producto.Producto;
-import producto.Promocion;
-import producto.TipoDeAtraccion;
+import java.util.LinkedList;
+import java.util.List;
+
+import producto.*;
 
 public class Usuario {
 
 	private String nombre;
-	private double presupuesto;
+	@SuppressWarnings("unused")
+	private double presupuestoInicial;
 	private double horasDisponibles;
+	private TipoDeAtraccion tipoFavorito;
 	private double totalAPagar;
 	private double monedasDisponibles;
-	private Producto productoComprado[];
-	private int cantidad_productosComprados;
+	private List<Producto> productosComprados;
+	//private List<Atraccion> atraccionesElectas;
 
-	public Usuario(String nombre, double presupuesto, double horasDisponibles, double totalAPagar,
-			double monedasDisponibles, int cant_productosComprados) {
+	public Usuario(String nombre, double presupuesto, double horasDisponibles, TipoDeAtraccion tipoFavorito) {
 		this.nombre = nombre;
-		this.presupuesto = presupuesto;
+		this.presupuestoInicial = presupuesto;
 		this.horasDisponibles = horasDisponibles;
-		this.totalAPagar = totalAPagar;
+		this.tipoFavorito=tipoFavorito;
+		this.productosComprados = new LinkedList<Producto>();
+		
 		this.monedasDisponibles = presupuesto;
-		this.cantidad_productosComprados = 0;
-		this.productoComprado = new Producto[20];
 	}
 
 	public double getHorasDisponibles() {
@@ -37,9 +38,20 @@ public class Usuario {
 	public double getTotalAPagar() {
 		return totalAPagar;
 	}
+	
+	public TipoDeAtraccion getTipoFavorito() {
+		return tipoFavorito;
+	}
 
+	public String getNombre() {
+		return this.nombre;
+	}
+	
 	public double descontarMonedas(Producto producto) {
-		monedasDisponibles -= producto.getCosto();
+		//No verificamos si el importe a pagar es mayor a sus monedas disponibles porque
+		//solo la invocamos si se cumple el puedeComprar
+		this.monedasDisponibles -= producto.getCosto();
+		this.totalAPagar+=producto.getCosto();
 		return monedasDisponibles;
 	}
 
@@ -52,8 +64,8 @@ public class Usuario {
 		return (getHorasDisponibles() >= producto.getDuracion()) && (getMonedasDisponibles() >= producto.getCosto());
 	}
 
-	 /*public boolean esAtraccionYaElegida() {
-		 
+	 /*public boolean esAtraccionYaElegida(Atraccion atraccion) {
+		 return atraccionesElectas.contains(atraccion);
 	 }*/
 	 
 
@@ -62,8 +74,9 @@ public class Usuario {
 		if (puedeComprar(producto)) {
 			descontarMonedas(producto);
 			descontarHorasDisponibles(producto);
-				productoComprado[cantidad_productosComprados] = producto;
-				cantidad_productosComprados++;
+			productosComprados.add(producto);
+			
 		}
 	}
+
 }

@@ -7,7 +7,8 @@ public class Promocion extends Producto {
 
 	protected List<Atraccion> atracciones;
 
-	public Promocion(String nombre, TipoDeAtraccion tipoAtraccion, ArrayList<Atraccion> atracciones) {
+	public Promocion(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones) {
+		//Preguntar al profe
 		super(nombre, tipoAtraccion, 0, 0);
 		this.atracciones = atracciones;
 	}

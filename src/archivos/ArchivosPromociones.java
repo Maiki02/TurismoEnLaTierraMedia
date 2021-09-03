@@ -15,7 +15,7 @@ public class ArchivosPromociones {
 	private static final int DATOS_ESPERADOS_POR_LINEA = 5;
 
 	// Crea una promocion a partir de la linea de un arcchivo
-	private static Promocion crearPromocion(String[] datos, List<Atraccion> atracciones) 
+	private static Promocion crearPromocion(String[] datos, Map<String, Atraccion> atraccionesPorNombre) 
 			throws ValorNegativo, IllegalArgumentException, NumberFormatException, AtraccionDeDistintoTipo{
 		
 		String nombrePack=datos[3];
@@ -23,7 +23,6 @@ public class ArchivosPromociones {
 		TipoDePromocion tipoPromocion = TipoDePromocion.valueOf(datos[0].toUpperCase());
 		TipoDeAtraccion tipoAtraccion=TipoDeAtraccion.valueOf(datos[2].toUpperCase());
 		
-		Map<String, Atraccion> atraccionesPorNombre = crearMapDeAtracciones(atracciones);
 		List<Atraccion> atraccionesInvolucradas = atraccionesInvolucradas(datos, atraccionesPorNombre);
 		if(!sonAtraccionesValidas(atraccionesInvolucradas, tipoAtraccion))
 			throw new AtraccionDeDistintoTipo("Hay atracciones que no son del mismo tipo que el pack");
@@ -46,6 +45,7 @@ public class ArchivosPromociones {
 		if (tipoPromocion == TipoDePromocion.DESCUENTO)
 			return new Absoluta(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
 
+		return null;
 	}
 
 	private static boolean esAtraccionValida(Atraccion atraccion, TipoDeAtraccion tipoAtraccion) {
@@ -88,6 +88,7 @@ public class ArchivosPromociones {
 		BufferedReader br = null;
 
 		List<Promocion> promociones = new LinkedList<Promocion>();
+		Map<String, Atraccion> atraccionesPorNombre = crearMapDeAtracciones(atracciones);
 
 		try {
 			fr = new FileReader("archivos/promociones.txt");
@@ -99,8 +100,9 @@ public class ArchivosPromociones {
 					String[] datos = linea.split(",");
 					if (datos.length > DATOS_ESPERADOS_POR_LINEA)
 						throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
-
-					Promocion promocion = crearPromocion(datos, atracciones);
+					
+					
+					Promocion promocion = crearPromocion(datos, atraccionesPorNombre);
 					promociones.add(promocion);
 
 				} catch (ValorNegativo ne) {

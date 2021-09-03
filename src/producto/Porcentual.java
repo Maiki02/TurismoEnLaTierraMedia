@@ -1,12 +1,13 @@
 package producto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Porcentual extends Promocion {
 
 	private double porcentajeDescuento;
 
-	public Porcentual(String nombre, TipoDeAtraccion tipoAtraccion, ArrayList<Atraccion> atracciones,
+	public Porcentual(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones,
 			double porcentajeDescuento) {
 		super(nombre, tipoAtraccion, atracciones);
 		this.porcentajeDescuento = porcentajeDescuento;

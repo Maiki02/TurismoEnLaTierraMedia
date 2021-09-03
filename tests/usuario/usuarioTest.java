@@ -14,7 +14,7 @@ public class usuarioTest {
 	// usuario: nombre, presupuesto, horas disponibles, total a pagar, monedas
 	// disponibles
 	// atraccion: nombre, costo, duracion, cupo, tipo
-	Usuario u = new Usuario("Juan", 1000, 10, 200, 1000, 0);
+	Usuario u = new Usuario("Juan", 1000, 10, TipoDeAtraccion.AVENTURA);
 	Atraccion p = new Atraccion("Moria", 300, 2, 10, TipoDeAtraccion.AVENTURA);
 
 	@Test
