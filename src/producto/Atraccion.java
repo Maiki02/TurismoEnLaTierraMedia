@@ -3,7 +3,7 @@ package producto;
 import java.util.Objects;
 
 public class Atraccion extends Producto implements Comparable<Atraccion> {
-	private String nombre;
+	
 	private int cuposDisponibles;
 	public boolean ocuparAtraccion;
 	private int cupoInicial;
@@ -24,7 +24,6 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 			cuposDisponibles--;
 			return true;
 		}
-		//System.out.println("No tiene mas cupos");
 		return false;
 	}
 
@@ -33,16 +32,17 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 		return 0;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	/*public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}*/
-
 	public int getCuposMaximos() {
 		return cupoInicial;
 	}
+
+	@Override
+	public String toString() {
+		return "Atraccion [nombre=" + super.getNombre() + ", TipoDeAtraccion: " + super.getTipoAtraccion() + 
+				", Duracion: " + super.getDuracion() + ", Costo: " + super.getCosto() + ", cuposDisponibles=" + 
+				cuposDisponibles + ", ocuparAtraccion=" + ocuparAtraccion + ", cupoInicial=" + cupoInicial + "]";
+	}
+	
+	
 
 }

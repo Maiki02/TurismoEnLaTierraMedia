@@ -12,11 +12,17 @@ import producto.*;
 public class ArchivoAtracciones { // , implements leible
 	private static final int DATOS_ESPERADOS_POR_LINEA = 5;
 
-	private static Atraccion crearAtraccion(String[] datos) 
-			throws ValorNegativo, IllegalArgumentException, NumberFormatException {
-		String nombre = datos[0]; // Capaz que conviene pasar el nombre a mayusculas o minusculas
-		//Deberiamos verificar que el nombre no sea una palabra como DESCUENTO, AVENTURA, un numero, etc.
+	private static Atraccion crearAtraccion(String linea)
+			throws ValorNegativo, IllegalArgumentException, NumberFormatException, CantidadDatosInvalidos {
+
+		String[] datos = linea.split(",");
 		
+		if (datos.length != DATOS_ESPERADOS_POR_LINEA) // Adentro de crearAtraccion
+			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
+		
+		String nombre = datos[0].toUpperCase();	// Deberiamos verificar que el nombre no sea una palabra como DESCUENTO,
+												// AVENTURA, un numero, etc.
+
 		double costo = Double.parseDouble(datos[1]);
 		double tiempo = Double.parseDouble(datos[2]);
 		int cupo = Integer.parseInt(datos[3]);
@@ -29,6 +35,8 @@ public class ArchivoAtracciones { // , implements leible
 		return new Atraccion(nombre, costo, tiempo, cupo, tipo);
 	}
 
+	
+	
 	public static List<Atraccion> leerArchivoAtracciones() {
 		FileReader fr = null;
 		BufferedReader br = null;
@@ -41,22 +49,17 @@ public class ArchivoAtracciones { // , implements leible
 			String linea = br.readLine(); // Leemos linea con caracteristicas
 			while ((linea = br.readLine()) != null) {
 				try {
-					String[] datos = linea.split(",");
-					if (datos.length != DATOS_ESPERADOS_POR_LINEA) //Adentro de crearAtraccion
-						throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
+					Atraccion nuevaAtraccion = crearAtraccion(linea);
+					atracciones.add(nuevaAtraccion);
 					
-					Atraccion atraccionNueva = crearAtraccion(datos);
-					atracciones.add(atraccionNueva);
-					
-
 				} catch (ValorNegativo ne) {
 					System.err.println(ne.getMessage() + " en: " + linea);
 				} catch (NumberFormatException e) {
-					System.err.println("Uno de los datos leídos no es un numero válido en: " + linea);
+					System.err.println("Uno de los datos leidos no es un numero valido en: " + linea);
 				} catch (IllegalArgumentException iae) {
 					System.err.println("Tipo de atraccion no reconocida en: " + linea);
 				} catch (CantidadDatosInvalidos cdi) {
-					System.err.println(cdi.getMessage()+ " en: " + linea);
+					System.err.println(cdi.getMessage() + " en: " + linea);
 				} catch (Exception e) {
 					e.getMessage();
 				}

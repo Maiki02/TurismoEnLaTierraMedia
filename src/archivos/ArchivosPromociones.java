@@ -15,24 +15,30 @@ public class ArchivosPromociones {
 	private static final int DATOS_ESPERADOS_POR_LINEA = 5;
 
 	// Crea una promocion a partir de la linea de un arcchivo
-	private static Promocion crearPromocion(String[] datos, Map<String, Atraccion> atraccionesPorNombre) 
-			throws ValorNegativo, IllegalArgumentException, NumberFormatException, AtraccionDeDistintoTipo{
-		
-		String nombrePack=datos[3];
-		
+
+	private static Promocion crearPromocion(String linea, Map<String, Atraccion> atraccionesPorNombre)
+			throws ValorNegativo, IllegalArgumentException, NumberFormatException, AtraccionDeDistintoTipo,
+			CantidadDatosInvalidos {
+
+		String[] datos = linea.split(",");
+		if (datos.length > DATOS_ESPERADOS_POR_LINEA)
+			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
+
+		String nombrePack = datos[3];
+
 		TipoDePromocion tipoPromocion = TipoDePromocion.valueOf(datos[0].toUpperCase());
-		TipoDeAtraccion tipoAtraccion=TipoDeAtraccion.valueOf(datos[2].toUpperCase());
-		
+		TipoDeAtraccion tipoAtraccion = TipoDeAtraccion.valueOf(datos[2].toUpperCase());
+
 		List<Atraccion> atraccionesInvolucradas = atraccionesInvolucradas(datos, atraccionesPorNombre);
-		if(!sonAtraccionesValidas(atraccionesInvolucradas, tipoAtraccion))
+		if (!sonAtraccionesValidas(atraccionesInvolucradas, tipoAtraccion))
 			throw new AtraccionDeDistintoTipo("Hay atracciones que no son del mismo tipo que el pack");
-		
+
 		if (tipoPromocion == TipoDePromocion.AXB) {
 			String nombreAtraccionDePremio = datos[1];
 			Atraccion premio = atraccionesPorNombre.get(nombreAtraccionDePremio);
-			if(!esAtraccionValida(premio, tipoAtraccion))
+			if (!esAtraccionValida(premio, tipoAtraccion))
 				throw new AtraccionDeDistintoTipo("El premio no es del mismo tipo que el pack");
-			// VER QUE EXCEPCION OCURRE CUANDO LA ATRACCION NO ESTÁ
+			// VER QUE EXCEPCION OCURRE CUANDO LA ATRACCION NO ESTA
 			return new AxB(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
 		}
 
@@ -51,10 +57,10 @@ public class ArchivosPromociones {
 	private static boolean esAtraccionValida(Atraccion atraccion, TipoDeAtraccion tipoAtraccion) {
 		return atraccion.getTipoAtraccion() == tipoAtraccion;
 	}
-	
+
 	private static boolean sonAtraccionesValidas(List<Atraccion> atracciones, TipoDeAtraccion tipoAtraccion) {
-		for(Atraccion atraccion: atracciones) {
-			if(!esAtraccionValida(atraccion, tipoAtraccion)) //Si es una atraccion invalida devuelve false
+		for (Atraccion atraccion : atracciones) {
+			if (!esAtraccionValida(atraccion, tipoAtraccion)) // Si es una atraccion invalida devuelve false
 				return false;
 		}
 		return true;
@@ -63,13 +69,13 @@ public class ArchivosPromociones {
 	// A partir de una linea de un archivo, se fija en su tercer columna en adelante
 	// y a cada nombre de atraccion
 	// lo mete en una LinkedList.
-	private static List<Atraccion> atraccionesInvolucradas(String[] datos, 
+	private static List<Atraccion> atraccionesInvolucradas(String[] datos,
 			Map<String, Atraccion> atraccionesPorNombre) {
 
 		List<Atraccion> atraccionesInvolucradas = new LinkedList<Atraccion>();
-		
+
 		for (String nombreAtraccion : datos) {
-			if(atraccionesPorNombre.containsKey(nombreAtraccion)) //A partir del 4to elemento puede dar true
+			if (atraccionesPorNombre.containsKey(nombreAtraccion)) // A partir del 4to elemento puede dar true
 				atraccionesInvolucradas.add(atraccionesPorNombre.get(nombreAtraccion));
 		}
 		return atraccionesInvolucradas;
@@ -97,18 +103,13 @@ public class ArchivosPromociones {
 			String linea = br.readLine(); // Leemos linea con caracteristicas
 			while ((linea = br.readLine()) != null) {
 				try {
-					String[] datos = linea.split(",");
-					if (datos.length > DATOS_ESPERADOS_POR_LINEA)
-						throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
-					
-					
-					Promocion promocion = crearPromocion(datos, atraccionesPorNombre);
+					Promocion promocion = crearPromocion(linea, atraccionesPorNombre);
 					promociones.add(promocion);
 
 				} catch (ValorNegativo ne) {
 					System.err.println(ne.getMessage());
 				} catch (NumberFormatException e) {
-					System.err.println("Uno de los datos leídos no es un numero válido en: " + linea);
+					System.err.println("Uno de los datos leidos no es un numero valido en: " + linea);
 				} catch (IllegalArgumentException iae) {
 					System.err.println("Tipo de atraccion no reconocida en: " + linea);
 				} catch (CantidadDatosInvalidos cdi) {
@@ -117,7 +118,7 @@ public class ArchivosPromociones {
 					e.getMessage();
 				}
 			}
-		} catch (IOException e) { // Se abrió incorrectamente el archivo
+		} catch (IOException e) { // Se abria incorrectamente el archivo
 			e.printStackTrace();
 		} finally { // Cerramos el archivo
 			try {

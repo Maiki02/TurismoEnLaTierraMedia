@@ -38,5 +38,11 @@ public class Promocion extends Producto {
 	public double importeAPagar() {
 		return getCosto();
 	}
+	
+	@Override
+	public String toString() {
+		return "Promocion [nombre=" + super.getNombre() + ", TipoDeAtraccion: " + super.getTipoAtraccion() + 
+				", Duracion: " + super.getDuracion() + ", Costo: " + super.getCosto() + ", Atracciones: " + atracciones + "]";
+	}
 
 }
