@@ -42,13 +42,12 @@ public class ArchivoAtracciones { // , implements leible
 			while ((linea = br.readLine()) != null) {
 				try {
 					String[] datos = linea.split(",");
-					if (datos.length != DATOS_ESPERADOS_POR_LINEA) 
+					if (datos.length != DATOS_ESPERADOS_POR_LINEA) //Adentro de crearAtraccion
 						throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
 					
 					Atraccion atraccionNueva = crearAtraccion(datos);
-					if (atraccionNueva != null) {
-						atracciones.add(atraccionNueva);
-					}
+					atracciones.add(atraccionNueva);
+					
 
 				} catch (ValorNegativo ne) {
 					System.err.println(ne.getMessage() + " en: " + linea);

@@ -14,15 +14,12 @@ public class Porcentual extends Promocion {
 	}
 
 	private double calcularDescuento() {
-		double descuentoCalculado = this.getCosto() * this.porcentajeDescuento / 100;
-		return descuentoCalculado;
+		return super.getCosto() * this.porcentajeDescuento / 100;
 	}
 
 	@Override
 	public double importeAPagar() {
-		double importeTotal = this.getCosto() - this.calcularDescuento();
-		return importeTotal;
-
+		return super.getCosto() - this.calcularDescuento();
 	}
 
 }

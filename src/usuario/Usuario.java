@@ -47,7 +47,7 @@ public class Usuario {
 		return this.nombre;
 	}
 	
-	public double descontarMonedas(Producto producto) {
+	private double descontarMonedas(Producto producto) {
 		//No verificamos si el importe a pagar es mayor a sus monedas disponibles porque
 		//solo la invocamos si se cumple el puedeComprar
 		this.monedasDisponibles -= producto.getCosto();
@@ -55,7 +55,7 @@ public class Usuario {
 		return monedasDisponibles;
 	}
 
-	public double descontarHorasDisponibles(Producto producto) {
+	private double descontarHorasDisponibles(Producto producto) {
 		horasDisponibles -= producto.getDuracion();
 		return horasDisponibles;
 	}

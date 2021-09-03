@@ -32,9 +32,8 @@ public class ArchivoUsuarios { // , implements leible
 					}
 					
 					Usuario nuevoUsuario = crearUsuario(datos);
-					if (nuevoUsuario != null) {
-						usuarios.add(nuevoUsuario);
-					}
+					usuarios.add(nuevoUsuario);
+					
 
 				} catch (ValorNegativo ne) {
 					System.err.println(ne.getMessage() + " en: " + linea);
@@ -68,7 +67,7 @@ public class ArchivoUsuarios { // , implements leible
 		String nombre = datos[0];
 		double monedasDisponibles = Double.parseDouble(datos[1]);
 		double tiempoDisponible = Double.parseDouble(datos[2]);
-		TipoDeAtraccion tipo = TipoDeAtraccion.valueOf(datos[3]);
+		TipoDeAtraccion tipo = TipoDeAtraccion.valueOf(datos[3].toUpperCase());
 
 		if (monedasDisponibles < 0 || tiempoDisponible < 0) {
 			throw new ValorNegativo("Fue pasado un valor negativo");

@@ -22,7 +22,7 @@ public class usuarioTest {
 		Assert.assertTrue(u.puedeComprar(p));
 	}
 
-	@Test
+	/*@Test
 	public void test_descontarMonedas() {
 		assertEquals(700, u.descontarMonedas(p), 0.001);
 	}
@@ -30,7 +30,7 @@ public class usuarioTest {
 	@Test
 	public void test_descontarHorasDisponibles() {
 		assertEquals(8, u.descontarHorasDisponibles(p), 0.001);
-	}
+	}*/
 
 	@Test
 	public void test_comprarProducto() {

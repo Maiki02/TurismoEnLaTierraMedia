@@ -16,9 +16,7 @@ public class Absoluta extends Promocion{
 	}
 	
 	public double importeAPagar() {
-		double importeAPagar = this.getCosto() - this.valorDeBeneficio;
-		
-		return importeAPagar;
+		return this.valorDeBeneficio;
 	}
 
 }

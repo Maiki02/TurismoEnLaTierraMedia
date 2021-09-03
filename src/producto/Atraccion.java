@@ -15,7 +15,7 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 		this.cuposDisponibles = cupo;
 	}
 
-	public boolean quedanCuposDisponibles() {
+	private boolean quedanCuposDisponibles() {
 		return cuposDisponibles > 0;
 	}
 
@@ -24,7 +24,7 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 			cuposDisponibles--;
 			return true;
 		}
-		System.out.println("No tiene m�s cupos");
+		//System.out.println("No tiene mas cupos");
 		return false;
 	}
 
@@ -37,29 +37,12 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	/*public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
+	}*/
 
 	public int getCuposMaximos() {
 		return cupoInicial;
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(nombre);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Atraccion other = (Atraccion) obj;
-		return Objects.equals(nombre, other.nombre);
 	}
 
 }
