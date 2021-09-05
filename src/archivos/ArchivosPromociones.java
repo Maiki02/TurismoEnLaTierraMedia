@@ -21,7 +21,7 @@ public class ArchivosPromociones {
 			CantidadDatosInvalidos {
 
 		String[] datos = linea.split(",");
-		if (datos.length > DATOS_ESPERADOS_POR_LINEA)
+		if (datos.length < DATOS_ESPERADOS_POR_LINEA)
 			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
 
 		String nombrePack = datos[3];

@@ -16,7 +16,7 @@ public abstract class Producto {
 	public String getNombre() {
 		return this.nombre;
 	}
-	
+
 	public double getCosto() {
 		return this.costo;
 	}
@@ -27,6 +27,10 @@ public abstract class Producto {
 
 	public TipoDeAtraccion getTipoAtraccion() {
 		return tipoAtraccion;
+	}
+
+	public boolean esPromocion() {
+		return false;
 	}
 
 }
