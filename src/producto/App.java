@@ -3,9 +3,7 @@ package producto;
 import java.util.LinkedList;
 import java.util.List;
 
-import archivos.ArchivoAtracciones;
-import archivos.ArchivoUsuarios;
-import archivos.ArchivosPromociones;
+import archivos.*;
 import usuario.Usuario;
 
 
@@ -27,7 +25,7 @@ public class App {
 	public static void main(String[] args) {
 		ArchivoUsuarios archivoUsuarios = new ArchivoUsuarios();
 		ArchivoAtracciones archivoAtracciones = new ArchivoAtracciones();
-		ArchivosPromociones archivoPromociones = new ArchivosPromociones();
+		ArchivoPromociones archivoPromociones = new ArchivoPromociones();
 		
 		App parque = new App();
 		

@@ -38,9 +38,7 @@ public class Atraccion extends Producto implements Comparable<Atraccion> {
 
 	@Override
 	public String toString() {
-		return "Atraccion [nombre=" + super.getNombre() + ", TipoDeAtraccion: " + super.getTipoAtraccion() + 
-				", Duracion: " + super.getDuracion() + ", Costo: " + super.getCosto() + ", cuposDisponibles=" + 
-				cuposDisponibles + ", ocuparAtraccion=" + ocuparAtraccion + ", cupoInicial=" + cupoInicial + "]";
+		return super.toString() + "," + cuposDisponibles;
 	}
 	
 	

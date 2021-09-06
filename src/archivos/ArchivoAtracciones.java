@@ -20,7 +20,7 @@ public class ArchivoAtracciones { // , implements leible
 		if (datos.length != DATOS_ESPERADOS_POR_LINEA) // Adentro de crearAtraccion
 			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
 		
-		String nombre = datos[0].toUpperCase();	// Deberiamos verificar que el nombre no sea una palabra como DESCUENTO,
+		String nombre = datos[0];	// Deberiamos verificar que el nombre no sea una palabra como DESCUENTO,
 												// AVENTURA, un numero, etc.
 
 		double costo = Double.parseDouble(datos[1]);
@@ -49,7 +49,7 @@ public class ArchivoAtracciones { // , implements leible
 			String linea = br.readLine(); // Leemos linea con caracteristicas
 			while ((linea = br.readLine()) != null) {
 				try {
-					Atraccion nuevaAtraccion = crearAtraccion(linea);
+					Atraccion nuevaAtraccion = crearAtraccion(linea.toUpperCase());
 					atracciones.add(nuevaAtraccion);
 					
 				} catch (ValorNegativo ne) {

@@ -11,7 +11,7 @@ import java.util.Map;
 import excepciones.*;
 import producto.*;
 
-public class ArchivosPromociones {
+public class ArchivoPromociones {
 	private static final int DATOS_ESPERADOS_POR_LINEA = 5;
 
 	// Crea una promocion a partir de la linea de un arcchivo
@@ -25,15 +25,15 @@ public class ArchivosPromociones {
 
 		String nombrePack = datos[3];
 
-		TipoDePromocion tipoPromocion = TipoDePromocion.valueOf(datos[0].toUpperCase());
-		TipoDeAtraccion tipoAtraccion = TipoDeAtraccion.valueOf(datos[2].toUpperCase());
+		TipoDePromocion tipoPromocion = TipoDePromocion.valueOf(datos[0]);
+		TipoDeAtraccion tipoAtraccion = TipoDeAtraccion.valueOf(datos[2]);
 
 		List<Atraccion> atraccionesInvolucradas = atraccionesInvolucradas(datos, atraccionesPorNombre);
 		if (!sonAtraccionesValidas(atraccionesInvolucradas, tipoAtraccion))
 			throw new AtraccionDeDistintoTipo("Hay atracciones que no son del mismo tipo que el pack");
 
 		if (tipoPromocion == TipoDePromocion.AXB) {
-			String nombreAtraccionDePremio = datos[1];
+			String nombreAtraccionDePremio = datos[1].toUpperCase();
 			Atraccion premio = atraccionesPorNombre.get(nombreAtraccionDePremio);
 			if (!esAtraccionValida(premio, tipoAtraccion))
 				throw new AtraccionDeDistintoTipo("El premio no es del mismo tipo que el pack");
@@ -47,7 +47,7 @@ public class ArchivosPromociones {
 
 		if (tipoPromocion == TipoDePromocion.PORCENTUAL)
 			return new Porcentual(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
-		if (tipoPromocion == TipoDePromocion.DESCUENTO)
+		if (tipoPromocion == TipoDePromocion.ABSOLUTA)
 			return new Absoluta(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
 
 		return null;
@@ -80,7 +80,7 @@ public class ArchivosPromociones {
 		return atraccionesInvolucradas;
 	}
 
-	private static Map<String, Atraccion> crearMapDeAtracciones(List<Atraccion> atracciones) {
+	public static Map<String, Atraccion> crearMapDeAtracciones(List<Atraccion> atracciones) {
 		Map<String, Atraccion> atraccionesPorNombre = new HashMap<String, Atraccion>();
 		for (Atraccion atraccion : atracciones) {
 			atraccionesPorNombre.put(atraccion.getNombre(), atraccion);
@@ -102,7 +102,7 @@ public class ArchivosPromociones {
 			String linea = br.readLine(); // Leemos linea con caracteristicas
 			while ((linea = br.readLine()) != null) {
 				try {
-					Promocion promocion = crearPromocion(linea, atraccionesPorNombre);
+					Promocion promocion = crearPromocion(linea.toUpperCase(), atraccionesPorNombre);
 					promociones.add(promocion);
 
 				} catch (ValorNegativo ne) {

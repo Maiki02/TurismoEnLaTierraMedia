@@ -1,13 +1,13 @@
 package producto;
 
 public abstract class Producto {
-	private String nombre;
-	private TipoDeAtraccion tipoAtraccion;
-	private double duracion;
-	private double costo;
+	protected String nombre;
+	protected TipoDeAtraccion tipoAtraccion;
+	protected double duracion;
+	protected double costo;
 
 	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, double duracion, double costo) {
-		this.nombre = nombre;
+		this.nombre = nombre.toUpperCase();
 		this.tipoAtraccion = tipoAtraccion;
 		this.duracion = duracion;
 		this.costo = costo;
@@ -32,5 +32,12 @@ public abstract class Producto {
 	public boolean esPromocion() {
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "Producto: "+ nombre + "," + tipoAtraccion + "," + duracion + ","+ costo;
+	}
+	
+	
 
 }

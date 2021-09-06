@@ -1,7 +1,7 @@
 package producto;
 
 public enum TipoDePromocion {
-	DESCUENTO,
+	ABSOLUTA,
 	AXB,
 	PORCENTUAL;
 }

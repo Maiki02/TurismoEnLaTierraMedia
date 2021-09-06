@@ -11,6 +11,8 @@ public class Promocion extends Producto {
 		// Preguntar al profe
 		super(nombre, tipoAtraccion, 0, 0);
 		this.atracciones = atracciones;
+		this.costo=getCosto();
+		this.duracion=getDuracion();
 	}
 
 	@Override
@@ -45,8 +47,7 @@ public class Promocion extends Producto {
 	
 	@Override
 	public String toString() {
-		return "Promocion [nombre=" + super.getNombre() + ", TipoDeAtraccion: " + super.getTipoAtraccion() + 
-				", Duracion: " + this.getDuracion() + ", Costo: " + this.getCosto() + ", Atracciones: " + this.atracciones + "]";
+		return super.toString() + ", Atracciones: " + this.atracciones;
 	}
 
 }

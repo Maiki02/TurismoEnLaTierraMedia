@@ -28,7 +28,7 @@ public class ArchivoUsuarios { // , implements leible
 			String linea = br.readLine(); // Leemos linea con caracteristicas
 			while ((linea = br.readLine()) != null) {
 				try {
-					Usuario nuevoUsuario = crearUsuario(linea);
+					Usuario nuevoUsuario = crearUsuario(linea.toUpperCase());
 					usuarios.add(nuevoUsuario);
 
 				} catch (ValorNegativo ne) {
@@ -66,10 +66,10 @@ public class ArchivoUsuarios { // , implements leible
 			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
 		}
 
-		String nombre = datos[0].toUpperCase();
+		String nombre = datos[0];
 		double monedasDisponibles = Double.parseDouble(datos[1]);
 		double tiempoDisponible = Double.parseDouble(datos[2]);
-		TipoDeAtraccion tipo = TipoDeAtraccion.valueOf(datos[3].toUpperCase());
+		TipoDeAtraccion tipo = TipoDeAtraccion.valueOf(datos[3]);
 
 		if (monedasDisponibles < 0 || tiempoDisponible < 0) {
 			throw new ValorNegativo("Fue pasado un valor negativo");
@@ -91,7 +91,7 @@ public class ArchivoUsuarios { // , implements leible
 		}
 	}
 
-	public static void escribirUsuario(Usuario usuario) throws IOException {
+	private static void escribirUsuario(Usuario usuario) throws IOException {
 
 		PrintWriter salida = new PrintWriter(new FileWriter(usuario.getNombre() + "." + "out"));
 
