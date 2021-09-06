@@ -15,7 +15,6 @@ public class ArchivosPromociones {
 	private static final int DATOS_ESPERADOS_POR_LINEA = 5;
 
 	// Crea una promocion a partir de la linea de un arcchivo
-
 	private static Promocion crearPromocion(String linea, Map<String, Atraccion> atraccionesPorNombre)
 			throws ValorNegativo, IllegalArgumentException, NumberFormatException, AtraccionDeDistintoTipo,
 			CantidadDatosInvalidos {

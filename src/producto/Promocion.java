@@ -28,10 +28,9 @@ public class Promocion extends Producto {
 
 		double duracion = 0;
 
-		for (Atraccion atraccion : atracciones) {
+		for (Atraccion atraccion : atracciones)
 			duracion += atraccion.getDuracion();
 
-		}
 		return duracion;
 	}
 	
