@@ -33,8 +33,9 @@ public class ArchivoPromociones {
 			throw new AtraccionDeDistintoTipo("Hay atracciones que no son del mismo tipo que el pack");
 
 		if (tipoPromocion == TipoDePromocion.AXB) {
-			String nombreAtraccionDePremio = datos[1].toUpperCase();
+			String nombreAtraccionDePremio = datos[1];
 			Atraccion premio = atraccionesPorNombre.get(nombreAtraccionDePremio);
+			
 			if (!esAtraccionValida(premio, tipoAtraccion))
 				throw new AtraccionDeDistintoTipo("El premio no es del mismo tipo que el pack");
 			// VER QUE EXCEPCION OCURRE CUANDO LA ATRACCION NO ESTA
@@ -74,7 +75,7 @@ public class ArchivoPromociones {
 		List<Atraccion> atraccionesInvolucradas = new LinkedList<Atraccion>();
 
 		for (String nombreAtraccion : datos) {
-			if (atraccionesPorNombre.containsKey(nombreAtraccion)) // A partir del 4to elemento puede dar true
+			if (atraccionesPorNombre.containsKey(nombreAtraccion))
 				atraccionesInvolucradas.add(atraccionesPorNombre.get(nombreAtraccion));
 		}
 		return atraccionesInvolucradas;
@@ -83,7 +84,7 @@ public class ArchivoPromociones {
 	public static Map<String, Atraccion> crearMapDeAtracciones(List<Atraccion> atracciones) {
 		Map<String, Atraccion> atraccionesPorNombre = new HashMap<String, Atraccion>();
 		for (Atraccion atraccion : atracciones) {
-			atraccionesPorNombre.put(atraccion.getNombre(), atraccion);
+			atraccionesPorNombre.put(atraccion.getNombre(), atraccion); //Creacion de mapa
 		}
 		return atraccionesPorNombre;
 	}
@@ -102,6 +103,7 @@ public class ArchivoPromociones {
 			String linea = br.readLine(); // Leemos linea con caracteristicas
 			while ((linea = br.readLine()) != null) {
 				try {
+					
 					Promocion promocion = crearPromocion(linea.toUpperCase(), atraccionesPorNombre);
 					promociones.add(promocion);
 

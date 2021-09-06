@@ -34,8 +34,6 @@ public class ArchivoAtracciones { // , implements leible
 
 		return new Atraccion(nombre, costo, tiempo, cupo, tipo);
 	}
-
-	
 	
 	public static List<Atraccion> leerArchivoAtracciones() {
 		FileReader fr = null;
@@ -50,6 +48,13 @@ public class ArchivoAtracciones { // , implements leible
 			while ((linea = br.readLine()) != null) {
 				try {
 					Atraccion nuevaAtraccion = crearAtraccion(linea.toUpperCase());
+					/*
+					 * for(Atraccion atraccion: atracciones){
+					 * 		if( ! atraccion.getNombre() == nuevaAtraccion.getNombre())
+					 * 			atracciones.add(nuevaAtraccion);
+					 * }
+					 * 
+					 */
 					atracciones.add(nuevaAtraccion);
 					
 				} catch (ValorNegativo ne) {

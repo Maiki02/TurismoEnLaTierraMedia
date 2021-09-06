@@ -66,8 +66,9 @@ public class Usuario {
 	}
 
 	/*
-	 * public boolean esAtraccionYaElegida(Atraccion atraccion) { return
-	 * atraccionesElectas.contains(atraccion); }
+	 * public boolean esAtraccionYaElegida(Producto producto) { 
+	 * Si es Atraccion -> Verifica si se eligio en la lista de Atracciones
+	 * Si es Promocion -> Verifica cada atraccionInvolucrada en la lista de Atracciones
 	 */
 
 	public void comprarProducto(Producto producto) {
@@ -75,8 +76,15 @@ public class Usuario {
 		if (puedeComprar(producto)) {
 			descontarMonedas(producto);
 			descontarHorasDisponibles(producto);
+			
 			productosComprados.add(producto);
-
+			
+			/* Si era una atraccion -> Agrega la atraccion a una nueva lista
+			 * Si era una Promocion -> Agrega cada elemento de la lista de AtraccionesInvolucradas a la nueva lista
+			 * 
+			 * 
+			 * 
+			 */
 		}
 	}
 

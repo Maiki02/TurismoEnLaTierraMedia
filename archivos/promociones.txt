@@ -6,3 +6,4 @@ ABSOLUTA,10,DEGUSTACION,pack Minas Tirith y Lothlorien,Minas Tirith,Lothlorien
 AXB,La Comarca,DEGUSTACION,pack degustacion 3,Lothlorien
 ABSOLUTA,10,PAISAJE,pack Paisaje 1,Erebor,Abismo de Helm
 absoluta,40,AVENTURA,pack aventura 3,Erebor,Abismo de Helm
+AXB,PEPE,DEGUSTACION,pack degustacion 3,AGUSTIN
