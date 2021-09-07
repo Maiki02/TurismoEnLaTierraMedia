@@ -3,7 +3,11 @@ package parqueDeAtracciones;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
+import archivos.ArchivoAtracciones;
+import archivos.ArchivoPromociones;
+import archivos.ArchivoUsuarios;
 import usuario.*;
 import producto.*;
 
@@ -12,8 +16,10 @@ public class ParqueDeAtracciones {
 	private List<Usuario> usuarios;
 	private List<Producto> productos;
 
-	public ParqueDeAtracciones(List<Usuario> usuarios, List<Atraccion> atracciones, List<Promocion> promociones) {
-		this.usuarios = usuarios;
+	public ParqueDeAtracciones() {
+		this.usuarios = ArchivoUsuarios.leerArchivoUsuarios();
+		List<Atraccion> atracciones= ArchivoAtracciones.leerArchivoAtracciones();
+		List<Promocion> promociones= ArchivoPromociones.leerArchivoPromociones(atracciones);
 		this.productos = crearListaDeProductos(atracciones, promociones);
 	}
 
@@ -33,12 +39,33 @@ public class ParqueDeAtracciones {
 			System.out.println(producto);
 	}
 
+	private String preguntarSiQuiereAtraccion() {
+		System.out.println("Ingrese 'S' o 'N' si lo desea o no comprar");
+		String opcion=""; //Va a ser S o N
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner (System.in);
+		opcion=sc.next();
+		
+		while(opcion.equals("S") || opcion.equals("N") ) {
+			System.out.println("Ingrese un comando válido: 'S' o 'N'");
+			opcion=sc.next();
+		}
+		
+		System.out.println();
+		return opcion;
+		
+	}
+	
+	
 	private void ofrecerProductoAlUsuario(Usuario usuario, Producto producto) {
+		String opcion="";
 		
 		if (usuario.puedeComprar(producto) ){//&& !usuario.atraccionYaElecta(producto)) { //Si puede comprar y la atraccion no fue electa
 			System.out.println(producto); //Mostramos el producto
-			boolean seAcepto = true; // Aca ejecutariamos la linea de comando
-			if (seAcepto) {
+			System.out.println("");
+			opcion=preguntarSiQuiereAtraccion();
+			
+			if (opcion.equals("S")) {
 				usuario.comprarProducto(producto);//Compra el producto y hace mas operaciones
 				
 				//Una idea es que las atracciones electas se encargue el usuario.
@@ -59,5 +86,8 @@ public class ParqueDeAtracciones {
 	public void ofrecerProductosALosUsuarios() {
 		for (Usuario usuario : this.usuarios)
 			ofrecerProductosAlUsuario(usuario);
+		
+		//Es momento de escribirlos
+		ArchivoUsuarios.escribirUsuarios(usuarios);
 	}
 }
