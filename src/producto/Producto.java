@@ -1,13 +1,10 @@
 package producto;
 
-import java.util.List;
-
 public abstract class Producto {
 	protected String nombre;
 	protected TipoDeAtraccion tipoAtraccion;
 	protected double duracion;
 	protected double costo;
-	protected List<Atraccion> atracciones;
 
 	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, double duracion, double costo) {
 		this.nombre = nombre;
@@ -32,10 +29,8 @@ public abstract class Producto {
 	public TipoDeAtraccion getTipoAtraccion() {
 		return tipoAtraccion;
 	}
-
-	public List<Atraccion> getAtracciones(){
-		return this.atracciones;
-	}
+	
+	//-------------------------------------------
 	
 	/*
 	 * @Pre:
@@ -44,10 +39,12 @@ public abstract class Producto {
 	public boolean esPromocion() {
 		return false;
 	}
+	
+	public abstract boolean quedanCuposDisponibles();
 
 	@Override
 	public String toString() {
-		return "Producto: "+ nombre + "," + tipoAtraccion + "," + duracion + ","+ costo;
+		return nombre + " Tipo:" + this.tipoAtraccion + " Precio:" + getCosto() + " Horas:" + getDuracion();
 	}
 	
 	

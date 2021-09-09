@@ -1,7 +1,7 @@
 package app;
 
-
 import parqueDeAtracciones.*;
+
 
 public class App {
 
@@ -14,9 +14,6 @@ public class App {
 
 		
 		//No se si falta algo xD
-		
-		
-		
 	}
 
 }

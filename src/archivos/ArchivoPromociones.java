@@ -18,31 +18,40 @@ public class ArchivoPromociones {
 	private static Promocion crearPromocion(String linea, Map<String, Atraccion> atraccionesPorNombre)
 			throws ValorNegativo, IllegalArgumentException, NumberFormatException, AtraccionDeDistintoTipo,
 			CantidadDatosInvalidos, AtraccionInexistente {
-
+		
 		String[] datos = linea.split(",");
-		//PORCENTUAL,20,AVENTURA,pack aventura 1,Bosque Negro,Mordor
-		//{"PORCENTUAL", "20" ,"AVENTURA", "pack aventura 1", "Bosque Negro" , "Mordor"}
 		
 		if (datos.length < DATOS_ESPERADOS_POR_LINEA)
 			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
-
+		
 		String nombrePack = datos[3];
 
 		TipoDePromocion tipoPromocion = TipoDePromocion.valueOf(datos[0]);
 		TipoDeAtraccion tipoAtraccion = TipoDeAtraccion.valueOf(datos[2]);
 
 		List<Atraccion> atraccionesInvolucradas = atraccionesInvolucradas(datos, atraccionesPorNombre);
+		
 		if (!sonAtraccionesValidas(atraccionesInvolucradas, tipoAtraccion))
 			throw new AtraccionDeDistintoTipo("Hay atracciones que no son del mismo tipo que el pack");
 
+		
 		if (tipoPromocion == TipoDePromocion.AXB) {
 			String nombreAtraccionDePremio = datos[1];
-			Atraccion premio = atraccionesPorNombre.get(nombreAtraccionDePremio);
 
+			if(!atraccionesPorNombre.containsKey(nombreAtraccionDePremio))
+				throw new AtraccionInexistente("Su premio es invalido en: "+ linea);
+			Atraccion premio = atraccionesPorNombre.get(nombreAtraccionDePremio);
+			atraccionesInvolucradas.add(premio); //Agregamos el premio a las atraccionesInvolucradas
+			 
 			if (!esAtraccionValida(premio, tipoAtraccion))
 				throw new AtraccionDeDistintoTipo("El premio no es del mismo tipo que el pack");
-			// VER QUE EXCEPCION OCURRE CUANDO LA ATRACCION NO ESTA
-			return new AxB(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
+			
+			System.out.println("AQUI LLEGA"); //Lo imprime
+			Promocion AxB= new AxB(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio); //No llega
+			System.out.println("AQUI NO");
+			System.out.println(AxB);
+			System.out.println("Hola");
+			return AxB;
 		}
 
 		double premio = Double.parseDouble(datos[1]);
@@ -112,6 +121,7 @@ public class ArchivoPromociones {
 				try {
 
 					Promocion promocion = crearPromocion(linea.toUpperCase(), atraccionesPorNombre);
+					System.out.println(promocion);
 					promociones.add(promocion);
 
 				} catch (ValorNegativo ne) {

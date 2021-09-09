@@ -1,6 +1,6 @@
 package producto;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class Porcentual extends Promocion {
@@ -13,13 +13,15 @@ public class Porcentual extends Promocion {
 		this.porcentajeDescuento = porcentajeDescuento;
 	}
 
+	//Getters:
+	@Override
+	public double getCosto() { //Representa el importe a pagar para comprar la promocion
+		return super.getCosto() - this.calcularDescuento();
+	}
+
 	private double calcularDescuento() {
 		return super.getCosto() * this.porcentajeDescuento / 100;
 	}
 
-	@Override
-	public double importeAPagar() {
-		return super.getCosto() - this.calcularDescuento();
-	}
-
+	
 }

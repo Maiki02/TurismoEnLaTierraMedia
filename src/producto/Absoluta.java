@@ -14,7 +14,7 @@ public class Absoluta extends Promocion{
 	}
 	
 	@Override
-	public double importeAPagar() {
+	public double getCosto() {
 		return this.valorDeBeneficio;
 	}
 

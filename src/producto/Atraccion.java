@@ -1,24 +1,25 @@
 package producto;
 
-import java.util.Objects;
-
 public class Atraccion extends Producto{
 	
 	private int cuposDisponibles;
-	public boolean ocuparAtraccion;
-	private int cupoInicial;
 
-	public Atraccion(String nombre, double costo, double duracion, int cupo, TipoDeAtraccion tipoAtraccion) {
+	public Atraccion(String nombre, double costo, double duracion, int cupo, TipoDeAtraccion tipoAtraccion) {	
 		super(nombre, tipoAtraccion, duracion, costo);
-		this.cupoInicial = cupo;
 		this.cuposDisponibles = cupo;
 	}
 	
+	//Getters
+	public int getCuposDisponibles() { //Creo que no usamos este metodo
+		return cuposDisponibles;
+	}
+
 	/*
 	 * @Pre:
 	 * @Post: retorna true en caso de que la atraccion tenga cupos disponibles (caso contrario false)
 	 */
-	private boolean quedanCuposDisponibles() {
+	@Override
+	public boolean quedanCuposDisponibles() {
 		return cuposDisponibles > 0;
 	}
 
@@ -36,15 +37,12 @@ public class Atraccion extends Producto{
 
 	/*
 	 * @Pre:
-	 * @Post: retorna la cantidad de cupos maximos que puede tener la atraccion
+	 * @Post: retorna la cantidad de cupos disponibles que tiene la atraccion
 	 */
-	public int getCuposMaximos() {
-		return cupoInicial;
-	}
-
+	
 	@Override
 	public String toString() {
-		return super.toString() + "," + cuposDisponibles;
+		return "Atraccion:" + super.toString();
 	}
 	
 	

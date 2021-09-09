@@ -1,6 +1,5 @@
 package producto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AxB extends Promocion {
@@ -11,20 +10,15 @@ public class AxB extends Promocion {
 		super(nombre, tipoAtraccion, atracciones);
 		this.premio = premio;
 	}
-
-	public Atraccion devolverPremio() {
-		return premio;
+	
+	@Override
+	public double getCosto() {
+		return super.getCosto() - premio.getCosto();
 	}
 	
-	public double importeAPagar() {
-		double importeTotal = this.getCosto() - premio.getCosto();
-		return importeTotal;
-	}
-	
-	public double cantidadDeHorasNecesarias() {
-		double duracionTotal = super.getDuracion() + premio.getDuracion();
-		return duracionTotal;
+	/*@Override
+	public double getDuracion(){
 		
-	}
+	}*/
 	
 }

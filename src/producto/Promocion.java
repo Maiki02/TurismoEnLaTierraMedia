@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Promocion extends Producto {
 
+	List<Atraccion> atracciones;
+	
 	public Promocion(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones) {
 		// Preguntar al profe
 		super(nombre, tipoAtraccion, 0, 0);
@@ -11,7 +13,8 @@ public class Promocion extends Producto {
 		this.costo=getCosto();
 		this.duracion=getDuracion();
 	}
-
+	
+	//Getters:
 	@Override
 	public double getCosto() {
 		double costo = 0;
@@ -33,18 +36,27 @@ public class Promocion extends Producto {
 		return duracion;
 	}
 	
+	public List<Atraccion> getAtracciones(){
+		return this.atracciones;
+	}
+	
+	//---------------------------------------
+	
 	@Override
 	public boolean esPromocion() {
 		return true;
 	}
 
-	public double importeAPagar() {
-		return getCosto();
+	public boolean quedanCuposDisponibles() {
+		for(Atraccion atraccion: atracciones) {
+			if( !atraccion.quedanCuposDisponibles() ) return false;
+		}
+		return true;
 	}
 	
 	@Override
 	public String toString() {
-		return super.toString() + ", Atracciones: " + this.atracciones;
+		return "Promocion:" + super.toString();
 	}
 
 }

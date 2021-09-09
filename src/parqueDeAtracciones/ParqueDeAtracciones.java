@@ -21,6 +21,7 @@ public class ParqueDeAtracciones {
 		List<Atraccion> atracciones= ArchivoAtracciones.leerArchivoAtracciones();
 		List<Promocion> promociones= ArchivoPromociones.leerArchivoPromociones(atracciones);
 		this.productos = crearListaDeProductos(atracciones, promociones);
+		System.out.println();
 	}
 
 	private List<Producto> crearListaDeProductos(List<Atraccion> atracciones, List<Promocion> promociones) {
@@ -38,18 +39,24 @@ public class ParqueDeAtracciones {
 		for (Producto producto : this.productos)
 			System.out.println(producto);
 	}
+	
+	public List<Producto> getProductos(){
+		return this.productos;
+	}
+	
 
 	private String preguntarSiQuiereAtraccion() {
-		System.out.println("Ingrese 'S' o 'N' si lo desea o no comprar");
+		System.out.println("Ingrese 'S' o 'N' si lo desea o no comprar: ");
 		String opcion=""; //Va a ser S o N
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner (System.in);
 		opcion=sc.next();//S o N o Y
-		opcion.toUpperCase();
+		opcion=opcion.toUpperCase();
 		
 		while(! (opcion.equals("S") || opcion.equals("N") )) {
-			System.out.println("Ingrese un comando válido: 'S' o 'N'");
+			System.out.println("Ingrese un comando válido: 'S' o 'N': ");
 			opcion=sc.next();
+			opcion=opcion.toUpperCase();
 		}
 		
 		System.out.println();
@@ -60,33 +67,34 @@ public class ParqueDeAtracciones {
 	
 	private void ofrecerProductoAlUsuario(Usuario usuario, Producto producto) {
 		String opcion="";
-		
-		if (usuario.puedeComprar(producto) && !usuario.esProductoYaElecto(producto)) { //Si puede comprar y la atraccion no fue electa
+	
+		if (usuario.puedeComprar(producto) && 
+			!usuario.esProductoYaElecto(producto) && 
+			producto.quedanCuposDisponibles() ) { 
+			
 			System.out.println(producto); //Mostramos el producto
-			System.out.println("");
-			opcion=preguntarSiQuiereAtraccion();
+			opcion=preguntarSiQuiereAtraccion();//Preguntamos si lo quiere
 			
 			if (opcion.equals("S")) {
-				usuario.comprarProducto(producto);//Compra el producto y hace mas operaciones
-				
-				//Una idea es que las atracciones electas se encargue el usuario.
-				//No es lo mismo una atraccionElecta, que lasAtraccionesInvolucradas de la promocion,
-				//que los productosCompradosDelUsuario
+				usuario.comprarProducto(producto);//Compra el producto
 			}
 		}
 	}
 	
 	private void ofrecerProductosAlUsuario(Usuario usuario) {
 		Collections.sort(productos, new OrdenarProductosPorPreferencia(usuario.getTipoFavorito()));
-
-		for (Producto producto : this.productos)
+		for (Producto producto : this.productos) {
 			ofrecerProductoAlUsuario(usuario, producto);
-		
+		}
+		System.out.println("\n");
 	}
 	
 	public void ofrecerProductosALosUsuarios() {
-		for (Usuario usuario : this.usuarios)
+		System.out.println();
+		for (Usuario usuario : this.usuarios) {
+			System.out.println(usuario);
 			ofrecerProductosAlUsuario(usuario);
+		}
 		
 		//Es momento de escribirlos
 		ArchivoUsuarios.escribirUsuarios(usuarios);
