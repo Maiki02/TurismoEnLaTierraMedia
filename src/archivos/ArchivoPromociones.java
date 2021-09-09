@@ -20,6 +20,9 @@ public class ArchivoPromociones {
 			CantidadDatosInvalidos, AtraccionInexistente {
 
 		String[] datos = linea.split(",");
+		//PORCENTUAL,20,AVENTURA,pack aventura 1,Bosque Negro,Mordor
+		//{"PORCENTUAL", "20" ,"AVENTURA", "pack aventura 1", "Bosque Negro" , "Mordor"}
+		
 		if (datos.length < DATOS_ESPERADOS_POR_LINEA)
 			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
 
@@ -50,7 +53,7 @@ public class ArchivoPromociones {
 			return new Porcentual(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
 		if (tipoPromocion == TipoDePromocion.ABSOLUTA)
 			return new Absoluta(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
-
+		
 		return null;
 	}
 
@@ -74,6 +77,7 @@ public class ArchivoPromociones {
 
 		List<Atraccion> atraccionesInvolucradas = new LinkedList<Atraccion>();
 
+		//PORCENTUAL,20,AVENTURA,pack aventura 1,Bosque Negro,Mordor
 		for (int i = 4; i < datos.length; i++) { // Leemos las atracciones que incluyen a la promocion
 			if (atraccionesPorNombre.containsKey(datos[i])) {// Si la contiene, se agrega la atraccion
 				atraccionesInvolucradas.add(atraccionesPorNombre.get(datos[i]));
@@ -115,7 +119,7 @@ public class ArchivoPromociones {
 				} catch (NumberFormatException e) {
 					System.err.println("Uno de los datos leidos no es un numero valido en: " + linea);
 				} catch (IllegalArgumentException iae) {
-					System.err.println("Tipo de atraccion no reconocida en: " + linea);
+					System.err.println("Tipo de atraccion o promocion no reconocida en: " + linea);
 				} catch (CantidadDatosInvalidos cdi) {
 					System.err.println(cdi.getMessage());
 				} catch (AtraccionInexistente ai) {

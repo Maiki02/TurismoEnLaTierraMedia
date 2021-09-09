@@ -55,6 +55,7 @@ public class ArchivoUsuarios { // , implements leible
 				e2.printStackTrace();
 			}
 		}
+
 		return usuarios;
 	}
 
@@ -62,6 +63,8 @@ public class ArchivoUsuarios { // , implements leible
 			throws ValorNegativo, IllegalArgumentException, NumberFormatException, CantidadDatosInvalidos {
 
 		String[] datos = linea.split(",");
+		// "EOWYN,10,8,AVENTURA"
+		// {"EOWYN", "10", "8", "AVENTURA"}
 		if (datos.length != DATOS_ESPERADOS_POR_LINEA) {
 			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
 		}
@@ -78,7 +81,7 @@ public class ArchivoUsuarios { // , implements leible
 	}
 
 	public static void escribirUsuarios(List<Usuario> listaUsuario) {
-		
+
 		if (listaUsuario != null) {
 
 			for (Usuario usuario : listaUsuario) {

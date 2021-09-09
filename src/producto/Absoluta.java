@@ -1,7 +1,5 @@
 package producto;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,6 +13,7 @@ public class Absoluta extends Promocion{
 		this.valorDeBeneficio = valorDeBeneficio;
 	}
 	
+	@Override
 	public double importeAPagar() {
 		return this.valorDeBeneficio;
 	}

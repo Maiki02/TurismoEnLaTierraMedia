@@ -15,7 +15,7 @@ public class Usuario {
 	private double monedasDisponibles;
 	private double horasGastadas;
 	private List<Producto> productosComprados;
-	// private List<Atraccion> atraccionesElectas;
+	private List<Atraccion> atraccionesElectas;
 
 	public Usuario(String nombre, double presupuesto, double horasDisponibles, TipoDeAtraccion tipoFavorito) {
 		this.nombre = nombre;
@@ -62,14 +62,22 @@ public class Usuario {
 	}
 
 	public boolean puedeComprar(Producto producto) {
-		return (getHorasDisponibles() >= producto.getDuracion()) && (getMonedasDisponibles() >= producto.getCosto());
+		return (getHorasDisponibles() >= producto.getDuracion()) && 
+				(getMonedasDisponibles() >= producto.getCosto());
 	}
 
-	/*
-	 * public boolean esAtraccionYaElegida(Producto producto) { 
-	 * Si es Atraccion -> Verifica si se eligio en la lista de Atracciones
-	 * Si es Promocion -> Verifica cada atraccionInvolucrada en la lista de Atracciones
-	 */
+	public boolean esProductoYaElecto(Producto producto) {
+		if(producto instanceof Atraccion) {
+			return atraccionesElectas.contains(producto);
+		} else {
+			Promocion prom= (Promocion) producto;
+			for(Atraccion atraccionAComprar: prom.getAtracciones()) {
+				if(atraccionesElectas.contains(atraccionAComprar))
+					return true;
+			}
+		}
+		return false;
+	}
 
 	public void comprarProducto(Producto producto) {
 
@@ -79,8 +87,21 @@ public class Usuario {
 			
 			productosComprados.add(producto);
 			
-			/* Si era una atraccion -> Agrega la atraccion a una nueva lista
-			 * Si era una Promocion -> Agrega cada elemento de la lista de AtraccionesInvolucradas a la nueva lista
+			if(producto instanceof Atraccion) {
+				Atraccion atr= (Atraccion) producto;
+				atraccionesElectas.add(atr);
+				atr.ocuparAtraccion();
+			} else if (producto instanceof Promocion){
+				Promocion prom= (Promocion) producto;
+				for(Atraccion atraccion: prom.getAtracciones()) {
+					atraccionesElectas.add(atraccion);
+				}
+			}
+
+			/*
+			 * Si era una atraccion -> Agrega la atraccion a una nueva lista Si era una
+			 * Promocion -> Agrega cada elemento de la lista de AtraccionesInvolucradas a la
+			 * nueva lista
 			 * 
 			 * 
 			 * 

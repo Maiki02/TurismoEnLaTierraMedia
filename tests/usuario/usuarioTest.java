@@ -6,36 +6,66 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import producto.Atraccion;
-import producto.TipoDeAtraccion;
+import producto.*;
 
 public class usuarioTest {
 
 	// usuario: nombre, presupuesto, horas disponibles, total a pagar, monedas
 	// disponibles
 	// atraccion: nombre, costo, duracion, cupo, tipo
-	Usuario u = new Usuario("Juan", 1000, 10, TipoDeAtraccion.AVENTURA);
-	Atraccion p = new Atraccion("Moria", 300, 2, 10, TipoDeAtraccion.AVENTURA);
-
+	Usuario u; 
+	Atraccion a, a2, a3;
+	Producto[] p;
+	
+	@Before
+	public void setUp() {
+		 a=new Atraccion("Moria", 300, 2, 10, TipoDeAtraccion.AVENTURA);
+		 a2= new Atraccion("Mordor", 1000, 12, 10, TipoDeAtraccion.AVENTURA);
+		 a3= new Atraccion("Bosque Negro", 400, 12, 10, TipoDeAtraccion.DEGUSTACION);
+		 u=new Usuario("Juan", 1000, 10, TipoDeAtraccion.AVENTURA);
+		 p=new Producto[3];
+	}
+	
 	@Test
 	public void test_puedeComprar() {
-		Assert.assertTrue(u.puedeComprar(p));
+		assertTrue(u.puedeComprar(a));
+		assertFalse(u.puedeComprar(a2));
+		assertEquals(700, u.getMonedasDisponibles(), 0);
+		assertEquals(300, u.getTotalAPagar(), 0);
 	}
-
-	/*@Test
-	public void test_descontarMonedas() {
-		assertEquals(700, u.descontarMonedas(p), 0.001);
-	}
-
-	@Test
-	public void test_descontarHorasDisponibles() {
-		assertEquals(8, u.descontarHorasDisponibles(p), 0.001);
-	}*/
 
 	@Test
 	public void test_comprarProducto() {
-		u.comprarProducto(p);
-
+		
 	}
+	
+	@Test
+	public void comprarProductosYpromocionesTest() {
+		
+	}
+	
+	@Test
+	public void comprarProductosQueNoSonDeSuTipoTest() {
+		
+	}
+	
+	@Test
+	public void comprarAtraccionesYVerificarAtraccionesElectas() {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

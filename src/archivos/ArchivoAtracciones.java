@@ -16,13 +16,13 @@ public class ArchivoAtracciones { // , implements leible
 			throws ValorNegativo, IllegalArgumentException, NumberFormatException, CantidadDatosInvalidos {
 
 		String[] datos = linea.split(",");
-		
+		//Moria,10,2,6,AVENTURA
+		//{"MORIA", "10" , "2" , "6", "AVENTURA"}
+
 		if (datos.length != DATOS_ESPERADOS_POR_LINEA) // Adentro de crearAtraccion
 			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
 		
-		String nombre = datos[0];	// Deberiamos verificar que el nombre no sea una palabra como DESCUENTO,
-												// AVENTURA, un numero, etc.
-
+		String nombre = datos[0];
 		double costo = Double.parseDouble(datos[1]);
 		double tiempo = Double.parseDouble(datos[2]);
 		int cupo = Integer.parseInt(datos[3]);

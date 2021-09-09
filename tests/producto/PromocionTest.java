@@ -7,8 +7,13 @@ import org.junit.Test;
 public class PromocionTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void crearDistintosTiposDeAtraccionesTest() {
+		
+	}
+	
+	@Test
+	public void crearAxByRetornarPremio() {
+		
 	}
 
 }

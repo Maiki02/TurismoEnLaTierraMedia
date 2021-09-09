@@ -44,9 +44,10 @@ public class ParqueDeAtracciones {
 		String opcion=""; //Va a ser S o N
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner (System.in);
-		opcion=sc.next();
+		opcion=sc.next();//S o N o Y
+		opcion.toUpperCase();
 		
-		while(opcion.equals("S") || opcion.equals("N") ) {
+		while(! (opcion.equals("S") || opcion.equals("N") )) {
 			System.out.println("Ingrese un comando válido: 'S' o 'N'");
 			opcion=sc.next();
 		}
@@ -60,7 +61,7 @@ public class ParqueDeAtracciones {
 	private void ofrecerProductoAlUsuario(Usuario usuario, Producto producto) {
 		String opcion="";
 		
-		if (usuario.puedeComprar(producto) ){//&& !usuario.atraccionYaElecta(producto)) { //Si puede comprar y la atraccion no fue electa
+		if (usuario.puedeComprar(producto) && !usuario.esProductoYaElecto(producto)) { //Si puede comprar y la atraccion no fue electa
 			System.out.println(producto); //Mostramos el producto
 			System.out.println("");
 			opcion=preguntarSiQuiereAtraccion();
@@ -73,7 +74,6 @@ public class ParqueDeAtracciones {
 				//que los productosCompradosDelUsuario
 			}
 		}
-		
 	}
 	
 	private void ofrecerProductosAlUsuario(Usuario usuario) {
@@ -81,6 +81,7 @@ public class ParqueDeAtracciones {
 
 		for (Producto producto : this.productos)
 			ofrecerProductoAlUsuario(usuario, producto);
+		
 	}
 	
 	public void ofrecerProductosALosUsuarios() {
