@@ -5,7 +5,3 @@ Esteban,40,4,DEGUSTACION
 Agustina,14,2,PAISAJE
 Guada,30,0,AVENTURA
 Juan,0,100,PAISAJE
-Fernanda,100,2,ACCION
-Mauricio,-1,-1,PAISAJE
-Agustin,tres,1,AVENTURA
-Agustina,1,2

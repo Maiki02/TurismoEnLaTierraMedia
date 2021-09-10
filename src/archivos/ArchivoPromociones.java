@@ -41,12 +41,17 @@ public class ArchivoPromociones {
 			if(!atraccionesPorNombre.containsKey(nombreAtraccionDePremio))
 				throw new AtraccionInexistente("Su premio es invalido en: "+ linea);
 			Atraccion premio = atraccionesPorNombre.get(nombreAtraccionDePremio);
-			atraccionesInvolucradas.add(premio); //Agregamos el premio a las atraccionesInvolucradas
 			 
 			if (!esAtraccionValida(premio, tipoAtraccion))
 				throw new AtraccionDeDistintoTipo("El premio no es del mismo tipo que el pack");
+			atraccionesInvolucradas.add(premio); //Agregamos el premio a las atraccionesInvolucradas
 			
 			System.out.println("AQUI LLEGA"); //Lo imprime
+			System.out.println(nombrePack);
+			System.out.println(tipoAtraccion);
+			System.out.println(atraccionesInvolucradas);
+			System.out.println(premio);
+			System.out.println("\n\n");
 			Promocion AxB= new AxB(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio); //No llega
 			System.out.println("AQUI NO");
 			System.out.println(AxB);

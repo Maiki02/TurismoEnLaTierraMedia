@@ -8,6 +8,7 @@ public class AxB extends Promocion {
 
 	public AxB(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones, Atraccion premio) {
 		super(nombre, tipoAtraccion, atracciones);
+		System.out.println("Constructor AXB");
 		this.premio = premio;
 	}
 	

@@ -21,7 +21,6 @@ public class ParqueDeAtracciones {
 		List<Atraccion> atracciones= ArchivoAtracciones.leerArchivoAtracciones();
 		List<Promocion> promociones= ArchivoPromociones.leerArchivoPromociones(atracciones);
 		this.productos = crearListaDeProductos(atracciones, promociones);
-		System.out.println();
 	}
 
 	private List<Producto> crearListaDeProductos(List<Atraccion> atracciones, List<Promocion> promociones) {

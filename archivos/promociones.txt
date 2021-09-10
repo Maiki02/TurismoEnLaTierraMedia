@@ -1,2 +1,3 @@
 TIPO DESCUENTO,PREMIO,TIPO ATRACCION,NOMBRE-PACK,ATRACCIONES INVOLUCRADAS
-AXB,La Comarca,DEGUSTACION,pack degustacion 3,Lothlorien,Peru
+AXB,La Comarca,DEGUSTACION,pack degustacion 3,Lothlorien
+AXB,Moria,AVENTURA,pack aventura 1,Mordor,Bosque Negro

@@ -7,6 +7,7 @@ public abstract class Producto {
 	protected double costo;
 
 	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, double duracion, double costo) {
+		System.out.println("Constructor Producto");
 		this.nombre = nombre;
 		this.tipoAtraccion = tipoAtraccion;
 		this.duracion = duracion;

@@ -8,7 +8,9 @@ public class Promocion extends Producto {
 	
 	public Promocion(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones) {
 		// Preguntar al profe
+		
 		super(nombre, tipoAtraccion, 0, 0);
+		System.out.println("Constructor Promocion");
 		this.atracciones = atracciones;
 		this.costo=getCosto();
 		this.duracion=getDuracion();
