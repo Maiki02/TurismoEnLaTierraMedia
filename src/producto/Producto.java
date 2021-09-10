@@ -1,5 +1,7 @@
 package producto;
 
+import usuario.Usuario;
+
 public abstract class Producto {
 	protected String nombre;
 	protected TipoDeAtraccion tipoAtraccion;
@@ -7,7 +9,6 @@ public abstract class Producto {
 	protected double costo;
 
 	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, double duracion, double costo) {
-		System.out.println("Constructor Producto");
 		this.nombre = nombre;
 		this.tipoAtraccion = tipoAtraccion;
 		this.duracion = duracion;
@@ -41,7 +42,14 @@ public abstract class Producto {
 		return false;
 	}
 	
+	/*
+	 * @pre
+	 * @post:
+	 * @returns:
+	 */
 	public abstract boolean quedanCuposDisponibles();
+	public abstract void agregarAtracciones(Usuario usuario);
+	public abstract boolean esProductoYaElecto(Usuario usuario);
 
 	@Override
 	public String toString() {

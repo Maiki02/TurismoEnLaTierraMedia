@@ -1,5 +1,7 @@
 package producto;
 
+import usuario.Usuario;
+
 public class Atraccion extends Producto{
 	
 	private int cuposDisponibles;
@@ -35,6 +37,18 @@ public class Atraccion extends Producto{
 		return false;
 	}
 
+	@Override
+	public void agregarAtracciones(Usuario usuario) {
+		usuario.getAtraccionesElectas().add(this);
+		this.ocuparAtraccion();
+	}
+	
+	@Override
+	public boolean esProductoYaElecto(Usuario usuario) {
+		return usuario.getAtraccionesElectas().contains(this);
+	}
+	
+	
 	/*
 	 * @Pre:
 	 * @Post: retorna la cantidad de cupos disponibles que tiene la atraccion

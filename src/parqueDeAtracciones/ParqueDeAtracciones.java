@@ -58,7 +58,6 @@ public class ParqueDeAtracciones {
 			opcion=opcion.toUpperCase();
 		}
 		
-		System.out.println();
 		return opcion;
 		
 	}
@@ -66,13 +65,12 @@ public class ParqueDeAtracciones {
 	
 	private void ofrecerProductoAlUsuario(Usuario usuario, Producto producto) {
 		String opcion="";
-	
-		if (usuario.puedeComprar(producto) && 
-			!usuario.esProductoYaElecto(producto) && 
-			producto.quedanCuposDisponibles() ) { 
+		
+		if (usuario.puedeComprar(producto) && !producto.esProductoYaElecto(usuario) ) { 
 			
 			System.out.println(producto); //Mostramos el producto
 			opcion=preguntarSiQuiereAtraccion();//Preguntamos si lo quiere
+			
 			
 			if (opcion.equals("S")) {
 				usuario.comprarProducto(producto);//Compra el producto

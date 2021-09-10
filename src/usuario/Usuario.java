@@ -55,6 +55,9 @@ public class Usuario {
 		return totalHorasGastadas;
 	}
 	
+	public List<Atraccion> getAtraccionesElectas(){
+		return this.atraccionesElectas;
+	}
 	//-----------------------------------------------------
 
 	private void descontarMonedas(Producto producto) {
@@ -78,7 +81,7 @@ public class Usuario {
 	}
 
 	public boolean puedeComprar(Producto producto) {
-		return leAlcanzanLasMonedas(producto) && leAlcanzanLasHoras(producto);
+		return leAlcanzanLasMonedas(producto) && leAlcanzanLasHoras(producto) && producto.quedanCuposDisponibles();
 	}
 
 	public boolean esProductoYaElecto(Producto producto) {
@@ -95,21 +98,6 @@ public class Usuario {
 		return false;
 	}
 
-	private void agregarProductoAListasCorrespondientes(Producto producto) {
-		productosComprados.add(producto); //Lo agregamos a lista de productos comprados
-		
-		if (producto instanceof Atraccion) { //Si es una atraccion, lo agregamos a lista de atracciones electas
-			Atraccion atr = (Atraccion) producto;
-			atraccionesElectas.add(atr);
-			atr.ocuparAtraccion();
-		} else if (producto instanceof Promocion) { //Si es una promocion, cada atraccion involucrada
-			Promocion prom = (Promocion) producto; //la agregamos a la lista de atracciones electas
-			for (Atraccion atraccion : prom.getAtracciones()) {
-				atraccionesElectas.add(atraccion);
-				atraccion.ocuparAtraccion();
-			}
-		}
-	}
 	
 	public void comprarProducto(Producto producto) {
 
@@ -117,7 +105,8 @@ public class Usuario {
 			descontarMonedas(producto);
 			descontarHorasDisponibles(producto);
 			
-			agregarProductoAListasCorrespondientes(producto);
+			productosComprados.add(producto); //Lo agregamos a lista de productos comprados
+			producto.agregarAtracciones(this);
 		}
 	}
 

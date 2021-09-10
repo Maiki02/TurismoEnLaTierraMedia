@@ -46,16 +46,7 @@ public class ArchivoPromociones {
 				throw new AtraccionDeDistintoTipo("El premio no es del mismo tipo que el pack");
 			atraccionesInvolucradas.add(premio); //Agregamos el premio a las atraccionesInvolucradas
 			
-			System.out.println("AQUI LLEGA"); //Lo imprime
-			System.out.println(nombrePack);
-			System.out.println(tipoAtraccion);
-			System.out.println(atraccionesInvolucradas);
-			System.out.println(premio);
-			System.out.println("\n\n");
 			Promocion AxB= new AxB(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio); //No llega
-			System.out.println("AQUI NO");
-			System.out.println(AxB);
-			System.out.println("Hola");
 			return AxB;
 		}
 
@@ -65,10 +56,10 @@ public class ArchivoPromociones {
 
 		if (tipoPromocion == TipoDePromocion.PORCENTUAL)
 			return new Porcentual(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
-		if (tipoPromocion == TipoDePromocion.ABSOLUTA)
+		else {
 			return new Absoluta(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
-		
-		return null;
+		}
+
 	}
 
 	private static boolean esAtraccionValida(Atraccion atraccion, TipoDeAtraccion tipoAtraccion) {
@@ -91,7 +82,6 @@ public class ArchivoPromociones {
 
 		List<Atraccion> atraccionesInvolucradas = new LinkedList<Atraccion>();
 
-		//PORCENTUAL,20,AVENTURA,pack aventura 1,Bosque Negro,Mordor
 		for (int i = 4; i < datos.length; i++) { // Leemos las atracciones que incluyen a la promocion
 			if (atraccionesPorNombre.containsKey(datos[i])) {// Si la contiene, se agrega la atraccion
 				atraccionesInvolucradas.add(atraccionesPorNombre.get(datos[i]));
@@ -118,7 +108,7 @@ public class ArchivoPromociones {
 		Map<String, Atraccion> atraccionesPorNombre = crearMapDeAtracciones(atracciones);
 
 		try {
-			fr = new FileReader("archivos/promociones.txt");
+			fr = new FileReader("archivos/promocionesVALIDAS.txt");
 			br = new BufferedReader(fr);
 
 			String linea = br.readLine(); // Leemos linea con caracteristicas
@@ -126,7 +116,7 @@ public class ArchivoPromociones {
 				try {
 
 					Promocion promocion = crearPromocion(linea.toUpperCase(), atraccionesPorNombre);
-					System.out.println(promocion);
+					System.out.println(promocion); //Promociones que se crean exitosamente
 					promociones.add(promocion);
 
 				} catch (ValorNegativo ne) {

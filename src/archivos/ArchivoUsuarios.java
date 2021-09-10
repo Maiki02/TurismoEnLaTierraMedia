@@ -10,6 +10,7 @@ import java.util.List;
 
 import excepciones.CantidadDatosInvalidos;
 import excepciones.ValorNegativo;
+import producto.Producto;
 import producto.TipoDeAtraccion;
 import usuario.Usuario;
 
@@ -98,15 +99,14 @@ public class ArchivoUsuarios { // , implements leible
 
 		PrintWriter salida = new PrintWriter(new FileWriter("archivos/usuarios/" + usuario.getNombre() + ".out"));
 
-		// NOMBRE
-		// COMPRA: LISTA DE PRODUCTOS
-		// TOTAL A PAGAR: Double total a Pagar
-		// TIEMPO A INVERTIR: Int horasGastadas
-
 		salida.println(usuario.getNombre());
-		salida.print("COMPRA: ");
-		salida.println(usuario.getProductosComprados());
-		salida.print("TOTAL A PAGAR: ");
+		salida.print("COMPRA: \n");
+		
+		for(Producto producto: usuario.getProductosComprados()) {
+			salida.println(producto);
+		}
+		
+		salida.print("\nTOTAL A PAGAR: ");
 		salida.println(usuario.getTotalAPagar());
 		salida.print("TIEMPO A INVERTIR: ");
 		salida.println(usuario.getHorasGastadas());

@@ -2,15 +2,14 @@ package producto;
 
 import java.util.List;
 
+import usuario.Usuario;
+
 public class Promocion extends Producto {
 
 	List<Atraccion> atracciones;
 	
 	public Promocion(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones) {
-		// Preguntar al profe
-		
 		super(nombre, tipoAtraccion, 0, 0);
-		System.out.println("Constructor Promocion");
 		this.atracciones = atracciones;
 		this.costo=getCosto();
 		this.duracion=getDuracion();
@@ -55,6 +54,24 @@ public class Promocion extends Producto {
 		}
 		return true;
 	}
+	
+	@Override
+	public void agregarAtracciones(Usuario usuario) {
+		for (Atraccion atraccion : this.atracciones) {
+			usuario.getAtraccionesElectas().add(atraccion);
+			atraccion.ocuparAtraccion();
+		}
+	}
+	
+	@Override
+	public boolean esProductoYaElecto(Usuario usuario) {
+		for (Atraccion atraccionAComprar : this.atracciones) {
+			if (usuario.getAtraccionesElectas().contains(atraccionAComprar)) 
+				return true;
+		}
+		return false;
+	}
+	
 	
 	@Override
 	public String toString() {
