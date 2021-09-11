@@ -5,19 +5,17 @@ import java.util.List;
 import usuario.Usuario;
 
 public class Promocion extends Producto {
-
+//Preguntar al profe abstract
 	List<Atraccion> atracciones;
 	
 	public Promocion(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones) {
-		super(nombre, tipoAtraccion, 0, 0);
+		super(nombre, tipoAtraccion);
 		this.atracciones = atracciones;
-		this.costo=getCosto();
-		this.duracion=getDuracion();
+		this.costo=calcularCosto();
+		this.duracion=calcularDuracion();
 	}
-	
-	//Getters:
-	@Override
-	public double getCosto() {
+
+	public double calcularCosto() {
 		double costo = 0;
 
 		for (Atraccion atraccion : atracciones)
@@ -26,11 +24,8 @@ public class Promocion extends Producto {
 		return costo;
 	}
 
-	@Override
-	public double getDuracion() {
-
+	public double calcularDuracion() {
 		double duracion = 0;
-
 		for (Atraccion atraccion : atracciones)
 			duracion += atraccion.getDuracion();
 

@@ -108,7 +108,7 @@ public class ArchivoPromociones {
 		Map<String, Atraccion> atraccionesPorNombre = crearMapDeAtracciones(atracciones);
 
 		try {
-			fr = new FileReader("archivos/promocionesVALIDAS.txt");
+			fr = new FileReader("archivos/promociones.txt");
 			br = new BufferedReader(fr);
 
 			String linea = br.readLine(); // Leemos linea con caracteristicas

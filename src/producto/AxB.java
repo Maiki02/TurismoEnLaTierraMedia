@@ -17,9 +17,4 @@ public class AxB extends Promocion {
 		return super.getCosto() - premio.getCosto();
 	}
 	
-	/*@Override
-	public double getDuracion(){
-		
-	}*/
-	
 }

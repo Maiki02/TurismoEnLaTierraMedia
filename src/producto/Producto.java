@@ -14,6 +14,10 @@ public abstract class Producto {
 		this.duracion = duracion;
 		this.costo = costo;
 	}
+	public Producto(String nombre, TipoDeAtraccion tipoAtraccion) {
+		this.nombre = nombre;
+		this.tipoAtraccion = tipoAtraccion;
+	}
 	
 	//Getters: retornan sus atributos
 	public String getNombre() {
