@@ -4,8 +4,7 @@ import java.util.List;
 
 import usuario.Usuario;
 
-public class Promocion extends Producto {
-//Preguntar al profe abstract
+public abstract class Promocion extends Producto {
 	List<Atraccion> atracciones;
 	
 	public Promocion(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones) {
@@ -14,10 +13,18 @@ public class Promocion extends Producto {
 		this.costo=calcularCosto();
 		this.duracion=calcularDuracion();
 	}
-
+	
+	//Getters:
+	public List<Atraccion> getAtracciones(){
+		return this.atracciones;
+	}
+	
+	
+	//----------------------------------------
+	
+	//Calcular duracion y costo:
 	public double calcularCosto() {
 		double costo = 0;
-
 		for (Atraccion atraccion : atracciones)
 			costo += atraccion.getCosto();
 		
@@ -30,10 +37,6 @@ public class Promocion extends Producto {
 			duracion += atraccion.getDuracion();
 
 		return duracion;
-	}
-	
-	public List<Atraccion> getAtracciones(){
-		return this.atracciones;
 	}
 	
 	//---------------------------------------
@@ -66,7 +69,6 @@ public class Promocion extends Producto {
 		}
 		return false;
 	}
-	
 	
 	@Override
 	public String toString() {

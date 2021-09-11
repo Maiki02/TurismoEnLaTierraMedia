@@ -18,36 +18,34 @@ public class ArchivoPromociones {
 	private static Promocion crearPromocion(String linea, Map<String, Atraccion> atraccionesPorNombre)
 			throws ValorNegativo, IllegalArgumentException, NumberFormatException, AtraccionDeDistintoTipo,
 			CantidadDatosInvalidos, AtraccionInexistente {
-		
+
 		String[] datos = linea.split(",");
-		
+
 		if (datos.length < DATOS_ESPERADOS_POR_LINEA)
 			throw new CantidadDatosInvalidos("Cantidad de datos invalidos en: " + linea);
-		
+
 		String nombrePack = datos[3];
 
 		TipoDePromocion tipoPromocion = TipoDePromocion.valueOf(datos[0]);
 		TipoDeAtraccion tipoAtraccion = TipoDeAtraccion.valueOf(datos[2]);
 
 		List<Atraccion> atraccionesInvolucradas = atraccionesInvolucradas(datos, atraccionesPorNombre);
-		
+
 		if (!sonAtraccionesValidas(atraccionesInvolucradas, tipoAtraccion))
 			throw new AtraccionDeDistintoTipo("Hay atracciones que no son del mismo tipo que el pack");
 
-		
 		if (tipoPromocion == TipoDePromocion.AXB) {
 			String nombreAtraccionDePremio = datos[1];
 
-			if(!atraccionesPorNombre.containsKey(nombreAtraccionDePremio))
-				throw new AtraccionInexistente("Su premio es invalido en: "+ linea);
+			if (!atraccionesPorNombre.containsKey(nombreAtraccionDePremio))
+				throw new AtraccionInexistente("Su premio es invalido en: " + linea);
 			Atraccion premio = atraccionesPorNombre.get(nombreAtraccionDePremio);
-			 
+
 			if (!esAtraccionValida(premio, tipoAtraccion))
 				throw new AtraccionDeDistintoTipo("El premio no es del mismo tipo que el pack");
-			atraccionesInvolucradas.add(premio); //Agregamos el premio a las atraccionesInvolucradas
-			
-			Promocion AxB= new AxB(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio); //No llega
-			return AxB;
+			atraccionesInvolucradas.add(premio); // Agregamos el premio a las atraccionesInvolucradas
+
+			return new AxB(nombrePack, tipoAtraccion, atraccionesInvolucradas, premio);
 		}
 
 		double premio = Double.parseDouble(datos[1]);
@@ -74,7 +72,7 @@ public class ArchivoPromociones {
 		return true;
 	}
 
-	// A partir de una linea de un archivo, se fija en su tercer columna en adelante
+	// A partir de una linea de un archivo, se fija en su cuarta columna en adelante
 	// y a cada nombre de atraccion
 	// lo mete en una LinkedList.
 	private static List<Atraccion> atraccionesInvolucradas(String[] datos, Map<String, Atraccion> atraccionesPorNombre)
@@ -116,7 +114,6 @@ public class ArchivoPromociones {
 				try {
 
 					Promocion promocion = crearPromocion(linea.toUpperCase(), atraccionesPorNombre);
-					System.out.println(promocion); //Promociones que se crean exitosamente
 					promociones.add(promocion);
 
 				} catch (ValorNegativo ne) {
@@ -129,8 +126,10 @@ public class ArchivoPromociones {
 					System.err.println(cdi.getMessage());
 				} catch (AtraccionInexistente ai) {
 					System.err.println(ai.getMessage());
+				} catch (AtraccionDeDistintoTipo addt) {
+					System.err.println(addt.getMessage() + " en: " + linea);
 				} catch (Exception e) {
-					e.getMessage();
+					System.err.println(e.getMessage());
 				}
 			}
 		} catch (IOException e) { // Se abria incorrectamente el archivo

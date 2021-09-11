@@ -81,6 +81,7 @@ public class ParqueDeAtracciones {
 	private void ofrecerProductosAlUsuario(Usuario usuario) {
 		Collections.sort(productos, new OrdenarProductosPorPreferencia(usuario.getTipoFavorito()));
 		for (Producto producto : this.productos) {
+			
 			ofrecerProductoAlUsuario(usuario, producto);
 		}
 		System.out.println("\n");
