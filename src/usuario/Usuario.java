@@ -2,6 +2,7 @@ package usuario;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import producto.*;
 
@@ -114,5 +115,8 @@ public class Usuario {
 	public String toString() {
 		return "Usuario: " + nombre + " Tipo favorito: " + this.tipoFavorito;
 	}
+
+	
+	 
 
 }

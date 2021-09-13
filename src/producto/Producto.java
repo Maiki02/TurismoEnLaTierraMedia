@@ -1,5 +1,7 @@
 package producto;
 
+import java.util.Objects;
+
 import usuario.Usuario;
 
 public abstract class Producto {
@@ -58,6 +60,23 @@ public abstract class Producto {
 	@Override
 	public String toString() {
 		return nombre + " Tipo:" + this.tipoAtraccion + " Precio:" + getCosto() + " Horas:" + getDuracion();
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(costo, duracion, nombre, tipoAtraccion);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Producto other = (Producto) obj;
+		return Double.doubleToLongBits(costo) == Double.doubleToLongBits(other.costo)
+				&& Double.doubleToLongBits(duracion) == Double.doubleToLongBits(other.duracion)
+				&& Objects.equals(nombre, other.nombre) && tipoAtraccion == other.tipoAtraccion;
 	}
 	
 	
