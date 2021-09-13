@@ -29,6 +29,7 @@ public class Atraccion extends Producto{
 	 * @Pre:
 	 * @Post: retorna true en caso de que la atraccion pueda ocuparse
 	 */
+	
 	public boolean ocuparAtraccion() {
 		if (this.quedanCuposDisponibles()) {
 			cuposDisponibles--;
@@ -36,23 +37,23 @@ public class Atraccion extends Producto{
 		}
 		return false;
 	}
-
+	/*
+	 * @Pre:
+	 * @Post: agrega la atraccion a la lista de atracciones elegidas del ususario y resta un cupo a la atraccion
+	 */
 	@Override
 	public void agregarAtracciones(Usuario usuario) {
 		usuario.getAtraccionesElectas().add(this);
 		this.ocuparAtraccion();
 	}
-	
+	/*
+	 * @Pre:
+	 * @Post: devuelve true si el producto ya fue vendido
+	 */
 	@Override
 	public boolean esProductoYaElecto(Usuario usuario) {
 		return usuario.getAtraccionesElectas().contains(this);
 	}
-	
-	
-	/*
-	 * @Pre:
-	 * @Post: retorna la cantidad de cupos disponibles que tiene la atraccion
-	 */
 	
 	@Override
 	public String toString() {

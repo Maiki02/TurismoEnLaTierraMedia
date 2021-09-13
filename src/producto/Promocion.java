@@ -70,6 +70,7 @@ public abstract class Promocion extends Producto {
 		return false;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "Promocion:" + super.toString();

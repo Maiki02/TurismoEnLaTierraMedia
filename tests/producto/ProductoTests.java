@@ -6,11 +6,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AtraccionTest {
-	
-	Atraccion a1;
-	Atraccion a2;
-	Atraccion a3;
+import usuario.Usuario;
+
+public class ProductoTests {
+
+	Producto a1;
+	Producto a2;
+	Producto a3;
+	Usuario u1;
 	
 	@Before
 	public void setUp() {
@@ -42,13 +45,6 @@ public class AtraccionTest {
 	}
 	
 	@Test
-	public void ocuparAtraccion() {
-		assertEquals(50, a1.getCuposDisponibles());
-		a1.ocuparAtraccion();
-		assertEquals(49, a1.getCuposDisponibles());
-	}
-	
-	@Test
 	public void tiemposValidos() {
 		assertEquals(12, a1.getDuracion(), 0);
 		assertEquals(5, a2.getDuracion(), 0);
@@ -57,8 +53,9 @@ public class AtraccionTest {
 	
 	@Test
 	public void ocupoTodosLosCupos() {
+		u1 = new Usuario("pepe", 100, 10, TipoDeAtraccion.AVENTURA);
 		assertTrue(a3.quedanCuposDisponibles());
-		a3.ocuparAtraccion();
+		a3.agregarAtracciones(u1);
 		assertFalse(a3.quedanCuposDisponibles());
 	}
 

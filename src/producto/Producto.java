@@ -38,27 +38,32 @@ public abstract class Producto {
 	
 	//-------------------------------------------
 	
-	/*
-	 * @Pre:
-	 * @Post: retorna true en caso de que la atraccion tenga cupos disponibles (caso contrario false)
-	 */
 	public boolean esPromocion() {
 		return false;
 	}
 	
 	/*
-	 * @pre
-	 * @post:
-	 * @returns:
+	 * @Pre:
+	 * @Post: retorna true en caso de que la atraccion tenga cupos disponibles (caso contrario false)
 	 */
 	public abstract boolean quedanCuposDisponibles();
+	/*
+	 * @Pre:
+	 * @Post: agrega la atraccion a la lista de atracciones elegidas por el usuario y resta un cupo de la atraccion
+	 */
 	public abstract void agregarAtracciones(Usuario usuario);
+	/*
+	 * @Pre:
+	 * @Post: devuelve true si el producto ya fue vendido
+	 */
 	public abstract boolean esProductoYaElecto(Usuario usuario);
+	
 
 	@Override
 	public String toString() {
 		return nombre + " Tipo:" + this.tipoAtraccion + " Precio:" + getCosto() + " Horas:" + getDuracion();
 	}
+	
 	
 	
 
