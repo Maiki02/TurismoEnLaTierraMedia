@@ -14,7 +14,6 @@ public class PromocionTest {
 	List<Promocion> listaPromociones, listaEsperada;
 
 	Atraccion atrMoria,atrMordor,atrLothlorien,atrLaComarca,atrCafayate,atrCalafate;
-
 	Promocion packAventura1, packAventura2, packDegustacion, packPaisaje, packPaisaje2, packPaisaje3;
 
 	@Before
@@ -41,27 +40,30 @@ public class PromocionTest {
 		listaPaisaje2.add(atrCalafate);
 
 		packAventura1 = new Porcentual("PACK AVENTURA 1", TipoDeAtraccion.AVENTURA, listaAventura, 20);// 28
-		packAventura2 = new Absoluta("PACK AVENTURA 2", TipoDeAtraccion.AVENTURA, listaAventura, 28); // 28
+		packAventura2 = new AxB("PACK AVENTURA 2", TipoDeAtraccion.AVENTURA, listaAventura, atrMordor); // 10
 		packDegustacion = new Porcentual("PACK DEGUSTACION 1", TipoDeAtraccion.DEGUSTACION, listaDegustacion, 10);// 34.2
-		packPaisaje = new Porcentual("PACK PAISAJE 1", TipoDeAtraccion.PAISAJE, listaPaisaje, 10); // 9
+		packPaisaje = new AxB("PACK PAISAJE 1", TipoDeAtraccion.PAISAJE, listaPaisaje, atrCafayate); // 0
 		packPaisaje2 = new Absoluta("PACK PAISAJE 2", TipoDeAtraccion.PAISAJE, listaPaisaje, 50); // 50
 		packPaisaje3 = new Absoluta("PACK PAISAJE 3", TipoDeAtraccion.PAISAJE, listaPaisaje2, 20); // 20
 
 		listaPromociones.add(packAventura1);
 		listaPromociones.add(packAventura2);
-		listaPromociones.add(packDegustacion);
 		listaPromociones.add(packPaisaje);
+		listaPromociones.add(packDegustacion);
 		listaPromociones.add(packPaisaje2);
 		listaPromociones.add(packPaisaje3);
+		
 
 	}
 
 	@Test
 	public void validarPreciosDePromocionesTest() {
-		assertEquals(34.2, packDegustacion.getCosto(), 0);
+		assertEquals(34.2, packDegustacion.getCosto(), 0); //Costo
 		assertEquals(28, packAventura1.getCosto(), 0);
-		assertEquals(28, packAventura2.getCosto(), 0);
-		//Falta el AXB
+		assertEquals(10, packAventura2.getCosto(), 0);
+		assertEquals(5, packAventura1.getDuracion(), 0); //Duracion
+		assertEquals(3, packPaisaje.getDuracion(), 0);
+		assertEquals(2, packPaisaje3.getDuracion(), 0);
 	}
 
 	@Test
@@ -99,8 +101,8 @@ public class PromocionTest {
 		listaEsperada.add(packDegustacion);
 		listaEsperada.add(packPaisaje2);
 		listaEsperada.add(packAventura1);
-		listaEsperada.add(packAventura2);
 		listaEsperada.add(packPaisaje3);
+		listaEsperada.add(packAventura2);
 		listaEsperada.add(packPaisaje);
 
 		assertEquals(listaEsperada, listaPromociones);
@@ -112,7 +114,6 @@ public class PromocionTest {
 		
 		assertEquals(10, axb.getCosto(), 0); //Solo el de Moria
 		assertEquals(5, axb.getDuracion(), 0); //Moria y el premio
-		
 	}
 	
 	
