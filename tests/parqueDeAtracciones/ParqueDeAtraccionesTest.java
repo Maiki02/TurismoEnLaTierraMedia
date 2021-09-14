@@ -1,32 +1,32 @@
 package parqueDeAtracciones;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
-import archivos.ArchivoAtracciones;
-import archivos.ArchivoPromociones;
-import producto.Atraccion;
-import producto.OrdenarProductosPorPreferencia;
-import producto.Producto;
-import producto.Promocion;
-import producto.TipoDeAtraccion;
+import archivos.*;
+import producto.*;
 import usuario.Usuario;
 
 public class ParqueDeAtraccionesTest {
 
-	ParqueDeAtracciones pa = new ParqueDeAtracciones();
-	List<Atraccion> atracciones = ArchivoAtracciones.leerArchivoAtracciones();
-	List<Promocion> promociones = ArchivoPromociones.leerArchivoPromociones(atracciones);
-	List<Producto> productos = new LinkedList<Producto>();
-	
+	ParqueDeAtracciones pa;
+	List<Atraccion> atracciones;
+	List<Promocion> promociones;
+	List<Producto> productos;
 	List<Usuario> usuarios;
 
+	@Before
+	public void setUp() {
+		pa= new ParqueDeAtracciones();
+		atracciones=ArchivoAtracciones.leerArchivoAtracciones();
+		promociones= ArchivoPromociones.leerArchivoPromociones(atracciones);
+		productos= new LinkedList<Producto>();
+	}
+	
+	
 	@Test
 	public void creaListaProductos() {
 		List<Producto> a = pa.getProductos();
@@ -37,7 +37,6 @@ public class ParqueDeAtraccionesTest {
 	public void contieneAtracciones() {
 		boolean ban = false;
 		productos.addAll(atracciones);
-		System.out.println(productos);
 		for (Producto atraccion : atracciones) {
 			if (productos.contains(atraccion)) {
 				ban = true;

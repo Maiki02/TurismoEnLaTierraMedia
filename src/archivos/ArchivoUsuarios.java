@@ -14,7 +14,7 @@ import producto.Producto;
 import producto.TipoDeAtraccion;
 import usuario.Usuario;
 
-public class ArchivoUsuarios { // , implements leible
+public class ArchivoUsuarios {
 	private static final int DATOS_ESPERADOS_POR_LINEA = 4;
 
 	public static List<Usuario> leerArchivoUsuarios() {
