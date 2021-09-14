@@ -22,7 +22,10 @@ public class ParqueDeAtracciones {
 		List<Promocion> promociones= ArchivoPromociones.leerArchivoPromociones(atracciones);
 		this.productos = crearListaDeProductos(atracciones, promociones);
 	}
-
+	/*
+	 * @Pre: Deben estar cargadas las listas de atracciones y promociones.
+	 * @Post: Crea lista de productos con atracciones y promociones.
+	 */
 	private List<Producto> crearListaDeProductos(List<Atraccion> atracciones, List<Promocion> promociones) {
 		productos = new LinkedList<Producto>();
 
@@ -33,7 +36,10 @@ public class ParqueDeAtracciones {
 
 		return productos;
 	}
-
+	/*
+	 * @Pre:
+	 * @Post: Permite imprimir la lista de productos.
+	 */
 	public void verProductos() {
 		for (Producto producto : this.productos)
 			System.out.println(producto);
@@ -43,7 +49,9 @@ public class ParqueDeAtracciones {
 		return this.productos;
 	}
 	
-
+	/*
+	 * @Post: Habilita al usuario para ingresar por teclado su elección de producto.
+	 */
 	private String preguntarSiQuiereAtraccion() {
 		System.out.println("Ingrese 'S' o 'N' si lo desea o no comprar: ");
 		String opcion=""; //Va a ser S o N
@@ -62,7 +70,10 @@ public class ParqueDeAtracciones {
 		
 	}
 	
-	
+	/*
+	 * @Pre:Lista creada de productos.
+	 * @Post: Ofrece producto al usuario y lo compra si el mismo es aceptado.
+	 */
 	private void ofrecerProductoAlUsuario(Usuario usuario, Producto producto) {
 		String opcion="";
 		
@@ -77,7 +88,10 @@ public class ParqueDeAtracciones {
 			}
 		}
 	}
-	
+	/*
+	 * @Pre: Lista de productos ya creada.
+	 * @Post: Le ofrece al usuario cada producto ordenado por preferencia.
+	 */
 	private void ofrecerProductosAlUsuario(Usuario usuario) {
 		Collections.sort(productos, new OrdenarProductosPorPreferencia(usuario.getTipoFavorito()));
 		for (Producto producto : this.productos) {
@@ -86,7 +100,10 @@ public class ParqueDeAtracciones {
 		}
 		System.out.println("\n");
 	}
-	
+	/*
+	 * @Pre
+	 * @Post: Ofrece productos al usuario ordenados por preferencia.
+	 */
 	public void ofrecerProductosALosUsuarios() {
 		System.out.println();
 		for (Usuario usuario : this.usuarios) {
@@ -94,7 +111,10 @@ public class ParqueDeAtracciones {
 			ofrecerProductosAlUsuario(usuario);
 		}
 		
-		//Es momento de escribirlos
+		/*
+		 * @Pre:
+		 * @Post: Escribe los usuarios en un archivo de usuarios.
+		 */
 		ArchivoUsuarios.escribirUsuarios(usuarios);
 	}
 }
