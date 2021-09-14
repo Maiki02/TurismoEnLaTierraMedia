@@ -67,23 +67,46 @@ public class Usuario {
 		this.monedasDisponibles -= producto.getCosto();
 		this.totalAPagar += producto.getCosto();
 	}
-
+	
+	/*
+	 * @Pre:
+	 * @Post: descuenta la cantidad de horas necesarias del producto
+	 */
 	private void descontarHorasDisponibles(Producto producto) {
 		horasDisponibles -= producto.getDuracion();
 		totalHorasGastadas += producto.getDuracion();
 	}
+	
+	/*
+	 * @Pre:
+	 * @Post: retorna true en caso de que el usuario cuente con monedas disponibles
+	 */
 
 	private boolean leAlcanzanLasMonedas(Producto producto) {
 		return this.monedasDisponibles >= producto.getCosto();
 	}
+	
+	/*
+	 * @Pre:
+	 * @Post: retorna true en caso de que el usuario cuente con horas disponibles
+	 */
 
 	private boolean leAlcanzanLasHoras(Producto producto) {
 		return this.horasDisponibles >= producto.getDuracion();
 	}
-
+	
+	/*
+	 * @Pre:
+	 * @Post: retorna true en caso de que el usuario cuente con monedas,horas y cupos disponibles
+	 */
 	public boolean puedeComprar(Producto producto) {
 		return leAlcanzanLasMonedas(producto) && leAlcanzanLasHoras(producto) && producto.quedanCuposDisponibles();
 	}
+	
+	/*
+	 * @Pre:
+	 * @Post: retorna true si el usuario cuenta con esa atraccion/promocion
+	 */
 
 	public boolean esProductoYaElecto(Producto producto) {
 		if (producto instanceof Atraccion) { //Si es atraccion, buscamos en su lista de atracciones electas si está
@@ -98,8 +121,11 @@ public class Usuario {
 		}
 		return false;
 	}
-
 	
+	/*
+	 * @Pre:
+	 * @Post: Si puede comprar lo agregaa a la lista de productos comprados
+	 */	
 	public void comprarProducto(Producto producto) {
 
 		if (puedeComprar(producto)) {

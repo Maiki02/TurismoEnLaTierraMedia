@@ -2,6 +2,9 @@ package usuario;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,28 +16,29 @@ public class usuarioTest {
 	// usuario: nombre, presupuesto, horas disponibles, total a pagar, monedas
 	// disponibles
 	// atraccion: nombre, costo, duracion, cupo, tipo
-	Usuario u; 
-	Producto a, a2, a3;
+	List<Atraccion> listaAventura, listaPaisaje, listaDegustacion;
+	Usuario u;
+	Atraccion a, a2, a3, a4;
 	Producto[] p;
-	Promocion promo1, promo2, promo3;
-	
-	
+
 	@Before
 	public void setUp() {
-		 a=new Atraccion("Moria", 300, 2, 10, TipoDeAtraccion.AVENTURA);
-		 a2= new Atraccion("Mordor", 1000, 12, 10, TipoDeAtraccion.AVENTURA);
-		 a3= new Atraccion("Bosque Negro", 400, 12, 10, TipoDeAtraccion.DEGUSTACION);
-		 u=new Usuario("Juan", 1000, 10, TipoDeAtraccion.AVENTURA);
-		 p=new Producto[3];
-		 promo1 = new AxB;
-		 promo2 = new Absoluta;
-		 promo3 = new Porcentual("Bosque Negro", 400, 12, 10, TipoDeAtraccion.DEGUSTACION);
-		
-		 
-	
-		 
+		a = new Atraccion("Moria", 300, 2, 10, TipoDeAtraccion.AVENTURA);
+		a2 = new Atraccion("Mordor", 1100, 12, 10, TipoDeAtraccion.AVENTURA);
+		a3 = new Atraccion("Bosque Negro", 400, 12, 10, TipoDeAtraccion.DEGUSTACION);
+		a4 = new Atraccion("MinasTirith", 1200, 9, 10, TipoDeAtraccion.PAISAJE);
+		u = new Usuario("Juan", 1000, 10, TipoDeAtraccion.AVENTURA);
+		p = new Producto[3];
+		listaAventura = new LinkedList<Atraccion>();
+		listaPaisaje = new LinkedList<Atraccion>();
+		listaDegustacion = new LinkedList<Atraccion>();
+
+		listaAventura.add(a);
+		listaDegustacion.add(a3);
+		listaPaisaje.add(a4);
+
 	}
-	
+
 	@Test
 	public void test_puedeComprar() {
 		assertTrue(u.puedeComprar(a));
@@ -48,41 +52,43 @@ public class usuarioTest {
 	public void test_comprarProducto() {
 		u.comprarProducto(a);
 		assertTrue(u.getProductosComprados().contains(a));
-   	}
-	
-	@Test
-	public void comprarProductosYpromocionesTest() {
-		;
-		
-		
 	}
-	
+
+	@Test
+	public void comprarAbsolutaTest() {
+		Producto abso = new Absoluta("Pack3", TipoDeAtraccion.PAISAJE, listaPaisaje, 400);
+		u.comprarProducto(abso);
+		assertEquals(400, u.getTotalAPagar(), 0);
+
+	}
+
+	@Test
+	public void comprarPorcentualTest() {
+		Producto porc = new Porcentual("Pack 1", TipoDeAtraccion.AVENTURA, listaAventura, 20);
+		u.comprarProducto(porc);
+		assertEquals(240, u.getTotalAPagar(), 0);
+
+	}
+
+	@Test
+	public void comprarAxBTest() {
+		Promocion axb = new AxB("Pack2", TipoDeAtraccion.DEGUSTACION, listaPaisaje, a2);
+		u.comprarProducto(axb);
+		assertEquals(100, u.getTotalAPagar(), 0);
+
+	}
+
 	@Test
 	public void comprarProductosQueNoSonDeSuTipoTest() {
 		u.comprarProducto(a3);
-		assertNotEquals(a3.getTipoAtraccion(),u.getTipoFavorito());
-		
-		
+		assertNotEquals(a3.getTipoAtraccion(), u.getTipoFavorito());
+
 	}
-	
+
 	@Test
 	public void comprarAtraccionesYVerificarAtraccionesElectas() {
 		u.comprarProducto(a);
-		assertTrue(u.esProductoYaElecto(a));	
+		assertTrue(u.esProductoYaElecto(a));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
