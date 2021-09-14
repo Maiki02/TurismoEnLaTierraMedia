@@ -50,7 +50,7 @@ public class ParqueDeAtracciones {
 	}
 	
 	/*
-	 * @Post: Habilita al usuario para ingresar por teclado su elección de producto.
+	 * @Post: Habilita al usuario para ingresar por teclado su elecciï¿½n de producto.
 	 */
 	private String preguntarSiQuiereAtraccion() {
 		System.out.println("Ingrese 'S' o 'N' si lo desea o no comprar: ");
