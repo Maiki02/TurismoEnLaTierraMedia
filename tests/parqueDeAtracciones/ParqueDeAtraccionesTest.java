@@ -24,6 +24,7 @@ public class ParqueDeAtraccionesTest {
 	List<Atraccion> atracciones = ArchivoAtracciones.leerArchivoAtracciones();
 	List<Promocion> promociones = ArchivoPromociones.leerArchivoPromociones(atracciones);
 	List<Producto> productos = new LinkedList<Producto>();
+	
 	List<Usuario> usuarios;
 
 	@Test
@@ -35,18 +36,22 @@ public class ParqueDeAtraccionesTest {
 	@Test
 	public void contieneAtracciones() {
 		boolean ban = false;
-		for (Atraccion atraccion : atracciones) {
-			if (pa.getProductos().contains(atraccion)) {
+		productos.addAll(atracciones);
+		System.out.println(productos);
+		for (Producto atraccion : atracciones) {
+			if (productos.contains(atraccion)) {
 				ban = true;
 			}
 		}
 		assertTrue(ban);
 	}
+	
 	@Test
 	public void contienePromociones() {
 		boolean ban = false;
+		productos.addAll(promociones);
 		for (Promocion promocion : promociones) {
-			if (pa.getProductos().contains(promocion)) {
+			if (productos.contains(promocion)) {
 				ban = true;
 			}
 		}
