@@ -102,7 +102,7 @@ public class ParqueDeAtracciones {
 	}
 	/*
 	 * @Pre
-	 * @Post: Ofrece productos al usuario ordenados por preferencia.
+	 * @Post: A cada usuario le ofrece productos.
 	 */
 	public void ofrecerProductosALosUsuarios() {
 		System.out.println();
