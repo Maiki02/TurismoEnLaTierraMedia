@@ -10,7 +10,9 @@ import java.util.List;
 
 import excepciones.CantidadDatosInvalidos;
 import excepciones.ValorNegativo;
+import producto.Atraccion;
 import producto.Producto;
+import producto.Promocion;
 import producto.TipoDeAtraccion;
 import usuario.Usuario;
 
@@ -100,18 +102,30 @@ public class ArchivoUsuarios {
 		PrintWriter salida = new PrintWriter(new FileWriter("archivos/usuarios/" + usuario.getNombre() + ".out"));
 
 		salida.println(usuario.getNombre());
-		salida.print("COMPRA: \n");
+		salida.println("COMPRA:");
 		
-		for(Producto producto: usuario.getProductosComprados()) {
-			salida.println(producto);
-		}
+		escribirProductos(usuario, salida);
 		
-		salida.print("\nTOTAL A PAGAR: ");
-		salida.println(usuario.getTotalAPagar());
-		salida.print("TIEMPO A INVERTIR: ");
-		salida.println(usuario.getHorasGastadas());
+		salida.println("\nTOTAL A PAGAR: " + usuario.getTotalAPagar());
+		salida.println("TIEMPO A INVERTIR: " + usuario.getHorasGastadas());
 
 		salida.close();
+	}
+
+	private static void escribirProductos(Usuario usuario, PrintWriter salida) {
+		for(Producto producto: usuario.getProductosComprados()) {
+			salida.println(producto);
+			escribirAtraccionesDeLaPromocion(salida, producto);
+		}
+	}
+
+	private static void escribirAtraccionesDeLaPromocion(PrintWriter salida, Producto producto) {
+		if(producto instanceof Promocion) { //Si es promocion, escribe sus atracciones
+			Promocion prom= (Promocion) producto;
+			for(Atraccion atraccion: prom.getAtracciones()) {
+				salida.println("\t" + atraccion);
+			}
+		}
 	}
 
 }
