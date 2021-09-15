@@ -24,11 +24,19 @@ public abstract class Producto {
 	}
 
 	// Setters:
+	/*
+	 * @Pre: dado un valor que representa un costo
+	 * @Post: establece ese valor al atributo de costo en caso de que no sea negativo
+	 */
 	private void setCosto(double costo) throws ValorNegativo {
 		verificarValor(costo);
 		this.costo = costo;
 	}
 
+	/*
+	 * @Pre: dado un valor que representa la duracion de un producto
+	 * @Post: establece ese valor al atributo de duracion en caso de que no sea negativo
+	 */
 	private void setDuracion(double duracion) throws ValorNegativo {
 		verificarValor(duracion);
 		this.duracion = duracion;
@@ -59,23 +67,10 @@ public abstract class Producto {
 
 	// -------------------------------------------
 
-	/*
-	 * @Pre:
-	 * 
-	 * @Post: retorna true en caso de que la atraccion tenga cupos disponibles (caso
-	 * contrario false)
-	 */
 	public boolean esPromocion() {
 		return false;
 	}
 
-	/*
-	 * @pre
-	 * 
-	 * @post:
-	 * 
-	 * @returns:
-	 */
 	public abstract boolean quedanCuposDisponibles();
 
 	public abstract void agregarAtracciones(Usuario usuario);

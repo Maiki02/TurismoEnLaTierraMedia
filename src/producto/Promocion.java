@@ -3,7 +3,6 @@ package producto;
 import java.util.List;
 
 import excepciones.AtraccionDeDistintoTipo;
-import excepciones.AtraccionInexistente;
 import usuario.Usuario;
 
 public abstract class Promocion extends Producto {
@@ -17,23 +16,28 @@ public abstract class Promocion extends Producto {
 		this.duracion = calcularDuracion();
 	}
 
+	/*
+	 * @Pre: dada una lista de atracciones y un TipoDeAtraccion
+	 * @Post: asigna la lista de atracciones a su atributo atracciones, 
+	 * verificando si todas las atracciones tienen el mismo TipoDeAtraccion
+	 */
 	private void setAtracciones(List<Atraccion> atracciones, TipoDeAtraccion tipoAtraccion)
 			throws AtraccionDeDistintoTipo {
-		if (!sonAtraccionesValidas(atracciones, tipoAtraccion)) {
+		if (!sonAtraccionesValidas(atracciones, tipoAtraccion)) { //Si no son atracciones validas, lanza excepcion
 			throw new AtraccionDeDistintoTipo("Hay atracciones que no son del tipo: " + tipoAtraccion);
 		}
 		this.atracciones = atracciones;
 	}
 
-	private static boolean sonAtraccionesValidas(List<Atraccion> atracciones, TipoDeAtraccion tipoAtraccion) {
+	private boolean sonAtraccionesValidas(List<Atraccion> atracciones, TipoDeAtraccion tipoAtraccion) {
 		for (Atraccion atraccion : atracciones) {
-			if (!esAtraccionValida(atraccion, tipoAtraccion)) // Si es una atraccion invalida devuelve false
+			if (!esAtraccionValida(atraccion, tipoAtraccion)) // Si hay una atraccion invalida devuelve false
 				return false;
 		}
 		return true;
 	}
 
-	private static boolean esAtraccionValida(Atraccion atraccion, TipoDeAtraccion tipoAtraccion) {
+	private boolean esAtraccionValida(Atraccion atraccion, TipoDeAtraccion tipoAtraccion) {
 		return atraccion.getTipoAtraccion() == tipoAtraccion;
 	}
 

@@ -14,7 +14,10 @@ public class Atraccion extends Producto {
 	}
 	
 	//Setters
-
+	/*
+	 * @Pre: dado un valor que representa un cupo
+	 * @Post: establece ese valor al atributo de cuposDisponibles en caso de que no sea negativo
+	 */
 	private void setCupo(int cupo) throws ValorNegativo {
 		super.verificarValor(cupo);
 		this.cuposDisponibles = cupo;
@@ -22,14 +25,14 @@ public class Atraccion extends Producto {
 	}
 
 	// Getters
-	public int getCuposDisponibles() { // Creo que no usamos este metodo
+	public int getCuposDisponibles() {
 		return cuposDisponibles;
 	}
 
 	/*
 	 * @Pre:
 	 * 
-	 * @Post: retorna true en caso de que la atraccion tenga cupos disponibles (caso
+	 * @Returns: retorna true en caso de que la atraccion tenga cupos disponibles (caso
 	 * contrario false)
 	 */
 	@Override
@@ -39,8 +42,8 @@ public class Atraccion extends Producto {
 
 	/*
 	 * @Pre:
-	 * 
-	 * @Post: retorna true en caso de que la atraccion pueda ocuparse
+	 * @Post: si quedan lugares, la atraccion descuenta un cupo
+	 * @Return: retorna true en caso de que la atraccion pueda ocuparse
 	 */
 	public boolean ocuparAtraccion() {
 		if (this.quedanCuposDisponibles()) {
@@ -56,16 +59,15 @@ public class Atraccion extends Producto {
 		this.ocuparAtraccion();
 	}
 
+	/*
+	 * @Pre:
+	 * @Post: agrega la atraccion a la lista de atracciones electas del usuario
+	 * @Return: retorna true en caso de que se pueda agregar.
+	 */
 	@Override
 	public boolean esProductoYaElecto(Usuario usuario) {
 		return usuario.getAtraccionesElectas().contains(this);
 	}
-
-	/*
-	 * @Pre:
-	 * 
-	 * @Post: retorna la cantidad de cupos disponibles que tiene la atraccion
-	 */
 
 	@Override
 	public String toString() {

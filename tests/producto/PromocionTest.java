@@ -13,7 +13,7 @@ public class PromocionTest {
 	List<Atraccion> listaAventura, listaPaisaje, listaPaisaje2, listaDegustacion;
 	List<Promocion> listaPromociones, listaEsperada;
 
-	Atraccion atrMoria,atrMordor,atrLothlorien,atrLaComarca,atrCafayate,atrCalafate;
+	Atraccion atrMoria, atrMordor, atrLothlorien, atrLaComarca, atrCafayate, atrCalafate;
 	Promocion packAventura1, packAventura2, packDegustacion, packPaisaje, packPaisaje2, packPaisaje3;
 
 	@Before
@@ -52,16 +52,15 @@ public class PromocionTest {
 		listaPromociones.add(packDegustacion);
 		listaPromociones.add(packPaisaje2);
 		listaPromociones.add(packPaisaje3);
-		
 
 	}
 
 	@Test
 	public void validarPreciosDePromocionesTest() {
-		assertEquals(34.2, packDegustacion.getCosto(), 0); //Costo
+		assertEquals(34.2, packDegustacion.getCosto(), 0); // Costo
 		assertEquals(28, packAventura1.getCosto(), 0);
 		assertEquals(10, packAventura2.getCosto(), 0);
-		assertEquals(5, packAventura1.getDuracion(), 0); //Duracion
+		assertEquals(5, packAventura1.getDuracion(), 0); // Duracion
 		assertEquals(3, packPaisaje.getDuracion(), 0);
 		assertEquals(2, packPaisaje3.getDuracion(), 0);
 	}
@@ -76,7 +75,7 @@ public class PromocionTest {
 		listaEsperada.add(packDegustacion);
 		listaEsperada.add(packAventura1);
 		listaEsperada.add(packAventura2);
-		
+
 		assertEquals(listaEsperada, listaPromociones);
 	}
 
@@ -90,7 +89,7 @@ public class PromocionTest {
 		listaEsperada.add(packDegustacion);
 		listaEsperada.add(packPaisaje3);
 		listaEsperada.add(packPaisaje);
-		
+
 		assertEquals(listaEsperada, listaPromociones);
 	}
 
@@ -107,17 +106,37 @@ public class PromocionTest {
 
 		assertEquals(listaEsperada, listaPromociones);
 	}
-	
+
 	@Test
 	public void promocionAxBTest() {
-		Promocion axb= new AxB("Pack AxB", TipoDeAtraccion.AVENTURA, listaAventura, atrMordor);
-		
-		assertEquals(10, axb.getCosto(), 0); //Solo el de Moria
-		assertEquals(5, axb.getDuracion(), 0); //Moria y el premio
+		Promocion axb = new AxB("Pack AxB", TipoDeAtraccion.AVENTURA, listaAventura, atrMordor);
+
+		assertEquals(10, axb.getCosto(), 0); // Solo el de Moria
+		assertEquals(5, axb.getDuracion(), 0); // Moria y el premio
 	}
-	
-	
-	
-	
+
+	@Test
+	public void creandoPromocionInvalidaTest() {
+		boolean excepcion = false, excepcion2=false;
+		try {
+			@SuppressWarnings("unused")
+			Promocion p3 = new Porcentual("PACK DEGUSTACION 1", TipoDeAtraccion.AVENTURA, listaDegustacion, 10);// INVALIDA
+		} catch (Exception e) {
+			excepcion = true;
+		}
+		assertTrue(excepcion);
+		
+		try {
+			List<Atraccion> listaInvalida= new LinkedList<Atraccion>();
+			listaInvalida.add(atrMordor);
+			listaInvalida.add(atrCalafate);
+			listaInvalida.add(atrCafayate);
+			@SuppressWarnings("unused")
+			Promocion p6 = new Absoluta("PACK PAISAJE 3", TipoDeAtraccion.PAISAJE, listaInvalida, 20); //INVALIDA
+		} catch(Exception e) {
+			excepcion2=true;
+		}
+		assertTrue(excepcion2);
+	}
 
 }
