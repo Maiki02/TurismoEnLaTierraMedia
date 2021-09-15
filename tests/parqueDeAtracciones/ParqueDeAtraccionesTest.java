@@ -26,7 +26,6 @@ public class ParqueDeAtraccionesTest {
 		productos= new LinkedList<Producto>();
 	}
 	
-	
 	@Test
 	public void creaListaProductos() {
 		List<Producto> a = pa.getProductos();

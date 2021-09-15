@@ -15,6 +15,10 @@ public class Absoluta extends Promocion {
 		setValorDeBeneficio(valorDeBeneficio);
 	}
 
+	/*
+	 * @Pre: dado un valor que representa el costo final del paquete
+	 * @Post: será asignado en caso de que este valor NO sea negativo.
+	 */
 	private void setValorDeBeneficio(double valorDeBeneficio) throws ValorNegativo {
 		super.verificarValor(valorDeBeneficio);
 		this.valorDeBeneficio = valorDeBeneficio;

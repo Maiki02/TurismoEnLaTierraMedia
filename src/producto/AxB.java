@@ -11,7 +11,8 @@ public class AxB extends Promocion {
 	public AxB(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones, 
 			Atraccion premio) throws AtraccionDeDistintoTipo {
 		super(nombre, tipoAtraccion, atracciones);
-		this.premio = premio;
+		this.premio = premio; //El premio está contenido en la lista de atracciones
+		//Por lo tanto si es de distinto tipo, será verificado en su padre.
 	}
 
 	@Override

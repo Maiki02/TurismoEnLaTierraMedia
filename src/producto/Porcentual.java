@@ -15,6 +15,10 @@ public class Porcentual extends Promocion {
 		setPorcentajeDescuento(porcentajeDescuento);
 	}
 
+	/*
+	 * @Pre: dado un valor que representa un porcentaje de descuento
+	 * @Post: será asignado en caso de que este valor NO sea negativo.
+	 */
 	private void setPorcentajeDescuento(double porcentajeDescuento) throws ValorNegativo {
 		super.verificarValor(porcentajeDescuento);
 		this.porcentajeDescuento = porcentajeDescuento;
