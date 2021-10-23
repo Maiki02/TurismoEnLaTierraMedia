@@ -75,6 +75,8 @@ public abstract class Producto {
 
 	public abstract boolean esProductoYaElecto(Usuario usuario);
 
+	public abstract boolean contiene(Producto producto);
+	
 	@Override
 	public String toString() {
 		return nombre + " Tipo:" + this.tipoAtraccion + " Precio:" + getCosto() + " Horas:" + getDuracion();

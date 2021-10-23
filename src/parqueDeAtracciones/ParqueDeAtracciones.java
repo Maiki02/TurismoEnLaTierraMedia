@@ -1,6 +1,7 @@
 package parqueDeAtracciones;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -76,8 +77,14 @@ public class ParqueDeAtracciones {
 	 */
 	private void ofrecerProductoAlUsuario(Usuario usuario, Producto producto) {
 		String opcion="";
+		boolean contiene=false;
+		Iterator<Producto> iter = usuario.getProductosComprados().iterator();
 		
-		if (usuario.puedeComprar(producto) && !producto.esProductoYaElecto(usuario) ) { 
+		while(!contiene && iter.hasNext()) {
+			contiene=producto.contiene(iter.next());
+		}
+		
+		if (usuario.puedeComprar(producto) && !contiene ) { 
 			
 			System.out.println(producto); //Mostramos el producto
 			opcion=preguntarSiQuiereAtraccion();//Preguntamos si lo quiere

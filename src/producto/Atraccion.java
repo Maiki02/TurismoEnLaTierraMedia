@@ -74,4 +74,11 @@ public class Atraccion extends Producto {
 		return "Atraccion:" + super.toString();
 	}
 
+	@Override
+	public boolean contiene(Producto producto) {
+		if(producto.esPromocion()) {
+			return producto.contiene(this);
+		}
+		return this.equals(producto);
+	}
 }
