@@ -85,7 +85,7 @@ public class AtraccionDAOImpl implements iAtraccionDAO {
 
 		conn = ConexionBDD.getConexion();
 		instruccion = conn.prepareStatement(SQL_ELIMINAR);
-		instruccion.setInt(1, atraccion.getIdAtraccion());
+		instruccion.setInt(1, atraccion.getID());
 		registros = instruccion.executeUpdate();
 
 		return registros;

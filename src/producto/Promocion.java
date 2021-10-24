@@ -99,7 +99,6 @@ public abstract class Promocion extends Producto {
 	
 	@Override
 	public boolean contiene(Producto producto) {
-		
 		for(Atraccion atraccion: this.atracciones) {
 			if(atraccion.contiene(producto)) {
 				return true;

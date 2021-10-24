@@ -1,12 +1,16 @@
 package producto;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import excepciones.ValorNegativo;
 import usuario.Usuario;
+import producto.*;
 
 public class Atraccion extends Producto {
 
 	private int cuposDisponibles;
-
 
 	public Atraccion(String nombre, double costo, double duracion, int cupo, TipoDeAtraccion tipoAtraccion, int id)
 			throws ValorNegativo {
@@ -31,15 +35,6 @@ public class Atraccion extends Producto {
 		return cuposDisponibles;
 	}
 
-	/*
-	 * @Pre:
-	 * 
-	 * @Post: retorna true en caso de que la atraccion tenga cupos disponibles (caso
-	 * contrario false)
-	 */
-	public int getIdAtraccion() {
-		return super.id;
-	}
 
 	@Override
 	public boolean quedanCuposDisponibles() {
@@ -79,6 +74,23 @@ public class Atraccion extends Producto {
 	@Override
 	public String toString() {
 		return "Atraccion:" + super.toString();
+	}
+	
+	public static Map<Integer, Atraccion> crearMapDeAtracciones(List<Atraccion> atracciones) {
+		Map<Integer, Atraccion> mapaDeAtracciones= new HashMap<Integer, Atraccion>();
+		
+		for(Atraccion atraccion: atracciones) {
+			mapaDeAtracciones.put(Integer.valueOf(atraccion.getID()), atraccion);
+		}
+		
+		return mapaDeAtracciones;
+		
+	}
+
+	@Override
+	public boolean contiene(Producto producto) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

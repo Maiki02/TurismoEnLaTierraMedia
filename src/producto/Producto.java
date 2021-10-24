@@ -20,7 +20,8 @@ public abstract class Producto {
 		setCosto(costo);
 	}
 
-	public Producto(String nombre, TipoDeAtraccion tipoAtraccion) {
+	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, int id) {
+		this.id=id;
 		this.nombre = nombre;
 		this.tipoAtraccion = tipoAtraccion;
 	}
@@ -59,6 +60,10 @@ public abstract class Producto {
 		return tipoAtraccion;
 	}
 
+	public Integer getID() {
+		return this.id;
+	}
+
 	// -------------------------------------------
 
 	/*
@@ -89,23 +94,7 @@ public abstract class Producto {
 		return nombre + " Tipo:" + this.tipoAtraccion + " Precio:" + getCosto() + " Horas:" + getDuracion();
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(costo, duracion, nombre, tipoAtraccion);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Producto other = (Producto) obj;
-		return Double.doubleToLongBits(costo) == Double.doubleToLongBits(other.costo)
-				&& Double.doubleToLongBits(duracion) == Double.doubleToLongBits(other.duracion)
-				&& Objects.equals(nombre, other.nombre) && tipoAtraccion == other.tipoAtraccion;
-	}
+	public abstract boolean contiene(Producto producto);
+	
 
 }
