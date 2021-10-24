@@ -64,6 +64,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 		} else if (tipoPromocion == TipoDePromocion.AXB) {
 			int atraccionPremioID = rs.getInt("id_atraccion_premio");
 			Atraccion atraccionPremio=mapDeAtraccionesPorID.get(Integer.valueOf(atraccionPremioID));
+			atraccionesInvolucradas.add(atraccionPremio);
 			nuevaPromocion = new AxB(nombre, tipoAtraccion, atraccionesInvolucradas, atraccionPremio, id);
 		}
 		return nuevaPromocion;
