@@ -10,13 +10,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import connection.ConexionBDD;
 import producto.*;
 
 public class PromocionDAOImpl implements PromocionDAO {
 
 	@Override
 	public List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) throws SQLException {
-		Connection conn = ConexionBDD.getConnection();
+		Connection conn = ConexionBDD.getConexion();
 		PreparedStatement instruccion = conn.prepareStatement(
 				"SELECT id_promocion, nombre_promocion, tipo_promocion, tipo_atraccion, costo_promocion, descuento_promocion, nombre_atraccion"
 						+ "FROM promociones"
@@ -68,8 +69,8 @@ public class PromocionDAOImpl implements PromocionDAO {
 		return nuevaPromocion;
 	}
 
-	private Map<Integer, List<Atraccion>> crearMapDeAtraccionesInvolucradas(Map<Integer, Atraccion> mapaDeAtracciones) {
-		Connection conn = ConexionBDD.getConnection();
+	private Map<Integer, List<Atraccion>> crearMapDeAtraccionesInvolucradas(Map<Integer, Atraccion> mapaDeAtracciones) throws SQLException{
+		Connection conn = ConexionBDD.getConexion();
 		PreparedStatement instruccion = conn.prepareStatement("SELECT * FROM atracciones_involucradas");
 		ResultSet rs = instruccion.executeQuery();
 		// -----------------------------------------
@@ -93,7 +94,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 
 	@Override
 	public int countAll() throws SQLException {
-		Connection conn = ConexionBDD.getConnection();
+		Connection conn = ConexionBDD.getConexion();
 		PreparedStatement instruccion = conn.prepareStatement("SELECT count(*) FROM (productos)");
 		ResultSet rs = instruccion.executeQuery();
 		return rs.getInt(1);
