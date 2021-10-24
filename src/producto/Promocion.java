@@ -8,9 +8,9 @@ import usuario.Usuario;
 public abstract class Promocion extends Producto {
 	List<Atraccion> atracciones;
 
-	public Promocion(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones)
+	public Promocion(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones, int id)
 			throws AtraccionDeDistintoTipo {
-		super(nombre, tipoAtraccion);
+		super(nombre, tipoAtraccion, id);
 		setAtracciones(atracciones, tipoAtraccion);
 		this.costo = calcularCosto();
 		this.duracion = calcularDuracion();
@@ -45,7 +45,7 @@ public abstract class Promocion extends Producto {
 	public List<Atraccion> getAtracciones() {
 		return this.atracciones;
 	}
-
+	
 	// ----------------------------------------
 
 	// Calcular duracion y costo:

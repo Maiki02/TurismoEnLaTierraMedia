@@ -10,8 +10,8 @@ public class Absoluta extends Promocion {
 	private double valorDeBeneficio;
 
 	public Absoluta(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones, 
-			double valorDeBeneficio) throws ValorNegativo, AtraccionDeDistintoTipo {
-		super(nombre, tipoAtraccion, atracciones);
+			double valorDeBeneficio, int id) throws ValorNegativo, AtraccionDeDistintoTipo {
+		super(nombre, tipoAtraccion, atracciones, id);
 		setValorDeBeneficio(valorDeBeneficio);
 	}
 

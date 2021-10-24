@@ -4,19 +4,22 @@ import excepciones.ValorNegativo;
 import usuario.Usuario;
 
 public abstract class Producto {
+	protected int id;
 	protected String nombre;
 	protected TipoDeAtraccion tipoAtraccion;
 	protected double duracion;
 	protected double costo;
 
-	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, double duracion, double costo) throws ValorNegativo {
+	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, double duracion, double costo, int id) throws ValorNegativo {
+		this.id=id;
 		this.nombre = nombre;
 		this.tipoAtraccion = tipoAtraccion;
 		setDuracion(duracion);
 		setCosto(costo);
 	}
 
-	public Producto(String nombre, TipoDeAtraccion tipoAtraccion) {
+	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, int id) {
+		this.id=id;
 		this.nombre = nombre;
 		this.tipoAtraccion = tipoAtraccion;
 	}
@@ -47,6 +50,10 @@ public abstract class Producto {
 	}
 
 	// Getters: retornan sus atributos
+	public Integer getID() {
+		return this.id;
+	}
+	
 	public String getNombre() {
 		return this.nombre;
 	}

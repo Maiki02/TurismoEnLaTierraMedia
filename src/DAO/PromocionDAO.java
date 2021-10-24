@@ -1,5 +1,10 @@
 package DAO;
 
-public class PromocionDAO {
+import java.sql.SQLException;
+import java.util.List;
 
+import producto.*;
+
+public interface PromocionDAO extends GenericDAO<Promocion> {
+	public List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) throws SQLException;
 }

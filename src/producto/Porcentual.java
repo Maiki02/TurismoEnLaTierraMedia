@@ -10,8 +10,8 @@ public class Porcentual extends Promocion {
 	private double porcentajeDescuento;
 
 	public Porcentual(String nombre, TipoDeAtraccion tipoAtraccion, List<Atraccion> atracciones,
-			double porcentajeDescuento) throws ValorNegativo, AtraccionDeDistintoTipo{
-		super(nombre, tipoAtraccion, atracciones);
+			double porcentajeDescuento, int id) throws ValorNegativo, AtraccionDeDistintoTipo{
+		super(nombre, tipoAtraccion, atracciones, id);
 		setPorcentajeDescuento(porcentajeDescuento);
 	}
 

@@ -1,5 +1,9 @@
 package producto;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import excepciones.ValorNegativo;
 import usuario.Usuario;
 
@@ -7,9 +11,9 @@ public class Atraccion extends Producto {
 
 	private int cuposDisponibles;
 
-	public Atraccion(String nombre, double costo, double duracion, int cupo, TipoDeAtraccion tipoAtraccion)
+	public Atraccion(String nombre, double costo, double duracion, int cupo, TipoDeAtraccion tipoAtraccion, int id)
 			throws ValorNegativo {
-		super(nombre, tipoAtraccion, duracion, costo);
+		super(nombre, tipoAtraccion, duracion, costo, id);
 		setCupo(cupo);
 	}
 	
@@ -80,5 +84,13 @@ public class Atraccion extends Producto {
 			return producto.contiene(this);
 		}
 		return this.equals(producto);
+	}
+	
+	public static Map<Integer, Atraccion> crearMapDeAtracciones(List<Atraccion> atracciones) {
+		Map<Integer, Atraccion> atraccionesPorID = new HashMap<Integer, Atraccion>();
+		for (Atraccion atraccion : atracciones) {
+			atraccionesPorID.put(atraccion.getID(), atraccion); // Creacion de mapa
+		}
+		return atraccionesPorID;
 	}
 }
