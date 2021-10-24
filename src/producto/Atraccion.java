@@ -1,9 +1,5 @@
 package producto;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import excepciones.ValorNegativo;
 import usuario.Usuario;
 
@@ -11,17 +7,19 @@ public class Atraccion extends Producto {
 
 	private int cuposDisponibles;
 
+
 	public Atraccion(String nombre, double costo, double duracion, int cupo, TipoDeAtraccion tipoAtraccion, int id)
 			throws ValorNegativo {
 		super(nombre, tipoAtraccion, duracion, costo, id);
 		setCupo(cupo);
 	}
-	
-	//Setters
-	/*
-	 * @Pre: dado un valor que representa un cupo
-	 * @Post: establece ese valor al atributo de cuposDisponibles en caso de que no sea negativo
-	 */
+
+	// Setters
+
+	public void setIdAtraccion(int idAtraccion) {
+		super.id = idAtraccion;
+	}
+
 	private void setCupo(int cupo) throws ValorNegativo {
 		super.verificarValor(cupo);
 		this.cuposDisponibles = cupo;
@@ -29,16 +27,20 @@ public class Atraccion extends Producto {
 	}
 
 	// Getters
-	public int getCuposDisponibles() {
+	public int getCuposDisponibles() { // Creo que no usamos este metodo
 		return cuposDisponibles;
 	}
 
 	/*
 	 * @Pre:
 	 * 
-	 * @Returns: retorna true en caso de que la atraccion tenga cupos disponibles (caso
+	 * @Post: retorna true en caso de que la atraccion tenga cupos disponibles (caso
 	 * contrario false)
 	 */
+	public int getIdAtraccion() {
+		return super.id;
+	}
+
 	@Override
 	public boolean quedanCuposDisponibles() {
 		return cuposDisponibles > 0;
@@ -46,8 +48,8 @@ public class Atraccion extends Producto {
 
 	/*
 	 * @Pre:
-	 * @Post: si quedan lugares, la atraccion descuenta un cupo
-	 * @Return: retorna true en caso de que la atraccion pueda ocuparse
+	 * 
+	 * @Post: retorna true en caso de que la atraccion pueda ocuparse
 	 */
 	public boolean ocuparAtraccion() {
 		if (this.quedanCuposDisponibles()) {
@@ -63,34 +65,20 @@ public class Atraccion extends Producto {
 		this.ocuparAtraccion();
 	}
 
-	/*
-	 * @Pre:
-	 * @Post: agrega la atraccion a la lista de atracciones electas del usuario
-	 * @Return: retorna true en caso de que se pueda agregar.
-	 */
 	@Override
 	public boolean esProductoYaElecto(Usuario usuario) {
 		return usuario.getAtraccionesElectas().contains(this);
 	}
+
+	/*
+	 * @Pre:
+	 * 
+	 * @Post: retorna la cantidad de cupos disponibles que tiene la atraccion
+	 */
 
 	@Override
 	public String toString() {
 		return "Atraccion:" + super.toString();
 	}
 
-	@Override
-	public boolean contiene(Producto producto) {
-		if(producto.esPromocion()) {
-			return producto.contiene(this);
-		}
-		return this.equals(producto);
-	}
-	
-	public static Map<Integer, Atraccion> crearMapDeAtracciones(List<Atraccion> atracciones) {
-		Map<Integer, Atraccion> atraccionesPorID = new HashMap<Integer, Atraccion>();
-		for (Atraccion atraccion : atracciones) {
-			atraccionesPorID.put(atraccion.getID(), atraccion); // Creacion de mapa
-		}
-		return atraccionesPorID;
-	}
 }
