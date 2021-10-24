@@ -16,7 +16,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 
 	@Override
 	public List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) throws SQLException {
-		Connection conn = ConeccionBDD.getConnection();
+		Connection conn = ConexionBDD.getConnection();
 		PreparedStatement instruccion = conn.prepareStatement(
 				"SELECT id_promocion, nombre_promocion, tipo_promocion, tipo_atraccion, costo_promocion, descuento_promocion, nombre_atraccion"
 						+ "FROM promociones"
@@ -69,7 +69,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 	}
 
 	private Map<Integer, List<Atraccion>> crearMapDeAtraccionesInvolucradas(Map<Integer, Atraccion> mapaDeAtracciones) {
-		Connection conn = ConeccionBDD.getConnection();
+		Connection conn = ConexionBDD.getConnection();
 		PreparedStatement instruccion = conn.prepareStatement("SELECT * FROM atracciones_involucradas");
 		ResultSet rs = instruccion.executeQuery();
 		// -----------------------------------------
@@ -93,7 +93,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 
 	@Override
 	public int countAll() throws SQLException {
-		Connection conn = ConeccionBDD.getConnection();
+		Connection conn = ConexionBDD.getConnection();
 		PreparedStatement instruccion = conn.prepareStatement("SELECT count(*) FROM (productos)");
 		ResultSet rs = instruccion.executeQuery();
 		return rs.getInt(1);
