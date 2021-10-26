@@ -20,7 +20,7 @@ public class Porcentual extends Promocion {
 	 * @Post: será asignado en caso de que este valor NO sea negativo.
 	 */
 	private void setPorcentajeDescuento(double porcentajeDescuento) throws ValorNegativo {
-		super.verificarValor(porcentajeDescuento);
+		ValorNegativo.verificarValor(porcentajeDescuento);
 		this.porcentajeDescuento = porcentajeDescuento;
 	}
 

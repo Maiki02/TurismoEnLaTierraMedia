@@ -1,14 +1,14 @@
 package parqueDeAtracciones;
 
+import java.sql.SQLException;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import archivos.ArchivoAtracciones;
-import archivos.ArchivoPromociones;
-import archivos.ArchivoUsuarios;
+import DAO.*;
+import comparador.OrdenarProductosPorPreferencia;
+import excepciones.*;
 import usuario.*;
 import producto.*;
 
@@ -17,10 +17,14 @@ public class ParqueDeAtracciones {
 	private List<Usuario> usuarios;
 	private List<Producto> productos;
 
-	public ParqueDeAtracciones() {
-		this.usuarios = ArchivoUsuarios.leerArchivoUsuarios();
-		List<Atraccion> atracciones= ArchivoAtracciones.leerArchivoAtracciones();
-		List<Promocion> promociones= ArchivoPromociones.leerArchivoPromociones(atracciones);
+	public ParqueDeAtracciones() throws SQLException, AtraccionDeDistintoTipo, ValorNegativo {
+		PromocionDAO promocionDAO= DAOFactory.getPromocionDAO();
+		iAtraccionDAO atraccionDAO = DAOFactory.getAtraccionDAO();
+		UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
+		
+		this.usuarios = usuarioDAO.listar();
+		List<Atraccion> atracciones = atraccionDAO.listar();
+		List<Promocion> promociones = promocionDAO.listarPromocionesValidas(atracciones);
 		this.productos = crearListaDeProductos(atracciones, promociones);
 	}
 	/*
@@ -37,19 +41,7 @@ public class ParqueDeAtracciones {
 
 		return productos;
 	}
-	/*
-	 * @Pre:
-	 * @Post: Permite imprimir la lista de productos.
-	 */
-	public void verProductos() {
-		for (Producto producto : this.productos)
-			System.out.println(producto);
-	}
-	
-	public List<Producto> getProductos(){
-		return this.productos;
-	}
-	
+
 	/*
 	 * @Post: Habilita al usuario para ingresar por teclado su elecci�n de producto.
 	 */
@@ -77,12 +69,7 @@ public class ParqueDeAtracciones {
 	 */
 	private void ofrecerProductoAlUsuario(Usuario usuario, Producto producto) {
 		String opcion="";
-		boolean contiene=false;
-		Iterator<Producto> iter = usuario.getProductosComprados().iterator();
-		
-		while(!contiene && iter.hasNext()) {
-			contiene=producto.contiene(iter.next());
-		}
+		boolean contiene=producto.esProductoYaElecto(usuario);
 		
 		if (usuario.puedeComprar(producto) && !contiene ) { 
 			
@@ -95,6 +82,7 @@ public class ParqueDeAtracciones {
 			}
 		}
 	}
+
 	/*
 	 * @Pre: Lista de productos ya creada.
 	 * @Post: Le ofrece al usuario cada producto ordenado por preferencia.
@@ -117,11 +105,10 @@ public class ParqueDeAtracciones {
 			System.out.println(usuario);
 			ofrecerProductosAlUsuario(usuario);
 		}
-		
-		/*
-		 * @Pre:
-		 * @Post: Escribe los usuarios en un archivo de usuarios.
-		 */
-		ArchivoUsuarios.escribirUsuarios(usuarios);
+	
+		//ArchivoUsuarios.escribirUsuarios(usuarios);
+		//Actualizar usuarios en la base de datos (nuevo tiempo y monedas disponibles y productosElectos)
+		//Actualizar tabla de compra_del_usuario
+		//Actualizar las atracciones en la base de datos (Descuento de cupos)
 	}
 }

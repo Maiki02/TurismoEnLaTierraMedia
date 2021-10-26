@@ -9,5 +9,11 @@ public class ValorNegativo extends RuntimeException {
 	public ValorNegativo(String string) {
 		super(string);
 	}
+	
+	public static void verificarValor(double valor) {
+		if (valor < 0) {
+			throw new ValorNegativo("Fue pasado un valor negativo");
+		}
+	}
 
 }

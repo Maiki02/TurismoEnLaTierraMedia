@@ -8,6 +8,7 @@ import producto.*;
 
 public class Usuario {
 
+	private int id;
 	private String nombre;
 	private double monedasDisponibles;
 	private double horasDisponibles;
@@ -15,36 +16,29 @@ public class Usuario {
 	private double totalAPagar;
 	private double totalHorasGastadas; // Horas a jugar
 	private List<Producto> productosComprados;
-	private List<Atraccion> atraccionesElectas;
 
-	public Usuario(String nombre, double presupuesto, double horasDisponibles, TipoDeAtraccion tipoFavorito)
+	public Usuario(String nombre, double presupuesto, double horasDisponibles, TipoDeAtraccion tipoFavorito, int id)
 			throws ValorNegativo {
+		this.id = id;
 		this.nombre = nombre;
 		setHorasDisponibles(horasDisponibles);
 		setMonedasDisponibles(presupuesto);
 		this.tipoFavorito = tipoFavorito;
 		this.productosComprados = new LinkedList<Producto>();
-		this.atraccionesElectas = new LinkedList<Atraccion>();
 
 	}
 
 	// Setters:
 	private void setMonedasDisponibles(double presupuesto) throws ValorNegativo {
-		verificarValor(presupuesto);
+		ValorNegativo.verificarValor(presupuesto);
 		this.monedasDisponibles = presupuesto;
 
 	}
 
 	private void setHorasDisponibles(double horasDisponibles) throws ValorNegativo {
 
-		verificarValor(horasDisponibles);
+		ValorNegativo.verificarValor(horasDisponibles);
 		this.horasDisponibles = horasDisponibles;
-	}
-
-	private void verificarValor(double valor) {
-		if (valor < 0) {
-			throw new ValorNegativo("Fue pasado un valor negativo");
-		}
 	}
 
 	// Getters:
@@ -76,8 +70,8 @@ public class Usuario {
 		return totalHorasGastadas;
 	}
 
-	public List<Atraccion> getAtraccionesElectas() {
-		return this.atraccionesElectas;
+	public int getID() {
+		return this.id;
 	}
 	// -----------------------------------------------------
 
@@ -131,27 +125,6 @@ public class Usuario {
 	/*
 	 * @Pre:
 	 * 
-	 * @Post: retorna true si el usuario cuenta con esa atraccion/promocion
-	 */
-
-	public boolean esProductoYaElecto(Producto producto) {
-		if (producto instanceof Atraccion) { // Si es atraccion, buscamos en su lista de atracciones electas si está
-			Atraccion atr = (Atraccion) producto;
-			return atraccionesElectas.contains(atr);
-		} else if (producto instanceof Promocion) { // Si es promocion, buscamos en su lista de atracciones involucradas
-
-			Promocion prom = (Promocion) producto; // si es que cada atraccion ya se eligio.
-
-			for (Atraccion atraccionAComprar : prom.getAtracciones())
-				if (atraccionesElectas.contains(atraccionAComprar))
-					return true;
-		}
-		return false;
-	}
-
-	/*
-	 * @Pre:
-	 * 
 	 * @Post: Si puede comprar lo agregaa a la lista de productos comprados
 	 */
 	public void comprarProducto(Producto producto) {
@@ -161,7 +134,7 @@ public class Usuario {
 			descontarHorasDisponibles(producto);
 
 			productosComprados.add(producto); // Lo agregamos a lista de productos comprados
-			producto.agregarAtracciones(this);
+			producto.ocuparAtraccion();
 		}
 	}
 

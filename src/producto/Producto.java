@@ -1,6 +1,6 @@
 package producto;
 
-import java.util.Objects;
+import java.util.Iterator;
 
 import excepciones.ValorNegativo;
 import usuario.Usuario;
@@ -12,7 +12,8 @@ public abstract class Producto {
 	protected double costo;
 	protected int id;
 
-	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, double duracion, double costo, int id) throws ValorNegativo {
+	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, double duracion, double costo, int id)
+			throws ValorNegativo {
 		this.id = id;
 		this.nombre = nombre;
 		this.tipoAtraccion = tipoAtraccion;
@@ -21,28 +22,24 @@ public abstract class Producto {
 	}
 
 	public Producto(String nombre, TipoDeAtraccion tipoAtraccion, int id) {
-		this.id=id;
+		this.id = id;
 		this.nombre = nombre;
 		this.tipoAtraccion = tipoAtraccion;
 	}
 
 	// Setters:
 	private void setCosto(double costo) throws ValorNegativo {
-		verificarValor(costo);
+		ValorNegativo.verificarValor(costo);
 		this.costo = costo;
 	}
 
 	private void setDuracion(double duracion) throws ValorNegativo {
-		verificarValor(duracion);
+		ValorNegativo.verificarValor(duracion);
 		this.duracion = duracion;
 	}
 
-	protected void verificarValor(double valor) throws ValorNegativo {
-		if (valor < 0) {
-			throw new ValorNegativo("Fue pasado un valor negativo");
-		}
-	}
-
+	//---------------------------------
+	
 	// Getters: retornan sus atributos
 	public String getNombre() {
 		return this.nombre;
@@ -76,18 +73,9 @@ public abstract class Producto {
 		return false;
 	}
 
-	/*
-	 * @pre
-	 * 
-	 * @post:
-	 * 
-	 * @returns:
-	 */
 	public abstract boolean quedanCuposDisponibles();
 
-	public abstract void agregarAtracciones(Usuario usuario);
-
-	public abstract boolean esProductoYaElecto(Usuario usuario);
+	public abstract boolean ocuparAtraccion();
 
 	@Override
 	public String toString() {
@@ -96,5 +84,13 @@ public abstract class Producto {
 
 	public abstract boolean contiene(Producto producto);
 	
+	public boolean esProductoYaElecto(Usuario usuario) {
+		Iterator<Producto> iter = usuario.getProductosComprados().iterator();
+		boolean contiene = false;
+		while (!contiene && iter.hasNext()) {
+			contiene = this.contiene(iter.next());
+		}
+		return contiene;
+	}
 
 }

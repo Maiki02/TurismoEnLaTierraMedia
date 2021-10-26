@@ -20,7 +20,7 @@ public class Absoluta extends Promocion {
 	 * @Post: será asignado en caso de que este valor NO sea negativo.
 	 */
 	private void setValorDeBeneficio(double valorDeBeneficio) throws ValorNegativo {
-		super.verificarValor(valorDeBeneficio);
+		ValorNegativo.verificarValor(valorDeBeneficio);
 		this.valorDeBeneficio = valorDeBeneficio;
 	}
 

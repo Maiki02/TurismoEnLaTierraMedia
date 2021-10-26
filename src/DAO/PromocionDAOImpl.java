@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import connection.ConexionBDD;
+import excepciones.*;
 import producto.*;
 
 public class PromocionDAOImpl implements PromocionDAO {
@@ -21,10 +22,11 @@ public class PromocionDAOImpl implements PromocionDAO {
 			+ "LEFT JOIN atracciones ON atracciones.id_atraccion = promociones.id_atraccion_premio"
 			+ "LEFT JOIN tipo_atraccion ON tipo_atraccion.id_tipo_atraccion = promociones.id_tipo_atraccion";
 	
-	private static final String SQL_ACTUALIZAR = "UPDATE atracciones SET nombre_atraccion = ?, costo_atraccion = ?, tiempo_atraccion = ?, cupo = ?, tipo_atraccion = ? WHERE id__atraccion = ?";
 	private static final String SQL_DELETE = "DELETE FROM promociones WHERE id_atraccion = ?";
-	@Override
-	public List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) throws SQLException {
+	
+
+	public List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) 
+			throws SQLException, AtraccionDeDistintoTipo, ValorNegativo {
 		Connection conn = ConexionBDD.getConexion();
 		PreparedStatement instruccion = conn.prepareStatement(SQL_LISTAR);
 		ResultSet rs = instruccion.executeQuery();
@@ -105,17 +107,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 
 	@Override
 	public int insertar(Promocion promocion, TipoDePromocion tipoPromocion) throws SQLException {
-		String sql="INSERT INTO promociones(nombre_promocion, id_tipo_promocion, id_tipo_atraccion, descuento_promocion) VALUES (?, ?, ?, ?)";
-		Connection conn = ConexionBDD.getConexion();
-		PreparedStatement instruccion = conn.prepareStatement(sql);
-
-		instruccion.setString(1, promocion.getNombre());
-		instruccion.setDouble(2, promocion.getCosto());
-		instruccion.setDouble(3, promocion.getDuracion());
-		instruccion.setString(5, promocion.getTipoAtraccion().toString());
-	
-
-		return instruccion.executeUpdate(); // nos devuelve la cantidad de registros afectados
+		return 0;
 	}
 
 	@Override

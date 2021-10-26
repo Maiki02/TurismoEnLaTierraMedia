@@ -3,7 +3,6 @@ package producto;
 import java.util.List;
 
 import excepciones.AtraccionDeDistintoTipo;
-import usuario.Usuario;
 
 public abstract class Promocion extends Producto {
 	List<Atraccion> atracciones;
@@ -18,12 +17,13 @@ public abstract class Promocion extends Producto {
 
 	/*
 	 * @Pre: dada una lista de atracciones y un TipoDeAtraccion
-	 * @Post: asigna la lista de atracciones a su atributo atracciones, 
-	 * verificando si todas las atracciones tienen el mismo TipoDeAtraccion
+	 * 
+	 * @Post: asigna la lista de atracciones a su atributo atracciones, verificando
+	 * si todas las atracciones tienen el mismo TipoDeAtraccion
 	 */
 	private void setAtracciones(List<Atraccion> atracciones, TipoDeAtraccion tipoAtraccion)
 			throws AtraccionDeDistintoTipo {
-		if (!sonAtraccionesValidas(atracciones, tipoAtraccion)) { //Si no son atracciones validas, lanza excepcion
+		if (!sonAtraccionesValidas(atracciones, tipoAtraccion)) { // Si no son atracciones validas, lanza excepcion
 			throw new AtraccionDeDistintoTipo("Hay atracciones que no son del tipo: " + tipoAtraccion);
 		}
 		this.atracciones = atracciones;
@@ -45,7 +45,7 @@ public abstract class Promocion extends Producto {
 	public List<Atraccion> getAtracciones() {
 		return this.atracciones;
 	}
-	
+
 	// ----------------------------------------
 
 	// Calcular duracion y costo:
@@ -80,34 +80,27 @@ public abstract class Promocion extends Producto {
 		return true;
 	}
 
-	@Override
-	public void agregarAtracciones(Usuario usuario) {
-		for (Atraccion atraccion : this.atracciones) {
-			usuario.getAtraccionesElectas().add(atraccion);
-			atraccion.ocuparAtraccion();
+	public boolean ocuparAtraccion() {
+		if (this.quedanCuposDisponibles()) {
+			for (Atraccion atraccion : atracciones) {
+				atraccion.ocuparAtraccion();
+			}
+			return true;
 		}
+		return false;
 	}
 
 	@Override
-	public boolean esProductoYaElecto(Usuario usuario) {
-		for (Atraccion atraccionAComprar : this.atracciones) {
-			if (usuario.getAtraccionesElectas().contains(atraccionAComprar))
-				return true;
-		}
-		return false;
-	}
-	
-	@Override
 	public boolean contiene(Producto producto) {
-		for(Atraccion atraccion: this.atracciones) {
-			if(atraccion.contiene(producto)) {
+
+		for (Atraccion atraccion : this.atracciones) {
+			if (atraccion.contiene(producto)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
 
 	@Override
 	public String toString() {
