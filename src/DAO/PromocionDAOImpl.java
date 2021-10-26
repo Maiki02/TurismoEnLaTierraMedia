@@ -15,15 +15,18 @@ import producto.*;
 
 public class PromocionDAOImpl implements PromocionDAO {
 
+	private static final String SQL_LISTAR = "SELECT id_promocion, nombre_promocion, tipo_promocion, tipo_atraccion, costo_promocion, descuento_promocion, nombre_atraccion"
+			+ "FROM promociones"
+			+ "LEFT JOIN tipo_promocion ON tipo_promocion.id_tipo_promocion = promociones.id_tipo_promocion"
+			+ "LEFT JOIN atracciones ON atracciones.id_atraccion = promociones.id_atraccion_premio"
+			+ "LEFT JOIN tipo_atraccion ON tipo_atraccion.id_tipo_atraccion = promociones.id_tipo_atraccion";
+	
+	private static final String SQL_ACTUALIZAR = "UPDATE atracciones SET nombre_atraccion = ?, costo_atraccion = ?, tiempo_atraccion = ?, cupo = ?, tipo_atraccion = ? WHERE id__atraccion = ?";
+	private static final String SQL_DELETE = "DELETE FROM promociones WHERE id_atraccion = ?";
 	@Override
 	public List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) throws SQLException {
 		Connection conn = ConexionBDD.getConexion();
-		PreparedStatement instruccion = conn.prepareStatement(
-				"SELECT id_promocion, nombre_promocion, tipo_promocion, tipo_atraccion, costo_promocion, descuento_promocion, nombre_atraccion"
-						+ "FROM promociones"
-						+ "LEFT JOIN tipo_promocion ON tipo_promocion.id_tipo_promocion = promociones.id_tipo_promocion"
-						+ "LEFT JOIN atracciones ON atracciones.id_atraccion = promociones.id_atraccion_premio"
-						+ "LEFT JOIN tipo_atraccion ON tipo_atraccion.id_tipo_atraccion = promociones.id_tipo_atraccion");
+		PreparedStatement instruccion = conn.prepareStatement(SQL_LISTAR);
 		ResultSet rs = instruccion.executeQuery();
 		// ------------------------------------------------------
 		List<Promocion> promociones = new ArrayList<Promocion>();
@@ -48,7 +51,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 		// Tomamos los datos de la tabla
 		int id = rs.getInt("id_promocion");
 		String nombre = rs.getString("nombre_promocion");
-		List<Atraccion> atraccionesInvolucradas = buscarAtraccionesInvolucradas(rs.getInt("atracciones_involucradas"),
+		List<Atraccion> atraccionesInvolucradas = buscarAtraccionesInvolucradas(rs.getInt("id_promocion"),
 				mapaDeIDPromocionAtraccion);
 		TipoDeAtraccion tipoAtraccion = TipoDeAtraccion.valueOf(rs.getString("tipo_atraccion"));
 
@@ -80,11 +83,10 @@ public class PromocionDAOImpl implements PromocionDAO {
 		while (rs.next()) {
 			Integer promocionID = rs.getInt("id_promocion");
 			Integer atraccionID = rs.getInt("id_atraccion");
-			if (mapAtraccionesInvolucradas.containsKey(promocionID)) {
-				mapAtraccionesInvolucradas.get(promocionID).add(mapaDeAtracciones.get(atraccionID));
-			} else {
+			if (!mapAtraccionesInvolucradas.containsKey(promocionID)) {
 				mapAtraccionesInvolucradas.put(promocionID, new LinkedList<Atraccion>());
 			}
+			mapAtraccionesInvolucradas.get(promocionID).add(mapaDeAtracciones.get(atraccionID));
 		}
 		return mapAtraccionesInvolucradas;
 	}
@@ -96,15 +98,24 @@ public class PromocionDAOImpl implements PromocionDAO {
 	@Override
 	public int countAll() throws SQLException {
 		Connection conn = ConexionBDD.getConexion();
-		PreparedStatement instruccion = conn.prepareStatement("SELECT count(*) FROM (productos)");
+		PreparedStatement instruccion = conn.prepareStatement("SELECT count(*) FROM productos");
 		ResultSet rs = instruccion.executeQuery();
 		return rs.getInt(1);
 	}
 
 	@Override
-	public int insert(Promocion t) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertar(Promocion promocion, TipoDePromocion tipoPromocion) throws SQLException {
+		String sql="INSERT INTO promociones(nombre_promocion, id_tipo_promocion, id_tipo_atraccion, descuento_promocion) VALUES (?, ?, ?, ?)";
+		Connection conn = ConexionBDD.getConexion();
+		PreparedStatement instruccion = conn.prepareStatement(sql);
+
+		instruccion.setString(1, promocion.getNombre());
+		instruccion.setDouble(2, promocion.getCosto());
+		instruccion.setDouble(3, promocion.getDuracion());
+		instruccion.setString(5, promocion.getTipoAtraccion().toString());
+	
+
+		return instruccion.executeUpdate(); // nos devuelve la cantidad de registros afectados
 	}
 
 	@Override
@@ -115,14 +126,23 @@ public class PromocionDAOImpl implements PromocionDAO {
 
 	@Override
 	public int delete(Promocion t) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = ConexionBDD.getConexion();
+		PreparedStatement instruccion = conn.prepareStatement(SQL_DELETE);
+		instruccion.setInt(1, t.getID());
+
+		return instruccion.executeUpdate();
 	}
 
 	@Override
 	public List<Promocion> findAll() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int insert(Promocion t) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
