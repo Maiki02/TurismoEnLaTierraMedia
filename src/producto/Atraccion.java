@@ -62,7 +62,7 @@ public class Atraccion extends Producto {
 		Map<Integer, Atraccion> mapaDeAtracciones = new HashMap<Integer, Atraccion>();
 
 		for (Atraccion atraccion : atracciones) {
-			mapaDeAtracciones.put(Integer.valueOf(atraccion.getID()), atraccion);
+			mapaDeAtracciones.put(atraccion.getID(), atraccion);
 		}
 
 		return mapaDeAtracciones;

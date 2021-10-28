@@ -14,16 +14,13 @@ import connection.ConexionBDD;
 import excepciones.*;
 import producto.*;
 
-public class PromocionDAOImpl implements PromocionDAO {
+public class PromocionDAOImpl implements iPromocionDAO {
 
-	private static final String SQL_LISTAR = "SELECT id_promocion, nombre_promocion, tipo_promocion, tipo_atraccion, costo_promocion, descuento_promocion, nombre_atraccion"
-			+ "FROM promociones"
-			+ "LEFT JOIN tipo_promocion ON tipo_promocion.id_tipo_promocion = promociones.id_tipo_promocion"
-			+ "LEFT JOIN atracciones ON atracciones.id_atraccion = promociones.id_atraccion_premio"
+	private static final String SQL_LISTAR = "SELECT id_promocion, nombre_promocion, tipo_promocion, tipo_atraccion, costo_promocion, descuento_promocion, nombre_atraccion "
+			+ "FROM promociones "
+			+ "LEFT JOIN tipo_promocion ON tipo_promocion.id_tipo_promocion = promociones.id_tipo_promocion "
+			+ "LEFT JOIN atracciones ON atracciones.id_atraccion = promociones.id_atraccion_premio "
 			+ "LEFT JOIN tipo_atraccion ON tipo_atraccion.id_tipo_atraccion = promociones.id_tipo_atraccion";
-	
-	private static final String SQL_DELETE = "DELETE FROM promociones WHERE id_atraccion = ?";
-	
 
 	public List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) 
 			throws SQLException, AtraccionDeDistintoTipo, ValorNegativo {
@@ -95,46 +92,6 @@ public class PromocionDAOImpl implements PromocionDAO {
 
 	private List<Atraccion> buscarAtraccionesInvolucradas(int id, Map<Integer, List<Atraccion>> mapPromocionAtraccion) {
 		return mapPromocionAtraccion.get(Integer.valueOf(id));
-	}
-
-	@Override
-	public int countAll() throws SQLException {
-		Connection conn = ConexionBDD.getConexion();
-		PreparedStatement instruccion = conn.prepareStatement("SELECT count(*) FROM productos");
-		ResultSet rs = instruccion.executeQuery();
-		return rs.getInt(1);
-	}
-
-	@Override
-	public int insertar(Promocion promocion, TipoDePromocion tipoPromocion) throws SQLException {
-		return 0;
-	}
-
-	@Override
-	public int update(Promocion t) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int delete(Promocion t) throws SQLException {
-		Connection conn = ConexionBDD.getConexion();
-		PreparedStatement instruccion = conn.prepareStatement(SQL_DELETE);
-		instruccion.setInt(1, t.getID());
-
-		return instruccion.executeUpdate();
-	}
-
-	@Override
-	public List<Promocion> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int insert(Promocion t) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }
