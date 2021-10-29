@@ -24,12 +24,11 @@ public class ParqueDeAtracciones {
 		iAtraccionDAO atraccionDAO = DAOFactory.getAtraccionDAO();
 		iUsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
 		
-		atracciones = atraccionDAO.listar();
+		atracciones = atraccionDAO.listar();		
 		promociones = promocionDAO.listarPromocionesValidas(atracciones);
 
 		this.productos = crearListaDeProductos(atracciones, promociones);
 		this.usuarios = usuarioDAO.listarUsuarios(atracciones,promociones);
-		
 	}
 	/*
 	 * @Pre: Deben estar cargadas las listas de atracciones y promociones.
@@ -94,7 +93,6 @@ public class ParqueDeAtracciones {
 	private void ofrecerProductosAlUsuario(Usuario usuario) {
 		Collections.sort(productos, new OrdenarProductosPorPreferencia(usuario.getTipoFavorito()));
 		for (Producto producto : this.productos) {
-			
 			ofrecerProductoAlUsuario(usuario, producto);
 		}
 		System.out.println("\n");
@@ -117,8 +115,7 @@ public class ParqueDeAtracciones {
 		}
 		
 		for(Atraccion atraccion: atracciones) {
-				atraccionDAO.actualizar(atraccion);
+			atraccionDAO.actualizar(atraccion);
 		}
-		//Actualizar las atracciones en la base de datos (Descuento de cupos)
 	}
 }

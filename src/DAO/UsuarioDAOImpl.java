@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,25 +55,24 @@ public class UsuarioDAOImpl implements iUsuarioDAO {
 
 	}
 
-
 	private List<Producto> buscarProductosComprados(int idUsuario, List<Atraccion> atracciones,
 			List<Promocion> promociones) throws SQLException {
 		Connection conn = ConexionBDD.getConexion();
 		PreparedStatement instruccion = conn.prepareStatement("SELECT * FROM compra_del_usuario WHERE id_usuario=?");
-		
+
 		instruccion.setInt(1, idUsuario);
 
 		ResultSet rs = instruccion.executeQuery();
 
 		Map<Integer, Atraccion> mapDeAtraccionesPorID = Atraccion.crearMapDeAtracciones(atracciones);
 		Map<Integer, Promocion> mapDePromocionesPorID = Promocion.crearMapDePromociones(promociones);
-		List<Producto> productosComprados = new LinkedList<Producto>();
+		List<Producto> productosComprados = new ArrayList<Producto>();
 		while (rs.next()) {
 			Integer idPromocion = rs.getInt("id_promocion_comprada");
 			Integer idAtraccion = rs.getInt("id_atraccion_comprada");
 			Producto productoComprado = null;
 
-			if (idPromocion == null) {
+			if (idPromocion == 0) {
 				productoComprado = mapDeAtraccionesPorID.get(idAtraccion);
 			} else {
 				productoComprado = mapDePromocionesPorID.get(idPromocion);
@@ -95,32 +93,31 @@ public class UsuarioDAOImpl implements iUsuarioDAO {
 		instruccion.setDouble(3, usuario.getTotalAPagar());
 		instruccion.setDouble(4, usuario.getHorasGastadas());
 		instruccion.setDouble(5, usuario.getID());
-		
+
 		actualizarProductosComprados(usuario);
-	
+
 		return instruccion.executeUpdate();
 	}
 
 	private static void actualizarProductosComprados(Usuario usuario) throws SQLException {
-		List<Producto> productosComprados= usuario.getProductosComprados();
+		List<Producto> productosComprados = usuario.getProductosComprados();
 		Connection conn = ConexionBDD.getConexion();
-		String sql="INSERT INTO compra_del_usuario (id_usuario, id_promocion_comprada, id_atraccion_comprada) VALUES (?, ?, ?);";
-		
-		for(Producto producto: productosComprados) {
-	
+		String sql = "INSERT INTO compra_del_usuario (id_usuario, id_promocion_comprada, id_atraccion_comprada) VALUES (?, ?, ?);";
+
+		for (Producto producto : productosComprados) {
+
 			PreparedStatement instruccion = conn.prepareStatement(sql);
 			instruccion.setInt(1, usuario.getID());
-			if(producto.esPromocion()){
+			if (producto.esPromocion()) {
 				instruccion.setInt(2, producto.getID());
-				instruccion.setInt(3, (Integer) null);
-			} else if(!producto.esPromocion()) {
-				instruccion.setInt(2, (Integer) null);
+				instruccion.setString(3, null);
+			} else if (!producto.esPromocion()) {
+				instruccion.setString(2, null);
 				instruccion.setInt(3, producto.getID());
 			}
 			instruccion.executeUpdate();
 		}
-		
-	}
 
+	}
 
 }

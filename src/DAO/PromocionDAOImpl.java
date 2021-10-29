@@ -16,14 +16,14 @@ import producto.*;
 
 public class PromocionDAOImpl implements iPromocionDAO {
 
-	private static final String SQL_LISTAR = "SELECT id_promocion, nombre_promocion, tipo_promocion, tipo_atraccion, costo_promocion, descuento_promocion, nombre_atraccion "
+	private static final String SQL_LISTAR = "SELECT id_promocion, nombre_promocion, tipo_promocion, tipo_atraccion, costo_promocion, descuento_promocion, id_atraccion_premio "
 			+ "FROM promociones "
 			+ "LEFT JOIN tipo_promocion ON tipo_promocion.id_tipo_promocion = promociones.id_tipo_promocion "
 			+ "LEFT JOIN atracciones ON atracciones.id_atraccion = promociones.id_atraccion_premio "
 			+ "LEFT JOIN tipo_atraccion ON tipo_atraccion.id_tipo_atraccion = promociones.id_tipo_atraccion";
 
 	public List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) 
-			throws SQLException, AtraccionDeDistintoTipo, ValorNegativo {
+			throws SQLException, ValorNegativo {
 		Connection conn = ConexionBDD.getConexion();
 		PreparedStatement instruccion = conn.prepareStatement(SQL_LISTAR);
 		ResultSet rs = instruccion.executeQuery();
@@ -34,8 +34,13 @@ public class PromocionDAOImpl implements iPromocionDAO {
 				mapDeAtraccionesPorID);
 
 		while (rs.next()) {
+			try {
 			Promocion nuevaPromocion = crearPromocion(rs, mapaDeIDPromocionAtraccion, mapDeAtraccionesPorID);
 			promociones.add(nuevaPromocion);
+			} catch(AtraccionDeDistintoTipo addt) {
+				System.err.println(addt);
+			}
+			
 		}
 
 		return promociones;

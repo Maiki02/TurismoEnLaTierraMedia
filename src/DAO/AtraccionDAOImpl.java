@@ -11,7 +11,7 @@ public class AtraccionDAOImpl implements iAtraccionDAO {
 	private static final String SQL_LISTAR = "SELECT id_atraccion, nombre_atraccion, costo_atraccion, tiempo_atraccion, cupo, tipo_atraccion "
 			+ "FROM atracciones JOIN tipo_atraccion ON tipo_atraccion.id_tipo_atraccion = atracciones.id_tipo_atraccion";
 	
-	private static final String SQL_ACTUALIZAR = "UPDATE atracciones SET cupo = ? WHERE id__atraccion = ?;";
+	private static final String SQL_ACTUALIZAR = "UPDATE atracciones SET cupo = ? WHERE id_atraccion = ?;";
 	
 
 	@Override

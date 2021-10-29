@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class ConexionBDD {
 
-	private static String url = "C:\\Users\\Esteban\\Desktop\\BDDTP\\TurismoEnLaTierraMedia.db";
+	private static String url = "jdbc:sqlite:TurismoEnLaTierraMedia.db";
 	private static Connection conexion;
 
 	public static Connection getConexion() throws SQLException {

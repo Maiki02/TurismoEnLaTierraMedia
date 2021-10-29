@@ -37,7 +37,7 @@ public class Usuario {
 		this.tipoFavorito = tipoFavorito;
 		this.totalAPagar=totalAPagar;
 		this.totalHorasGastadas= totalHorasGastadas;
-		this.productosComprados = new LinkedList<Producto>();
+		this.productosComprados = productosComprados;
 	}
 
 	// Setters:
@@ -152,7 +152,7 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario: " + nombre + " Tipo favorito: " + this.tipoFavorito;
+		return "Usuario: " + nombre + " Tipo favorito: " + this.tipoFavorito + "\n Monedas: " + this.monedasDisponibles + " Horas: " + this.horasDisponibles;
 	}
 
 }
