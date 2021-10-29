@@ -7,9 +7,8 @@ import excepciones.AtraccionDeDistintoTipo;
 import excepciones.ValorNegativo;
 import producto.*;
 
-public interface PromocionDAO extends GenericDAO<Promocion> {
-	
+public interface iPromocionDAO {
+
 	public abstract List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) throws SQLException, AtraccionDeDistintoTipo, ValorNegativo;
 
-	public int insertar(Promocion promocion, TipoDePromocion tipoPromocion) throws SQLException;
 }

@@ -1,6 +1,8 @@
 package producto;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import excepciones.AtraccionDeDistintoTipo;
 
@@ -66,6 +68,14 @@ public abstract class Promocion extends Producto {
 	}
 
 	// ---------------------------------------
+
+	public static Map<Integer, Promocion> crearMapDePromociones(List<Promocion> promociones) {
+		Map<Integer, Promocion> mapaDePromociones = new HashMap<Integer, Promocion>();
+		for (Promocion promocion : promociones) {
+			mapaDePromociones.put(promocion.getID(), promocion);
+		}
+		return mapaDePromociones;
+	}
 
 	@Override
 	public boolean esPromocion() {

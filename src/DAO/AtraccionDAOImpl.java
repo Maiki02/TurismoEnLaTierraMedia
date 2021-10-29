@@ -8,10 +8,11 @@ import producto.Atraccion;
 import producto.TipoDeAtraccion;
 
 public class AtraccionDAOImpl implements iAtraccionDAO {
-	private static final String SQL_LISTAR = "SELECT id_atraccion, nombre_atraccion, costo_atraccion, tiempo_atraccion, cupo, tipo_atraccion FROM atracciones";
-	private static final String SQL_INSERTAR = "INSERT INTO atracciones(nombre_atraccion, costo_atraccion, tiempo_atraccion, cupo, tipo_atraccion) VALUES (?, ?, ?, ?, ?)";
-	private static final String SQL_ACTUALIZAR = "UPDATE atracciones SET nombre_atraccion = ?, costo_atraccion = ?, tiempo_atraccion = ?, cupo = ?, tipo_atraccion = ? WHERE id__atraccion = ?";
-	private static final String SQL_ELIMINAR = "DELETE FROM atracciones WHERE id_atraccion = ?";
+	private static final String SQL_LISTAR = "SELECT id_atraccion, nombre_atraccion, costo_atraccion, tiempo_atraccion, cupo, tipo_atraccion "
+			+ "FROM atracciones JOIN tipo_atraccion ON tipo_atraccion.id_tipo_atraccion = atracciones.id_tipo_atraccion";
+	
+	private static final String SQL_ACTUALIZAR = "UPDATE atracciones SET cupo = ? WHERE id__atraccion = ?;";
+	
 
 	@Override
 	public List<Atraccion> listar() throws SQLException {
@@ -42,52 +43,17 @@ public class AtraccionDAOImpl implements iAtraccionDAO {
 	}
 
 	@Override
-	public int insertar(Atraccion atraccion) throws SQLException {
-		Connection conn = null;
-		PreparedStatement instruccion = null;
-		int registros = 0;
-
-		conn = ConexionBDD.getConexion();
-		instruccion = conn.prepareStatement(SQL_INSERTAR);
-		instruccion.setString(1, atraccion.getNombre());
-		instruccion.setDouble(2, atraccion.getCosto());
-		instruccion.setDouble(3, atraccion.getDuracion());
-		instruccion.setInt(4, atraccion.getCuposDisponibles());
-		instruccion.setString(5, atraccion.getTipoAtraccion().toString());
-		registros = instruccion.executeUpdate(); // nos devuelve la cantidad de registros afectados
-
-		return registros;
-	}
-
-	@Override
 	public int actualizar(Atraccion atraccion) throws SQLException {
 		Connection conn = null;
 		PreparedStatement instruccion = null;
-		int registros = 0;
 
 		conn = ConexionBDD.getConexion();
-		instruccion = conn.prepareStatement(SQL_INSERTAR);
-		instruccion.setString(1, atraccion.getNombre());
-		instruccion.setDouble(2, atraccion.getCosto());
-		instruccion.setDouble(3, atraccion.getDuracion());
-		instruccion.setInt(4, atraccion.getCuposDisponibles());
-		instruccion.setString(5, atraccion.getTipoAtraccion().toString());
-		registros = instruccion.executeUpdate(); // nos devuelve la cantidad de registros afectados
-
-		return registros;
+		instruccion = conn.prepareStatement(SQL_ACTUALIZAR);
+		instruccion.setInt(1, atraccion.getCuposDisponibles());
+		instruccion.setInt(2, atraccion.getID());
+		
+		return instruccion.executeUpdate(); // nos devuelve la cantidad de registros afectados
 	}
 
-	@Override
-	public int eliminar(Atraccion atraccion) throws SQLException {
-		Connection conn = null;
-		PreparedStatement instruccion = null;
-		int registros = 0;
 
-		conn = ConexionBDD.getConexion();
-		instruccion = conn.prepareStatement(SQL_ELIMINAR);
-		instruccion.setInt(1, atraccion.getID());
-		registros = instruccion.executeUpdate();
-
-		return registros;
-	}
 }

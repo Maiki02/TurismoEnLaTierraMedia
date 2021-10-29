@@ -16,16 +16,20 @@ public class ParqueDeAtracciones {
 
 	private List<Usuario> usuarios;
 	private List<Producto> productos;
+	private List<Atraccion> atracciones;
+	private List<Promocion> promociones;
 
 	public ParqueDeAtracciones() throws SQLException, AtraccionDeDistintoTipo, ValorNegativo {
-		PromocionDAO promocionDAO= DAOFactory.getPromocionDAO();
+		iPromocionDAO promocionDAO= DAOFactory.getPromocionDAO();
 		iAtraccionDAO atraccionDAO = DAOFactory.getAtraccionDAO();
-		UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
+		iUsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
 		
-		this.usuarios = usuarioDAO.listar();
-		List<Atraccion> atracciones = atraccionDAO.listar();
-		List<Promocion> promociones = promocionDAO.listarPromocionesValidas(atracciones);
+		atracciones = atraccionDAO.listar();
+		promociones = promocionDAO.listarPromocionesValidas(atracciones);
+
 		this.productos = crearListaDeProductos(atracciones, promociones);
+		this.usuarios = usuarioDAO.listarUsuarios(atracciones,promociones);
+		
 	}
 	/*
 	 * @Pre: Deben estar cargadas las listas de atracciones y promociones.
@@ -99,16 +103,22 @@ public class ParqueDeAtracciones {
 	 * @Pre
 	 * @Post: A cada usuario le ofrece productos.
 	 */
-	public void ofrecerProductosALosUsuarios() {
+	public void ofrecerProductosALosUsuarios() throws SQLException {
 		System.out.println();
 		for (Usuario usuario : this.usuarios) {
 			System.out.println(usuario);
 			ofrecerProductosAlUsuario(usuario);
 		}
 	
-		//ArchivoUsuarios.escribirUsuarios(usuarios);
-		//Actualizar usuarios en la base de datos (nuevo tiempo y monedas disponibles y productosElectos)
-		//Actualizar tabla de compra_del_usuario
+		iUsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
+		iAtraccionDAO atraccionDAO = DAOFactory.getAtraccionDAO();
+		for(Usuario usuario: usuarios) {
+			usuarioDAO.actualizar(usuario);
+		}
+		
+		for(Atraccion atraccion: atracciones) {
+				atraccionDAO.actualizar(atraccion);
+		}
 		//Actualizar las atracciones en la base de datos (Descuento de cupos)
 	}
 }

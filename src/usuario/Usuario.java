@@ -27,6 +27,18 @@ public class Usuario {
 		this.productosComprados = new LinkedList<Producto>();
 
 	}
+	
+	public Usuario(int idUsuario, String nombre, double monedasDisponibles, double horasDisponibles, 
+			TipoDeAtraccion tipoFavorito, double totalAPagar, double totalHorasGastadas, List<Producto> productosComprados) {
+		this.id = idUsuario;
+		this.nombre = nombre;
+		setHorasDisponibles(horasDisponibles);
+		setMonedasDisponibles(monedasDisponibles);
+		this.tipoFavorito = tipoFavorito;
+		this.totalAPagar=totalAPagar;
+		this.totalHorasGastadas= totalHorasGastadas;
+		this.productosComprados = new LinkedList<Producto>();
+	}
 
 	// Setters:
 	private void setMonedasDisponibles(double presupuesto) throws ValorNegativo {
