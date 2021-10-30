@@ -1,12 +1,10 @@
 package app;
 
-import java.sql.SQLException;
-
 import parqueDeAtracciones.*;
 
 public class App {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) {
 		ParqueDeAtracciones parque= new ParqueDeAtracciones();	
 		parque.ofrecerProductosALosUsuarios();
 

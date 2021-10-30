@@ -1,15 +1,14 @@
 package DAO;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.util.*;
 
-import producto.Atraccion;
-import producto.Promocion;
+import producto.*;
 import usuario.*;
 
 public interface iUsuarioDAO  {
     
-	public List<Usuario> listarUsuarios(List<Atraccion> atracciones, List<Promocion> promociones) throws SQLException;
+	public List<Usuario> listarUsuarios(Map<Integer, Atraccion> mapDeAtraccionesPorID, 
+			Map<Integer, Promocion> mapDePromocionesPorID);
 
-	public int actualizar(Usuario usuario) throws SQLException;
+	public int actualizar(Usuario usuario);
 }

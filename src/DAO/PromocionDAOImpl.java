@@ -22,62 +22,77 @@ public class PromocionDAOImpl implements iPromocionDAO {
 			+ "LEFT JOIN atracciones ON atracciones.id_atraccion = promociones.id_atraccion_premio "
 			+ "LEFT JOIN tipo_atraccion ON tipo_atraccion.id_tipo_atraccion = promociones.id_tipo_atraccion";
 
-	public List<Promocion> listarPromocionesValidas(List<Atraccion> atracciones) 
-			throws SQLException, ValorNegativo {
-		Connection conn = ConexionBDD.getConexion();
-		PreparedStatement instruccion = conn.prepareStatement(SQL_LISTAR);
-		ResultSet rs = instruccion.executeQuery();
-		// ------------------------------------------------------
-		List<Promocion> promociones = new ArrayList<Promocion>();
-		Map<Integer, Atraccion> mapDeAtraccionesPorID = Atraccion.crearMapDeAtracciones(atracciones);
-		Map<Integer, List<Atraccion>> mapaDeIDPromocionAtraccion = crearMapDeAtraccionesInvolucradas(
-				mapDeAtraccionesPorID);
+	public List<Promocion> listarPromocionesValidas(Map<Integer, Atraccion> mapDeAtraccionesPorID) {
+		try {
+			Connection conn = ConexionBDD.getConexion();
+			PreparedStatement instruccion = conn.prepareStatement(SQL_LISTAR);
+			ResultSet rs = instruccion.executeQuery();
+			// ------------------------------------------------------
+			List<Promocion> promociones = new ArrayList<Promocion>();
+			Map<Integer, List<Atraccion>> mapaDeIDPromocionAtraccion = crearMapDeAtraccionesInvolucradas(
+					mapDeAtraccionesPorID);
 
-		while (rs.next()) {
-			try {
-			Promocion nuevaPromocion = crearPromocion(rs, mapaDeIDPromocionAtraccion, mapDeAtraccionesPorID);
-			promociones.add(nuevaPromocion);
-			} catch(AtraccionDeDistintoTipo addt) {
-				System.err.println(addt);
+			while (rs.next()) {
+				try {
+					Promocion nuevaPromocion = crearPromocion(rs, mapaDeIDPromocionAtraccion, mapDeAtraccionesPorID);
+					promociones.add(nuevaPromocion);
+				} catch (AtraccionDeDistintoTipo addt) {
+					System.err.println(addt);
+				} catch (ValorNegativo ne) {
+					System.err.println(ne.getMessage());
+				} catch (NumberFormatException e) {
+					System.err.println("Uno de los datos leidos no es un numero valido");
+				} catch (IllegalArgumentException iae) {
+					System.err.println("Tipo de atraccion no reconocida");
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+
 			}
-			
-		}
 
-		return promociones;
+			return promociones;
+		} catch (Exception e) {
+			throw new DatosPerdidos(e);
+		}
 	}
 
 	private Promocion crearPromocion(ResultSet rs, Map<Integer, List<Atraccion>> mapaDeIDPromocionAtraccion,
-			Map<Integer, Atraccion>mapDeAtraccionesPorID)
-			throws SQLException {
-		// Tomamos el tipo de promocion
-		TipoDePromocion tipoPromocion = TipoDePromocion.valueOf(rs.getString("tipo_promocion"));
+			Map<Integer, Atraccion> mapDeAtraccionesPorID) throws ValorNegativo, AtraccionDeDistintoTipo,
+			NumberFormatException, IllegalArgumentException {
+		try {
+			// Tomamos el tipo de promocion
+			TipoDePromocion tipoPromocion = TipoDePromocion.valueOf(rs.getString("tipo_promocion"));
 
-		// Tomamos los datos de la tabla
-		int id = rs.getInt("id_promocion");
-		String nombre = rs.getString("nombre_promocion");
-		List<Atraccion> atraccionesInvolucradas = buscarAtraccionesInvolucradas(rs.getInt("id_promocion"),
-				mapaDeIDPromocionAtraccion);
-		TipoDeAtraccion tipoAtraccion = TipoDeAtraccion.valueOf(rs.getString("tipo_atraccion"));
+			// Tomamos los datos de la tabla
+			int id = rs.getInt("id_promocion");
+			String nombre = rs.getString("nombre_promocion");
+			List<Atraccion> atraccionesInvolucradas = buscarAtraccionesInvolucradas(rs.getInt("id_promocion"),
+					mapaDeIDPromocionAtraccion);
+			TipoDeAtraccion tipoAtraccion = TipoDeAtraccion.valueOf(rs.getString("tipo_atraccion"));
 
-		Promocion nuevaPromocion = null;
-		if (tipoPromocion == TipoDePromocion.ABSOLUTA) {
-			Double costoPromocion = rs.getDouble("costo_promocion");
-			nuevaPromocion = new Absoluta(nombre, tipoAtraccion, atraccionesInvolucradas, costoPromocion, id);
+			Promocion nuevaPromocion = null;
+			if (tipoPromocion == TipoDePromocion.ABSOLUTA) {
+				Double costoPromocion = rs.getDouble("costo_promocion");
+				nuevaPromocion = new Absoluta(nombre, tipoAtraccion, atraccionesInvolucradas, costoPromocion, id);
 
-		} else if (tipoPromocion == TipoDePromocion.PORCENTUAL) {
-			Double descuentoPromocion = rs.getDouble("descuento_promocion");
-			nuevaPromocion = new Porcentual(nombre, tipoAtraccion, atraccionesInvolucradas, descuentoPromocion, id);
+			} else if (tipoPromocion == TipoDePromocion.PORCENTUAL) {
+				Double descuentoPromocion = rs.getDouble("descuento_promocion");
+				nuevaPromocion = new Porcentual(nombre, tipoAtraccion, atraccionesInvolucradas, descuentoPromocion, id);
 
-		} else if (tipoPromocion == TipoDePromocion.AXB) {
-			int atraccionPremioID = rs.getInt("id_atraccion_premio");
-			Atraccion atraccionPremio=mapDeAtraccionesPorID.get(Integer.valueOf(atraccionPremioID));
-			atraccionesInvolucradas.add(atraccionPremio);
-			nuevaPromocion = new AxB(nombre, tipoAtraccion, atraccionesInvolucradas, atraccionPremio, id);
+			} else if (tipoPromocion == TipoDePromocion.AXB) {
+				int atraccionPremioID = rs.getInt("id_atraccion_premio");
+				Atraccion atraccionPremio = mapDeAtraccionesPorID.get(Integer.valueOf(atraccionPremioID));
+				atraccionesInvolucradas.add(atraccionPremio);
+				nuevaPromocion = new AxB(nombre, tipoAtraccion, atraccionesInvolucradas, atraccionPremio, id);
+			}
+			return nuevaPromocion;
+		} catch (Exception e) {
+			throw new DatosPerdidos(e);
 		}
-		return nuevaPromocion;
 	}
 
-	private Map<Integer, List<Atraccion>> crearMapDeAtraccionesInvolucradas(Map<Integer, Atraccion> mapaDeAtracciones) throws SQLException{
+	private Map<Integer, List<Atraccion>> crearMapDeAtraccionesInvolucradas(Map<Integer, Atraccion> mapaDeAtracciones)
+			throws SQLException {
 		Connection conn = ConexionBDD.getConexion();
 		PreparedStatement instruccion = conn.prepareStatement("SELECT * FROM atracciones_involucradas");
 		ResultSet rs = instruccion.executeQuery();
