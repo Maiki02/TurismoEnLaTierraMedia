@@ -2,7 +2,8 @@ package DAO;
 
 import java.sql.*;
 import java.util.*;
-import connection.ConexionBDD;
+
+import conexion.ConexionBDD;
 import excepciones.*;
 import producto.*;
 

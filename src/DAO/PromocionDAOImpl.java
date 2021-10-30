@@ -1,16 +1,9 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
-import connection.ConexionBDD;
+import conexion.ConexionBDD;
 import excepciones.*;
 import producto.*;
 
@@ -57,8 +50,8 @@ public class PromocionDAOImpl implements iPromocionDAO {
 	}
 
 	private Promocion crearPromocion(ResultSet rs, Map<Integer, List<Atraccion>> mapaDeIDPromocionAtraccion,
-			Map<Integer, Atraccion> mapDeAtraccionesPorID) throws ValorNegativo, AtraccionDeDistintoTipo,
-			NumberFormatException, IllegalArgumentException {
+			Map<Integer, Atraccion> mapDeAtraccionesPorID)
+			throws ValorNegativo, AtraccionDeDistintoTipo, NumberFormatException, IllegalArgumentException {
 		try {
 			// Tomamos el tipo de promocion
 			TipoDePromocion tipoPromocion = TipoDePromocion.valueOf(rs.getString("tipo_promocion"));
@@ -91,23 +84,26 @@ public class PromocionDAOImpl implements iPromocionDAO {
 		}
 	}
 
-	private Map<Integer, List<Atraccion>> crearMapDeAtraccionesInvolucradas(Map<Integer, Atraccion> mapaDeAtracciones)
-			throws SQLException {
-		Connection conn = ConexionBDD.getConexion();
-		PreparedStatement instruccion = conn.prepareStatement("SELECT * FROM atracciones_involucradas");
-		ResultSet rs = instruccion.executeQuery();
-		// -----------------------------------------
-		Map<Integer, List<Atraccion>> mapAtraccionesInvolucradas = new HashMap<Integer, List<Atraccion>>();
+	private Map<Integer, List<Atraccion>> crearMapDeAtraccionesInvolucradas(Map<Integer, Atraccion> mapaDeAtracciones) {
+		try {
+			Connection conn = ConexionBDD.getConexion();
+			PreparedStatement instruccion = conn.prepareStatement("SELECT * FROM atracciones_involucradas");
+			ResultSet rs = instruccion.executeQuery();
+			// -----------------------------------------
+			Map<Integer, List<Atraccion>> mapAtraccionesInvolucradas = new HashMap<Integer, List<Atraccion>>();
 
-		while (rs.next()) {
-			Integer promocionID = rs.getInt("id_promocion");
-			Integer atraccionID = rs.getInt("id_atraccion");
-			if (!mapAtraccionesInvolucradas.containsKey(promocionID)) {
-				mapAtraccionesInvolucradas.put(promocionID, new LinkedList<Atraccion>());
+			while (rs.next()) {
+				Integer promocionID = rs.getInt("id_promocion");
+				Integer atraccionID = rs.getInt("id_atraccion");
+				if (!mapAtraccionesInvolucradas.containsKey(promocionID)) {
+					mapAtraccionesInvolucradas.put(promocionID, new LinkedList<Atraccion>());
+				}
+				mapAtraccionesInvolucradas.get(promocionID).add(mapaDeAtracciones.get(atraccionID));
 			}
-			mapAtraccionesInvolucradas.get(promocionID).add(mapaDeAtracciones.get(atraccionID));
+			return mapAtraccionesInvolucradas;
+		} catch (Exception e) {
+			throw new DatosPerdidos(e);
 		}
-		return mapAtraccionesInvolucradas;
 	}
 
 	private List<Atraccion> buscarAtraccionesInvolucradas(int id, Map<Integer, List<Atraccion>> mapPromocionAtraccion) {
