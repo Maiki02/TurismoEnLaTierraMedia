@@ -1,6 +1,5 @@
 package usuario;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import excepciones.ValorNegativo;
@@ -16,17 +15,8 @@ public class Usuario {
 	private double totalAPagar;
 	private double totalHorasGastadas; // Horas a jugar
 	private List<Producto> productosComprados;
+	private int cantidadProductosViejos;
 
-	public Usuario(String nombre, double presupuesto, double horasDisponibles, TipoDeAtraccion tipoFavorito, int id)
-			throws ValorNegativo {
-		this.id = id;
-		this.nombre = nombre;
-		setHorasDisponibles(horasDisponibles);
-		setMonedasDisponibles(presupuesto);
-		this.tipoFavorito = tipoFavorito;
-		this.productosComprados = new LinkedList<Producto>();
-
-	}
 	
 	public Usuario(int idUsuario, String nombre, double monedasDisponibles, double horasDisponibles, 
 			TipoDeAtraccion tipoFavorito, double totalAPagar, double totalHorasGastadas, List<Producto> productosComprados) {
@@ -38,6 +28,7 @@ public class Usuario {
 		this.totalAPagar=totalAPagar;
 		this.totalHorasGastadas= totalHorasGastadas;
 		this.productosComprados = productosComprados;
+		this.cantidadProductosViejos=productosComprados.size();
 	}
 
 	// Setters:
@@ -153,6 +144,10 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario: " + nombre + " Tipo favorito: " + this.tipoFavorito + "\n Monedas: " + this.monedasDisponibles + " Horas: " + this.horasDisponibles;
+	}
+
+	public int getCantidadProductosViejos() {
+		return cantidadProductosViejos;
 	}
 
 }

@@ -120,16 +120,18 @@ public class UsuarioDAOImpl implements iUsuarioDAO {
 			Connection conn = ConexionBDD.getConexion();
 			String sql = "INSERT INTO compra_del_usuario (id_usuario, id_promocion_comprada, id_atraccion_comprada) VALUES (?, ?, ?);";
 
-			for (Producto producto : productosComprados) {
-
+			for(int i = usuario.getCantidadProductosViejos(); i<productosComprados.size(); i++) {
 				PreparedStatement instruccion = conn.prepareStatement(sql);
 				instruccion.setInt(1, usuario.getID());
-				if (producto.esPromocion()) {
-					instruccion.setInt(2, producto.getID());
+				
+				Producto productoAAgregar = productosComprados.get(i);
+
+				if (productoAAgregar.esPromocion()) {
+					instruccion.setInt(2, productoAAgregar.getID());
 					instruccion.setString(3, null);
-				} else if (!producto.esPromocion()) {
+				} else if (!productoAAgregar.esPromocion()) {
 					instruccion.setString(2, null);
-					instruccion.setInt(3, producto.getID());
+					instruccion.setInt(3, productoAAgregar.getID());
 				}
 				instruccion.executeUpdate();
 			}
