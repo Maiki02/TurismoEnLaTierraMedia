@@ -1,4 +1,5 @@
 bin
 .settings
 /target/
-.Maven Dependencies
+TurismoEnLaTierraMedia.db
+TurismoEnLaTierraMedia.sqbpro
